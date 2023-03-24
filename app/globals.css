@@ -18,7 +18,7 @@
 
 html,
 body {
-  max-width: 100vw;
+  width: 100vw;
   overflow-x: hidden;
 }
 
@@ -27,8 +27,84 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.signup__title,
+.signup__subtitle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.signup__title {
+  font-size: 5em;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+.signup__subtitle {
+  margin-bottom: 10px;
+}
+
+.signup__container {
+  width: 100%;
+  height: 100%;
+}
+
+.profileimage__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profileimage__button {
+  height: 100px;
+  aspect-ratio: 1/1;
+  border: 0.1px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50px;
+  object-fit: cover;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.inputField {
+  border-radius: 5px;
+  border: 0.1px solid black;
+  padding-block: 7px;
+  padding-inline: 80px;
+}
+
+.inputLabel {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.form {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formButton {
+  font-size: 1em;
+  opacity: 0.8;
+  border-radius: 5px;
+  border: 0.1px solid black;
+  padding-block: 8px;
+  padding-inline: 35px;
+  cursor: pointer;
 }
