@@ -10,12 +10,20 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  uploadBytes,
+} from "firebase/storage";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getFirebaseConfig, auth } from "../../../firebase-config";
 
-const Form = () => {
+export const Form = () => {
   const router = useRouter();
   const [image, setImage] = useState<string>("");
+  const [file, setFile] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -39,20 +47,13 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ATTEMPTING TO UPLOAD IMAGE TO FIRESTORE STORAGE!!!!!!!!!!
-    // if (image) {
-    //   const filePath = `/users/${getAuth().currentUser.uid}/${file.name}`;
-    //   const newImageRef = ref(getStorage(), filePath);
-    //   const fileSnapshot = await uploadBytesResumable(newImageRef, file);
-    // }
-
     if (inputs.password === inputs.confirmpassword) {
       console.log(process.env.NEXT_PUBLIC_API_URL);
       createUserWithEmailAndPassword(auth, inputs.email, inputs.password).then(
         async (userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
 
           const data = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/auth`,
@@ -70,6 +71,19 @@ const Form = () => {
           );
           const response = await data;
           initFirebaseAuth();
+          const userid = await response.json();
+
+          // // ATTEMPTING TO UPLOAD IMAGE TO FIRESTORE STORAGE!!!!!!!!!!
+          if (image) {
+            const storage = getStorage();
+            const filePath = `/users/${userid}.jpeg`;
+            const storageRef = ref(storage, filePath);
+
+            // 'file' comes from the Blob or File API
+            // uploadBytes(storageRef, file).then((snapshot) => {
+            //   console.log("Uploaded a blob or file!");
+            // });
+          }
           return response;
         }
       );
@@ -82,24 +96,28 @@ const Form = () => {
       userImage.current?.classList.remove("hidden");
       const fileRef = files[0];
       const fileType: string = fileRef.type || "";
-      setImage(fileRef.name);
+      // setFile(fileRef);
+
       const reader = new FileReader();
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
+        // console.log(ev.target.result);
+
+        setFile(ev.target.result);
         setImage(`data:${fileType};base64,${btoa(ev.target.result)}`);
       };
     }
   };
 
-  const googleAuthentication = async (e: React.FormEvent) => {
-    e.preventDefault();
-    var provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-    });
-  };
+  // const googleAuthentication = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   var provider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, provider).then(async (userCredential) => {
+  //     // Signed in
+  //     const user = userCredential.user;
+  //     console.log(user);
+  //   });
+  // };
 
   return (
     <div className="signup__container">
@@ -128,7 +146,7 @@ const Form = () => {
           <br></br>
           <input
             className="inputField"
-            type="text"
+            type="email"
             name="email"
             value={inputs.email}
             onChange={handleChange}
@@ -166,4 +184,3 @@ const Form = () => {
     </div>
   );
 };
-export default Form;
