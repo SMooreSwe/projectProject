@@ -1,8 +1,9 @@
 import React from 'react'
+import styles from '../userpage.module.css'
 
 const Sidebar = () => {
   return (
-    <div>Sidebar</div>
+    <div className={styles.Sidebar}>Sidebar</div>
   )
 }
 
