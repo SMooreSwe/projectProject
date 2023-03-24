@@ -29,11 +29,8 @@ const Form = () => {
   };
   function authStateObserver(user: any) {
     if (user) {
-      console.log(user);
-      console.log(user.displayName);
-      console.log(user.username);
       // const username = JSON.stringify(getAuth().currentUser?.displayName);
-      // router.push(`http://localhost:3000/user/${username}`);
+      // router.push(`${process.env.NEXT_PUBLIC_API_URL}user/${username}`);
     }
   }
   function initFirebaseAuth() {
@@ -50,13 +47,14 @@ const Form = () => {
     // }
 
     if (inputs.password === inputs.confirmpassword) {
+      console.log(process.env.NEXT_PUBLIC_API_URL)
       createUserWithEmailAndPassword(auth, inputs.email, inputs.password).then(
         async (userCredential) => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
 
-          const data = await fetch("http://localhost:3000/api/auth", {
+          const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth`, {
             cache: "no-store",
             method: "POST",
             headers: {
