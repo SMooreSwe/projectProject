@@ -47,24 +47,27 @@ const Form = () => {
     // }
 
     if (inputs.password === inputs.confirmpassword) {
-      console.log(process.env.NEXT_PUBLIC_API_URL)
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       createUserWithEmailAndPassword(auth, inputs.email, inputs.password).then(
         async (userCredential) => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
 
-          const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth`, {
-            cache: "no-store",
-            method: "POST",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify({
-              username: inputs.username,
-              email: inputs.email,
-            }),
-          });
+          const data = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/auth`,
+            {
+              cache: "no-store",
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+              body: JSON.stringify({
+                username: inputs.username,
+                email: inputs.email,
+              }),
+            }
+          );
           const response = await data;
           initFirebaseAuth();
           return response;
