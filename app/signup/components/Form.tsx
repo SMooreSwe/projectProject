@@ -48,7 +48,6 @@ export const Form = () => {
     e.preventDefault();
 
     if (inputs.password === inputs.confirmpassword) {
-      console.log(process.env.NEXT_PUBLIC_API_URL);
       createUserWithEmailAndPassword(auth, inputs.email, inputs.password).then(
         async (userCredential) => {
           // Signed in
@@ -56,7 +55,7 @@ export const Form = () => {
           // console.log(user);
 
           const data = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/auth`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
             {
               cache: "no-store",
               method: "POST",

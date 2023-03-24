@@ -2,7 +2,7 @@ import { initializeApp, applicationDefault, cert } from "firebase-admin/app";
 import { getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { getFirebaseConfig, auth } from "../../../firebase-config";
+import { getFirebaseConfig, auth } from "../../../../firebase-config";
 import { v4 } from "uuid";
 
 const signUpUser = async (username: string, email: string) => {
