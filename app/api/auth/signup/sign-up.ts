@@ -17,7 +17,7 @@ const signUpUser = async (username: string, email: string) => {
   return userid;
 };
 
-const serviceAccount = require("../../../project-project-3e46d-firebase-adminsdk-v3er7-a29f526e72.json");
+const serviceAccount = require("../../../../project-project-3e46d-firebase-adminsdk-v3er7-a29f526e72.json");
 const completed = Object.assign(serviceAccount, {
   private_key: `${process.env.FB_ADMIN_PRIVATE_KEY}`,
   client_x509_cert_url: `${process.env.FB_CERT_URL}`,
