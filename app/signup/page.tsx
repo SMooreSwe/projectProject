@@ -4,7 +4,10 @@ import Form from "./components/Form";
 const Signup = () => {
   return (
     <>
-      SIGNUP
+      <div>
+        <h1 className="signup__title"> [project Project]</h1>
+        <p className="signup__subtitle">Please create an account</p>
+      </div>
       <Form />
     </>
   );
