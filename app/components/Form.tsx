@@ -1,29 +1,13 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
-import { initializeApp } from "firebase/app";
+import { onAuthStateChanged, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-} from "firebase/auth";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  uploadBytes,
-} from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { getFirebaseConfig, auth } from "../../firebase-config";
+import { useState } from "react";
+import { auth } from "../../firebase-config";
 
 export const Form = () => {
   const router = useRouter();
-  const [image, setImage] = useState<string>("");
-  const [file, setFile] = useState<string>("");
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -33,17 +17,23 @@ export const Form = () => {
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  function authStateObserver(user: any) {
-    if (user) {
-      // const username = JSON.stringify(getAuth().currentUser?.displayName);
-      // router.push(`${process.env.NEXT_PUBLIC_API_URL}user/${username}`);
-    }
-  }
-  function initFirebaseAuth() {
-    onAuthStateChanged(getAuth(), authStateObserver);
-  }
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const email = inputs.email
+    const password = inputs.password
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredentials.user;
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+      return true
+    } catch (error: any) {
+      return {error: error.message}
+    }
   }
   return (
     <div className="login__container">
