@@ -30,9 +30,21 @@ export const getProjects = async (userid: string) => {
     where("users", "array-contains", userid)
   );
   const querySnapshot = await getDocs(docRef);
+  const data = [] as any[];
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
+    data.push(doc.data());
   });
-  // const docSnap = await getDoc(docRef);
+  return data;
+};
+
+export const getCanvas = async (projectid: string) => {
+  const docRef = doc(db, "canvas", `${projectid}`);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap) {
+    const data = await docSnap.data();
+    return data;
+  } else {
+    console.log("No such document!");
+  }
 };

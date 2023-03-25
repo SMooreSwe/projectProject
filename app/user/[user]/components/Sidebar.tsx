@@ -1,10 +1,8 @@
-import React from 'react'
-import styles from '../userpage.module.css'
+import React from "react";
+import styles from "../userpage.module.css";
 
 const Sidebar = () => {
-  return (
-    <div className={styles.Sidebar}>Sidebar</div>
-  )
-}
+  return <div className="Sidebar">Sidebar</div>;
+};
 
-export default Sidebar
+export default Sidebar;

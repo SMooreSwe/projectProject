@@ -20,13 +20,14 @@ const User = () => {
     const newuser = await getUser(userid);
     const projects = await getProjects(userid);
     setUser({ email: newuser!.email, username: newuser!.username });
-    // setProjectList(projects);
+    setProjectList(projects);
   };
 
   useEffect(() => {
     const auth = onAuthStateChanged(getAuth(), (user) => {
-      userData(user!.uid);
-      getProjects(user!.uid);
+      if (user) {
+        userData(user!.uid);
+      }
     });
     return auth;
   }, []);
