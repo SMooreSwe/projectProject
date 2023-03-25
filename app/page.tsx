@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import styles from "./page.module.css";
 import { Form } from "./components/LoginForm";
 import Link from "next/link";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
