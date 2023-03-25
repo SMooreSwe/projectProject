@@ -25,7 +25,6 @@ export const getUser = async (userid: string) => {
 };
 
 export const getProjects = async (userid: string) => {
-  //const docRef = doc(db, "projects");
   const docRef = query(
     collection(db, "projects"),
     where("users", "array-contains", userid)

@@ -18,7 +18,9 @@ const User = () => {
 
   const userData = async (userid: string) => {
     const newuser = await getUser(userid);
+    const projects = await getProjects(userid);
     setUser({ email: newuser!.email, username: newuser!.username });
+    // setProjectList(projects);
   };
 
   useEffect(() => {
