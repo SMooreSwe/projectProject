@@ -1,18 +1,22 @@
 import { initializeApp, applicationDefault, cert } from "firebase-admin/app";
 import { getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { getFirebaseConfig, auth } from "../../../../firebase-config";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  FieldValue,
+} from "firebase/firestore";
+import { getFirebaseConfig, app } from "../../../../firebase-config";
 import { v4 } from "uuid";
 
-const signUpUser = async (username: string, email: string) => {
-  const userid = v4();
-  await addDoc(collection(getFirestore(getApp()), "users"), {
-    user_id: userid,
+const db = getFirestore(app) as any;
+const signUpUser = async (username: string, email: string, userid: string) => {
+  await setDoc(doc(db, "users", `${userid}`), {
     username,
     email,
-  }).catch((error) => {
-    console.log(error.code, error.message);
   });
   return userid;
 };

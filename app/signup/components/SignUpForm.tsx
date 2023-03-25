@@ -24,6 +24,7 @@ export const Form = () => {
   const router = useRouter();
   const [image, setImage] = useState<string>("");
   const [file, setFile] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -37,8 +38,7 @@ export const Form = () => {
   };
   function authStateObserver(user: any) {
     if (user) {
-      // const username = JSON.stringify(getAuth().currentUser?.displayName);
-      // router.push(`${process.env.NEXT_PUBLIC_API_URL}user/${username}`);
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
     }
   }
   function initFirebaseAuth() {
@@ -52,8 +52,6 @@ export const Form = () => {
         async (userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // console.log(user);
-
           const data = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
             {
@@ -65,6 +63,7 @@ export const Form = () => {
               body: JSON.stringify({
                 username: inputs.username,
                 email: inputs.email,
+                userid: user.uid,
               }),
             }
           );
@@ -89,97 +88,101 @@ export const Form = () => {
     }
   };
 
+  const uploadedImageName = useRef<HTMLParagraphElement>(null);
   const userImage = useRef<HTMLDivElement>(null);
   const handleImage = (files: FileList | null) => {
     if (files) {
       userImage.current?.classList.remove("hidden");
       const fileRef = files[0];
       const fileType: string = fileRef.type || "";
-      // setFile(fileRef);
-
       const reader = new FileReader();
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
-        // console.log(ev.target.result);
-
+        uploadedImageName.current!.innerHTML = files[0].name;
         setFile(ev.target.result);
         setImage(`data:${fileType};base64,${btoa(ev.target.result)}`);
       };
     }
   };
 
-  // const googleAuthentication = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   var provider = new GoogleAuthProvider();
-  //   signInWithPopup(auth, provider).then(async (userCredential) => {
-  //     // Signed in
-  //     const user = userCredential.user;
-  //     console.log(user);
-  //   });
-  // };
-
   return (
-    <div className="signup__container">
-      <div className="profileimage__container">
-        <div ref={userImage} className="profileimage__button hidden">
-          <img className="image" src={image} />
+    <div>
+      <div className="signup__container">
+        <div className="profileimage__container">
+          <div ref={userImage} className="profileimage__button hidden">
+            <img className="image" src={image} />
+          </div>
+          <div className="selectImage__container">
+            <label className="custom-file-upload">
+              <input
+                type="file"
+                onChange={(e) => handleImage(e.target.files)}
+              />
+              Choose image
+            </label>
+            <p ref={uploadedImageName}>Select profileimage (Optional)</p>
+          </div>
         </div>
-        <input type="file" onChange={(e) => handleImage(e.target.files)} />
-      </div>
-      <form className="form" onSubmit={handleSubmit}>
-        <label className="inputLabel">
-          {" "}
-          Username:
-          <br></br>
-          <input
-            className="inputField"
-            type="text"
-            name="username"
-            value={inputs.username}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="inputLabel">
-          {" "}
-          Email:
-          <br></br>
-          <input
-            className="inputField"
-            type="email"
-            name="email"
-            value={inputs.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="inputLabel">
-          {" "}
-          Password:
-          <br></br>
-          <input
-            className="inputField"
-            type="text"
-            name="password"
-            value={inputs.password || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label className="inputLabel">
-          {" "}
-          Confirm Password:
-          <br></br>
-          <input
-            className="inputField"
-            type="text"
-            name="confirmpassword"
-            value={inputs.confirmpassword || ""}
-            onChange={handleChange}
-          />
-        </label>
+        <form className="form" onSubmit={handleSubmit}>
+          <label className="inputLabel">
+            {" "}
+            Username:
+            <br></br>
+            <input
+              className="inputField"
+              type="text"
+              name="username"
+              value={inputs.username}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="inputLabel">
+            {" "}
+            Email:
+            <br></br>
+            <input
+              className="inputField"
+              type="email"
+              name="email"
+              value={inputs.email}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="inputLabel">
+            {" "}
+            Password:
+            <br></br>
+            <input
+              className="inputField"
+              type="text"
+              name="password"
+              value={inputs.password || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="inputLabel">
+            {" "}
+            Confirm Password:
+            <br></br>
+            <input
+              className="inputField"
+              type="text"
+              name="confirmpassword"
+              value={inputs.confirmpassword || ""}
+              onChange={handleChange}
+            />
+          </label>
 
-        <button className="formButton" type="submit">
-          Login
-        </button>
-      </form>
+          <button className="formButton" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
+      {error && (
+        <div className="error__container">
+          <p className="error__text">{error}ERROR</p>
+        </div>
+      )}
     </div>
   );
 };

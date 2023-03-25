@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react'
-import styles from './userpage.module.css'
+import React, { ReactNode } from "react";
+import styles from "./userpage.module.css";
 
-const MonthContainer = (props: {children : ReactNode}) => {
+const MonthContainer = (props: { children: ReactNode }) => {
   return (
     <>
-    <div>MonthContainer</div>
-    {props.children}
-    <div>MonthContainer end</div>
+      <div>MonthContainer</div>
+      {props.children}
+      <div>MonthContainer end</div>
     </>
-  )
-}
+  );
+};
 
-export default MonthContainer
+export default MonthContainer;

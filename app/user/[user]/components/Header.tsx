@@ -1,8 +1,11 @@
-'use client'
-import React, { ReactNode } from 'react'
-import styles from '../userpage.module.css'
+"use client";
+import React, { ReactNode } from "react";
+import styles from "../userpage.module.css";
 
-const Header = (props: {children : ReactNode}) => {
+const Header = (props: {
+  user: { email: string; username: string };
+  children: ReactNode;
+}) => {
   return (
     <nav className={styles.Header}>
       {props.children}
@@ -14,12 +17,17 @@ const Header = (props: {children : ReactNode}) => {
         <label htmlFor="">Collaborators</label>
         <button>imgHere</button>
       </div>
-      <div>
-        <button>Profile</button>
+      <div className={styles.Header__UserProfile}>
+        <p>{props.user.username}</p>
+        <img
+          className={styles.UserProfileImage}
+          src="collaborator.png"
+          alt=""
+        />
         <button>Settings</button>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

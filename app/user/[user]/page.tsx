@@ -1,26 +1,47 @@
-import React from 'react'
-import Widget from './components/Widget'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
-import ProjectDropdown from './components/ProjectDropdown'
-import MonthContainer from './components/MonthContainer'
-import Canvas from './components/Canvas'
-import styles from './userpage.module.css'
+"use client";
 
-const user = () => {
+import React, { useEffect, useState } from "react";
+import Widget from "./components/Widget";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import ProjectDropdown from "./components/ProjectDropdown";
+import MonthContainer from "./components/MonthContainer";
+import Canvas from "./components/Canvas";
+import styles from "./userpage.module.css";
+import { getUser, getProjects } from "./utils/getMethods";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { User, Project } from "../../Types";
+
+const User = () => {
+  const [user, setUser] = useState<User>({ email: "", username: "" });
+  const [projectList, setProjectList] = useState<Project[]>([]);
+
+  const userData = async (userid: string) => {
+    const newuser = await getUser(userid);
+    setUser({ email: newuser!.email, username: newuser!.username });
+  };
+
+  useEffect(() => {
+    const auth = onAuthStateChanged(getAuth(), (user) => {
+      userData(user!.uid);
+      getProjects(user!.uid);
+    });
+    return auth;
+  }, []);
+
   return (
     <div className={styles.page}>
-    <Header>
-      <ProjectDropdown/>
-    </Header>
-    <Sidebar/>
-    <Canvas>
-      <MonthContainer>
-        <Widget/>
-      </MonthContainer>
-    </Canvas>
+      <Header user={user}>
+        <ProjectDropdown projectList={projectList} />
+      </Header>
+      <Sidebar />
+      <Canvas>
+        <MonthContainer>
+          <Widget />
+        </MonthContainer>
+      </Canvas>
     </div>
-  )
-}
+  );
+};
 
-export default user 
+export default User;

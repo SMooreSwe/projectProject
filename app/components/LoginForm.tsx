@@ -1,6 +1,10 @@
 "use client";
 
-import { onAuthStateChanged, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "../../firebase-config";
@@ -17,11 +21,11 @@ export const Form = () => {
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const email = inputs.email
-    const password = inputs.password
+    const email = inputs.email;
+    const password = inputs.password;
     try {
       const userCredentials = await signInWithEmailAndPassword(
         auth,
@@ -30,13 +34,13 @@ export const Form = () => {
       );
       const user = userCredentials.user;
       router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
-      return true
+      return true;
     } catch (error: any) {
-      return {error: error.message}
+      return { error: error.message };
     }
-  }
+  };
   return (
-    <div className="login__container">
+    <div>
       <form className="form" onSubmit={handleSubmit}>
         <label className="inputLabel">
           {" "}
@@ -66,5 +70,6 @@ export const Form = () => {
           Login
         </button>
       </form>
-    </div>);
+    </div>
+  );
 };
