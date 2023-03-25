@@ -1,7 +1,9 @@
 "use client";
 import React, { ReactNode } from "react";
 import styles from "../userpage.module.css";
-import image from "../../../../public/collaborator.png";
+import profileImage from "../../../../public/profileImage.png";
+import createButton from "../../../../public/createButton.png";
+import settingsButton from "../../../../public/settingsButton.png";
 import Image from "next/image";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -21,24 +23,42 @@ const Header = (props: {
 
   return (
     <nav className="Header">
+      <div>LOGO</div>
       {props.children}
-      <div>
+      <div className={styles.userprofile__container}>
         <label htmlFor="">New Project</label>
-        <button onClick={() => createProject()}>+</button>
+        <button
+          className={styles.createProjectBtn}
+          onClick={() => createProject()}
+        >
+          <Image
+            className={styles.createButton}
+            src={createButton}
+            placeholder="blur"
+            alt=""
+          />
+        </button>
       </div>
-      <div>
+      <div className={styles.collaborator__container}>
         <label htmlFor="">Collaborators</label>
-        <button>imgHere</button>
+        <button className={styles.collaboratorBtn}></button>
       </div>
-      <div className={styles.Header__UserProfile}>
+      <div className={styles.createproject__container}>
         <p>{props.user.username}</p>
         <Image
           className={styles.UserProfileImage}
-          src={image}
+          src={profileImage}
           placeholder="blur"
           alt=""
         />
-        <button onClick={() => signOutUser()}>Log out</button>
+        <button className={styles.settingsButton} onClick={() => signOutUser()}>
+          <Image
+            className={styles.settingsImage}
+            src={settingsButton}
+            placeholder="blur"
+            alt=""
+          />
+        </button>
       </div>
     </nav>
   );

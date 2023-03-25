@@ -4,7 +4,7 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --base-spacing: 8px;
   --header-height: 85px;
-  --sidebar-width: 250px;
+  --sidebar-width: 400px;
 }
 
 * {
@@ -24,21 +24,30 @@ a {
 }
 
 .Header {
-  border: 1px solid black;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-inline: 10px;
   height: var(--header-height);
+  margin-inline: 40px;
 }
 
 .Sidebar {
-  border: 1px solid black;
   position: absolute;
   top: var(--header-height);
   right: 0;
   height: 91vh;
   width: var(--sidebar-width);
+  padding-inline: 20px;
+}
+
+.canvas__container {
+  background-color: rgb(245, 245, 245);
+  height: calc(100vh - var(--header-height));
+  border-radius: 20px;
+  margin-right: var(--sidebar-width);
+  padding-block: 50px;
+  padding-inline: 50px;
 }
 
 .signup__title,
@@ -52,9 +61,17 @@ a {
 
 .signup__title,
 .login__title {
-  font-size: 5em;
+  font-size: 4em;
   margin-bottom: 30px;
-  opacity: 0.8;
+  opacity: 0.6;
+  font-family: "Virgil";
+  color: darkgoldenrod;
+}
+
+@font-face {
+  font-family: "Virgil";
+  src: url("../public/Virgil.woff2") format("woff2");
+  font-weight: 400;
 }
 
 .signup__subtitle,
@@ -128,7 +145,8 @@ input[type="file"] {
   border-radius: 5px;
   border: 0.1px solid black;
   padding-block: 7px;
-  padding-inline: 80px;
+  padding-inline: 10px;
+  width: 300px;
 }
 
 .inputLabel {

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./userpage.module.css";
+import styles from "../userpage.module.css";
 import { Project } from "../../../Types";
 
 const ProjectDropdown = (props: { projectList: Project[] }) => {
@@ -8,7 +8,7 @@ const ProjectDropdown = (props: { projectList: Project[] }) => {
 
   const populate = () => {
     if (props.projectList.length === 0) {
-      return <option value="">Please select a project</option>;
+      return <option value=""></option>;
     } else {
       return props.projectList.map((project) => (
         <option key={project.name} value={project.projectid}>
@@ -20,16 +20,13 @@ const ProjectDropdown = (props: { projectList: Project[] }) => {
 
   return (
     <div>
-      <label>
-        Select Project:
-        <select
-          name="projectList"
-          onChange={handleDropdown}
-          className="selectProject"
-        >
-          {populate()}
-        </select>
-      </label>
+      <select
+        className={styles.headerSearchField}
+        name="projectList"
+        onChange={handleDropdown}
+      >
+        {populate()}
+      </select>
     </div>
   );
 };

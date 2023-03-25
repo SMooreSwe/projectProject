@@ -1,12 +1,101 @@
-.Header__UserProfile {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-}
-
 .UserProfileImage {
   width: 50px;
   height: 50px;
   border-radius: 25px;
+}
+
+.headerSearchField {
+  height: calc(var(--header-primary-toolbar-height) * 0.4);
+  background-color: rgb(242, 242, 242);
+  font-family: Arial, Helvetica, sans-serif;
+  padding-block: 7px;
+  padding-inline: 15px;
+  border-width: 0px;
+  border-radius: 15px;
+  width: 240px;
+}
+.userprofile__container,
+.collaborator__container,
+.createproject__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
+.notification__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding-inline: 25px;
+  padding-block: 20px;
+  gap: 20px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+}
+
+.notification__message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.notification__button {
+  padding-inline: 10px;
+  padding-block: 5px;
+  border-radius: 7px;
+  border: none;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  cursor: pointer;
+}
+
+.collaboratorBtn {
+  width: 35px;
+  height: 35px;
+  border-radius: 17.5px;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.createProjectBtn {
+  width: 35px;
+  height: 35px;
+  border-radius: 17.5px;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.settingsButton {
+  height: 30px;
+  width: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+}
+
+.settingsImage {
+  height: 30px;
+  width: 30px;
+  opacity: 0.4;
+}
+
+.createButton {
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  cursor: pointer;
 }

@@ -38,11 +38,13 @@ const User = () => {
         <ProjectDropdown projectList={projectList} />
       </Header>
       <Sidebar />
-      <Canvas>
-        <MonthContainer>
-          <Widget />
-        </MonthContainer>
-      </Canvas>
+      <div className="canvas__container">
+        <Canvas>
+          <MonthContainer>
+            <Widget />
+          </MonthContainer>
+        </Canvas>
+      </div>
     </div>
   );
 };
