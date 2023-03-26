@@ -41,13 +41,13 @@ body {
   padding-inline: 20px;
 }
 
-.canvas__container {
+.project__container {
   background-color: rgb(245, 245, 245);
   height: calc(100vh - var(--header-height));
   border-radius: 20px;
   margin-right: var(--sidebar-width);
-  padding-block: 50px;
-  padding-inline: 50px;
+  padding-block: 25px;
+  padding-inline: 25px;
 }
 
 .signup__title,
@@ -189,4 +189,36 @@ input[type="file"] {
   border: 0.1px solid black;
 }
 .error__text {
+}
+
+.canvas__container {
+  display: flex;
+  gap: 20px;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  border: 0.1px solid black;
+}
+
+.createwidget__button {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: none;
+  background-color: white;
+}
+
+.widget {
+  outline: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  padding: 10px;
+}
+
+.widget__main {
+  outline: 1px solid black;
+  height: 100px;
 }

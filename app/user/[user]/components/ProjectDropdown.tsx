@@ -1,10 +1,15 @@
 "use client";
-import React from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import styles from "../userpage.module.css";
 import { Project } from "../../../Types";
 
-const ProjectDropdown = (props: { projectList: Project[] }) => {
-  const handleDropdown = () => {};
+const ProjectDropdown = (props: {
+  projectList: Project[];
+  projectSetter: Function;
+}) => {
+  const handleDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    props.projectSetter(e.target.value);
+  };
 
   const populate = () => {
     if (props.projectList.length === 0) {

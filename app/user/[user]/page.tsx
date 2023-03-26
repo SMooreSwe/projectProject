@@ -27,6 +27,7 @@ const User = () => {
     userid: "",
   });
   const [projectList, setProjectList] = useState<Project[]>([]);
+  const [currentProject, setCurrentProject] = useState<string>("");
 
   const db = getFirestore(app) as any;
 
@@ -60,17 +61,25 @@ const User = () => {
         getProjects(user!.uid);
       }
     });
+    console.log(currentProject);
     return auth;
   }, []);
+
+  const projectSetter = (projectid: string) => {
+    setCurrentProject(projectid);
+  };
 
   return (
     <div className={styles.page}>
       <Header user={user}>
-        <ProjectDropdown projectList={projectList} />
+        <ProjectDropdown
+          projectList={projectList}
+          projectSetter={projectSetter}
+        />
       </Header>
       <Sidebar />
-      <div className="canvas__container">
-        <Canvas>
+      <div className="project__container">
+        <Canvas project={currentProject}>
           <MonthContainer>
             <Widget />
           </MonthContainer>
