@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import createButton from "../../../../public/createButton.png";
+import createButton from "../../../../public/createbutton.png";
 import Image from "next/image";
 import styles from "../userpage.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
