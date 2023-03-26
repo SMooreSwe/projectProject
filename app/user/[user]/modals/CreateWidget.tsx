@@ -7,9 +7,7 @@ import styles from "../userpage.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AddProject } from "../utils/getMethods";
 
-function CreateWidget(props: {
-  user: { email: string; username: string; userid: string };
-}) {
+function CreateWidget(props: { projectid: string }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -25,16 +23,12 @@ function CreateWidget(props: {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputs.projectname.length > 0) {
-      setInputs((values) => ({ ...values, projectname: "" }));
-      await AddProject(inputs.projectname, props.user.userid);
-      handleClose();
-    }
+    console.log(inputs.projectname);
   };
 
   return (
     <>
-      <button className={styles.createProjectBtn} onClick={handleShow}>
+      <button onClick={handleShow} className="createwidget__button">
         <Image
           className={styles.createButton}
           src={createButton}
@@ -50,7 +44,7 @@ function CreateWidget(props: {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create new project</Modal.Title>
+          <Modal.Title>Add a project event</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form id="editmodal" className="form" onSubmit={handleSubmit}>
@@ -60,7 +54,7 @@ function CreateWidget(props: {
               <br></br>
               <input
                 className="inputField"
-                type="text"
+                type="date"
                 name="projectname"
                 value={inputs.projectname}
                 onChange={handleChange}
