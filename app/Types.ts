@@ -1,6 +1,7 @@
 export type User = {
   email: string;
   username: string;
+  userid: string;
 };
 
 export type Project = {

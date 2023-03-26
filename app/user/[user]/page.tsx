@@ -13,13 +13,21 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { User, Project } from "../../Types";
 
 const User = () => {
-  const [user, setUser] = useState<User>({ email: "", username: "" });
+  const [user, setUser] = useState<User>({
+    email: "",
+    username: "",
+    userid: "",
+  });
   const [projectList, setProjectList] = useState<Project[]>([]);
 
   const userData = async (userid: string) => {
     const newuser = await getUser(userid);
     const projects = await getProjects(userid);
-    setUser({ email: newuser!.email, username: newuser!.username });
+    setUser({
+      email: newuser!.email,
+      username: newuser!.username,
+      userid: userid,
+    });
     setProjectList(projects);
   };
 

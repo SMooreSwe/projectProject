@@ -4,6 +4,11 @@
   border-radius: 25px;
 }
 
+.userprofile__name {
+  font-size: 1em;
+  margin: 0px;
+}
+
 .headerSearchField {
   height: calc(var(--header-primary-toolbar-height) * 0.4);
   background-color: rgb(242, 242, 242);
@@ -76,7 +81,8 @@
   align-items: center;
   border: none;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.8;
+  background-color: white;
 }
 
 .settingsButton {

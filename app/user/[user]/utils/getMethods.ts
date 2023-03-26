@@ -6,9 +6,11 @@ import {
   getDocs,
   getFirestore,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
+import { v4 } from "uuid";
 
 const db = getFirestore(app) as any;
 
@@ -47,4 +49,15 @@ export const getCanvas = async (projectid: string) => {
   } else {
     console.log("No such document!");
   }
+};
+
+export const AddProject = async (projectname: string, userid: string) => {
+  console.log(projectname, userid);
+  const uuid = v4();
+  await setDoc(doc(db, "projects", `${uuid}`), {
+    projectname,
+    projectid: uuid,
+    users: [userid],
+  });
+  return projectname;
 };
