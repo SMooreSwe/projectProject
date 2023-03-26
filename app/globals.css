@@ -18,7 +18,7 @@ body {
   overflow-x: hidden;
 }
 
-a {
+.link {
   color: inherit;
   text-decoration: none;
 }
@@ -71,6 +71,12 @@ a {
   font-family: "Virgil";
   src: url("../public/Virgil.woff2") format("woff2");
   font-weight: 400;
+}
+
+.Logo {
+  font-size: 1.5em;
+  opacity: 0.8;
+  font-family: "Virgil";
 }
 
 .signup__subtitle,

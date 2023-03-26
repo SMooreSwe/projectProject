@@ -6,7 +6,7 @@ import Image from "next/image";
 const Sidebar = () => {
   return (
     <div className="Sidebar">
-      <h2>Activity</h2>
+      <h3>Activity</h3>
       <div className={styles.notification__container}>
         <div className={styles.notification__message}>
           <Image
@@ -21,6 +21,12 @@ const Sidebar = () => {
           <button className={styles.notification__button}>Accept</button>
           <button className={styles.notification__button}>Decline</button>
         </div>
+      </div>
+      <div>
+        <h3>History</h3>
+      </div>
+      <div>
+        <h3>Tutorial</h3>
       </div>
     </div>
   );

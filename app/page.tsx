@@ -8,13 +8,15 @@ export default function Home() {
   return (
     <>
       <header>
-        <Link href="/about">Learn about us here</Link>
+        <Link href="/about" className="link">
+          Learn about us here
+        </Link>
       </header>
       <main className="form">
         <h1 className="login__title">[project Project]</h1>
         <p className="login__subtitle">Login with your email and password</p>
         <Form />
-        <Link className="login__message" href="/signup">
+        <Link className="login__message link" href="/signup">
           Dont have an account? Click here to sign up
         </Link>
       </main>

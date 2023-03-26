@@ -8,10 +8,10 @@ const ProjectDropdown = (props: { projectList: Project[] }) => {
 
   const populate = () => {
     if (props.projectList.length === 0) {
-      return <option value=""></option>;
+      return <option value="">Please create a project...</option>;
     } else {
       return props.projectList.map((project) => (
-        <option key={project.name} value={project.projectid}>
+        <option key={project.projectid} value={project.projectid}>
           {project.name}
         </option>
       ));

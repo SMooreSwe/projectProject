@@ -26,7 +26,6 @@ function CreateProject(props: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (inputs.projectname.length > 0) {
-      console.log(inputs.projectname);
       setInputs((values) => ({ ...values, projectname: "" }));
       await AddProject(inputs.projectname, props.user.userid);
       handleClose();

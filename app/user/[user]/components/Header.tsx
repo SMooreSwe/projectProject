@@ -21,7 +21,7 @@ const Header = (props: {
 
   return (
     <nav className="Header">
-      <div>LOGO</div>
+      <div className="Logo">[project Project]</div>
       {props.children}
       <div className={styles.createproject__container}>
         <label htmlFor="">New Project</label>

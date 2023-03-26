@@ -5,12 +5,15 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  onSnapshot,
   query,
+  QuerySnapshot,
   setDoc,
   where,
 } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
 import { v4 } from "uuid";
+import { domainToASCII } from "url";
 
 const db = getFirestore(app) as any;
 
@@ -26,19 +29,6 @@ export const getUser = async (userid: string) => {
   }
 };
 
-export const getProjects = async (userid: string) => {
-  const docRef = query(
-    collection(db, "projects"),
-    where("users", "array-contains", userid)
-  );
-  const querySnapshot = await getDocs(docRef);
-  const data = [] as any[];
-  querySnapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-  return data;
-};
-
 export const getCanvas = async (projectid: string) => {
   const docRef = doc(db, "canvas", `${projectid}`);
   const docSnap = await getDoc(docRef);
@@ -51,13 +41,12 @@ export const getCanvas = async (projectid: string) => {
   }
 };
 
-export const AddProject = async (projectname: string, userid: string) => {
-  console.log(projectname, userid);
+export const AddProject = async (name: string, userid: string) => {
   const uuid = v4();
   await setDoc(doc(db, "projects", `${uuid}`), {
-    projectname,
+    name,
     projectid: uuid,
     users: [userid],
   });
-  return projectname;
+  return name;
 };
