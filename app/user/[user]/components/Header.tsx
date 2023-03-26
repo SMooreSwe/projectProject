@@ -2,7 +2,7 @@
 import React, { ReactNode } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
-import createButton from "../../../../public/createButton.png";
+import createButton from "../../../../public/createbutton.png";
 import settingsButton from "../../../../public/settingsButton.png";
 import Image from "next/image";
 import { getAuth, signOut } from "firebase/auth";
