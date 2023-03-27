@@ -23,15 +23,14 @@ const ProjectDropdown = (props: {
         <option key={project.projectid} value={project.projectid}>
           {project.name}
         </option>
-      ), dropdown.current!.selectedIndex =0);
+      ));
     }
-    
   };
 
   useEffect(() => {
     console.log('POP!')
-    populate();
-  })
+    dropdown.current!.selectedIndex =0
+  }, [props.projectList])
 
   return (
     <div>

@@ -71,7 +71,7 @@ const Header = (props: {
         <img
           ref={imageSRC}
           className={styles.UserProfileImage}
-          src={imageSrc}
+          src={imageSrc as string}
           placeholder="blur"
           alt=""
         />
