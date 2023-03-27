@@ -8,6 +8,7 @@ import {
   onSnapshot,
   query,
   QuerySnapshot,
+  serverTimestamp,
   setDoc,
   Timestamp,
   where,
@@ -47,6 +48,7 @@ export const AddProject = async (name: string, userid: string) => {
     name,
     projectid: uuid,
     users: [userid],
+    created: serverTimestamp()
   });
   return name;
 };

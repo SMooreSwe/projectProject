@@ -7,11 +7,15 @@ const ProjectDropdown = (props: {
   projectList: Project[];
   projectSetter: Function;
 }) => {
+
+  
   const handleDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
     props.projectSetter(e.target.value);
   };
 
+  const dropdown = useRef<HTMLSelectElement>(null)
   const populate = () => {
+
     if (props.projectList.length === 0) {
       return <option value="">Please create a project...</option>;
     } else {
@@ -19,13 +23,20 @@ const ProjectDropdown = (props: {
         <option key={project.projectid} value={project.projectid}>
           {project.name}
         </option>
-      ));
+      ), dropdown.current!.selectedIndex =0);
     }
+    
   };
+
+  useEffect(() => {
+    console.log('POP!')
+    populate();
+  })
 
   return (
     <div>
       <select
+      ref={dropdown}
         className={styles.headerSearchField}
         name="projectList"
         onChange={handleDropdown}

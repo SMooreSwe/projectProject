@@ -17,6 +17,8 @@ import {
   where,
   onSnapshot,
   getFirestore,
+  orderBy,
+  Query,
 } from "firebase/firestore";
 import { app } from "../../../firebase-config";
 
@@ -34,7 +36,8 @@ const User = () => {
   const getProjects = async (userid: string) => {
     const docRef = query(
       collection(db, "projects"),
-      where("users", "array-contains", userid)
+      where("users", "array-contains", userid),
+      orderBy('created', 'desc')
     );
     onSnapshot(docRef, (querySnapshot) => {
       let data = [] as any[];
@@ -42,6 +45,7 @@ const User = () => {
         data.push(doc.data());
       });
       setProjectList(data);
+      setCurrentProject(data[0].projectid)
     });
   };
 

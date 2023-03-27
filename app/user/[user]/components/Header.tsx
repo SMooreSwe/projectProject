@@ -25,6 +25,7 @@ const Header = (props: {
       const storage = getStorage();
       const filePath = `/users/${props.user.userid}.jpeg`;
       const storageRef = ref(storage, filePath);
+      // setImageSrc('https://firebasestorage.googleapis.com/v0/b/project-project-3e46d.appspot.com/o/users%2FhrJm7g9KRTcndvYJIX46OpaGFpz1.jpeg?alt=media&token=e223a526-d36c-42cb-9112-1b2f98520e3f')
 
        getDownloadURL(storageRef).then(url => {
         const xhr = new XMLHttpRequest();
@@ -52,7 +53,7 @@ const Header = (props: {
     signOut(getAuth());
   }
 
-  userImage();
+  // userImage();
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
@@ -67,10 +68,9 @@ const Header = (props: {
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>
-        <Image
+        <img
           ref={imageSRC}
           className={styles.UserProfileImage}
-          srcset={imageSrc}
           src={imageSrc}
           placeholder="blur"
           alt=""

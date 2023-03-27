@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type User = {
   email: string;
   username: string;
@@ -7,6 +9,7 @@ export type User = {
 export type Project = {
   name: string;
   users: string[];
+  created: Timestamp;
   projectid: string;
 };
 

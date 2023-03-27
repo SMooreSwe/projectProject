@@ -6,6 +6,7 @@ import {
   collection,
   getFirestore,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -21,7 +22,8 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
   const getWidgets = async (projectid: string) => {
     const docRef = query(
       collection(db, "widgets"),
-      where("projectid", "==", projectid)
+      where("projectid", "==", projectid),
+      orderBy('date')
     );
     onSnapshot(docRef, (querySnapshot) => {
       let data = [] as any[];
