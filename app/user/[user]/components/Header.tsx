@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useReducer, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useReducer, useRef, useState } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import settingsButton from "../../../../public/settingsButton.png";
@@ -20,8 +20,8 @@ const Header = (props: {
   const [imageSrc, setImageSrc] = useState<string | StaticImageData>(profileImage)
 
   const imageSRC = useRef<HTMLImageElement>(null)
+
   const userImage = () => {
-    
       const storage = getStorage();
       const filePath = `/users/${props.user.userid}.jpeg`;
       const storageRef = ref(storage, filePath);
@@ -53,7 +53,10 @@ const Header = (props: {
     signOut(getAuth());
   }
 
-  // userImage();
+  useEffect(() => {
+    userImage();
+  },[])
+
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
