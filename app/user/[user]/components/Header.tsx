@@ -17,7 +17,7 @@ const Header = (props: {
 }) => {
   const router = useRouter();
 
-  const [imageSrc, setImageSrc] = useState<string | StaticImageData>(profileImage)
+  const [imageSrc, setImageSrc] = useState<URL | StaticImageData>(profileImage)
 
   const imageSRC = useRef<HTMLImageElement>(null)
   const userImage = () => {
@@ -36,7 +36,9 @@ const Header = (props: {
         xhr.open('GET', url);
         xhr.send();
 
-        setImageSrc(url)
+        const url2 = new URL(url)
+
+        setImageSrc(url2)
         console.log(url)
         // imageSRC.current!.src = url
       })
