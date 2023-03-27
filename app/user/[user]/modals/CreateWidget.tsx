@@ -29,7 +29,6 @@ function CreateWidget(props: { projectid: string }) {
       await AddWidget(date, props.projectid);
       handleClose();
     }
-    console.log(inputs.date);
   };
 
   return (

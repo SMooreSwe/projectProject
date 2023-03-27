@@ -28,7 +28,6 @@ const ProjectDropdown = (props: {
   };
 
   useEffect(() => {
-    console.log('POP!')
     dropdown.current!.selectedIndex =0
   }, [props.projectList])
 

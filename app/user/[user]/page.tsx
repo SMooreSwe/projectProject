@@ -65,7 +65,6 @@ const User = () => {
         getProjects(user!.uid);
       }
     });
-    console.log(currentProject);
     return auth;
   }, []);
 

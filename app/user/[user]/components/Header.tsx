@@ -17,7 +17,7 @@ const Header = (props: {
 }) => {
   const router = useRouter();
 
-  const [imageSrc, setImageSrc] = useState<string | StaticImageData>(profileImage)
+  const [imageSrc, setImageSrc] = useState<string | StaticImageData>("/profileImage.png")
 
   const imageSRC = useRef<HTMLImageElement>(null)
 
@@ -32,7 +32,6 @@ const Header = (props: {
         xhr.responseType = 'blob';
         xhr.onload = (event) => {
           const blob = xhr.response;
-          console.log(blob)
         };
         xhr.open('GET', url);
         xhr.send();
@@ -40,7 +39,6 @@ const Header = (props: {
         // const url2 = new URL(url).toString()
 
         setImageSrc(url)
-        console.log(url)
         // imageSRC.current!.src = url
       })
       .catch((error) => {
