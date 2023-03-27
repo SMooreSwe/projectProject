@@ -55,7 +55,7 @@ const Header = (props: {
 
   useEffect(() => {
     userImage();
-  },[])
+  },[props.user])
 
   return (
     <nav className="Header">
