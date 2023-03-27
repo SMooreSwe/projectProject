@@ -23,7 +23,7 @@ import { getFirebaseConfig, auth } from "../../../firebase-config";
 export const Form = () => {
   const router = useRouter();
   const [image, setImage] = useState<string>("");
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<any>();
   const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
@@ -78,7 +78,11 @@ export const Form = () => {
             const filePath = `/users/${userid}.jpeg`;
             const storageRef = ref(storage, filePath);
 
-            uploadBytes(storageRef, file as Blob).then((snapshot) => {
+            console.log('----------AFTER CREATION-------------')
+            console.log(file)
+            console.log('----------AFTER CREATION-------------')
+
+            uploadBytes(storageRef, file).then((snapshot) => {
               console.log("Uploaded a blob or file!");
             });
           }
@@ -97,11 +101,13 @@ export const Form = () => {
       const fileType: string = fileRef.type || "";
       const reader = new FileReader();
 
+      console.log('-------FILE REF----')
+      console.log(files[0])
+      console.log('-------FILE REF----')
       
-
-      const storage = getStorage();
-      const filePath = '/users/StevensFavoriteImage.jpg';
-      const storageRef = ref(storage, filePath);
+      // const storage = getStorage();
+      // const filePath = '/users/StevensFavoriteImage.jpg';
+      // const storageRef = ref(storage, filePath);
 
     
       // getDownloadURL(storageRef).then(url => {
@@ -126,7 +132,7 @@ export const Form = () => {
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
         uploadedImageName.current!.innerHTML = files[0].name;
-        setFile(ev.target.result);
+        setFile(files[0]);
         setImage(`data:${fileType};base64,${btoa(ev.target.result)}`);
       };
     }
