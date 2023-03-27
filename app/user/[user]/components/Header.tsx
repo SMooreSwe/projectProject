@@ -39,6 +39,7 @@ const Header = (props: {
         imageSRC.current!.src = url
       })
       .catch((error) => {
+        imageSRC.current!.src = "../../../../public/profileImage.png"
         console.log(error)
       });
   }
@@ -66,7 +67,7 @@ const Header = (props: {
         <Image
           ref={imageSRC}
           className={styles.UserProfileImage}
-          src={profileImage}
+          src={''}
           placeholder="blur"
           alt=""
         />
