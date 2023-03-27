@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useReducer, useRef } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import settingsButton from "../../../../public/settingsButton.png";
@@ -18,6 +18,7 @@ const Header = (props: {
   const router = useRouter();
 
 
+  const imageSRC = useRef<HTMLImageElement>(null)
   const userImage = () => {
       const storage = getStorage();
       const filePath = `/users/${props.user.userid}.jpeg`;
@@ -35,11 +36,11 @@ const Header = (props: {
         xhr.send();
 
         console.log(url)
-        return url
+        imageSRC.current!.src = url
       })
       .catch((error) => {
         console.log(error)
-        return profileImage
+        imageSRC.current!.src = "../../../../public/profileImage.png"
 
       });
   }
@@ -66,8 +67,9 @@ const Header = (props: {
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>
         <Image
+          ref={imageSRC}
           className={styles.UserProfileImage}
-          src={profileImage}
+          src={userImage}
           placeholder="blur"
           alt=""
         />
