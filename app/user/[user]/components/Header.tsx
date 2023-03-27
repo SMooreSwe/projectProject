@@ -20,7 +20,7 @@ const Header = (props: {
 
   const userImage = () => {
       const storage = getStorage();
-      const filePath = `/users/${props.user.userid}.jpg`;
+      const filePath = `/users/${props.user.userid}`;
       const storageRef = ref(storage, filePath);
 
        getDownloadURL(storageRef).then(url => {
@@ -73,7 +73,7 @@ const Header = (props: {
         <button className={styles.settingsButton} onClick={() => signOutUser()}>
           <Image
             className={styles.settingsImage}
-            src={profileImage}
+            src={settingsButton}
             placeholder="blur"
             alt=""
           />

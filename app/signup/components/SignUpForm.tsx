@@ -104,7 +104,6 @@ export const Form = () => {
       const storageRef = ref(storage, filePath);
 
     
-      // console.log('HELLO!!!!!!!')
       // getDownloadURL(storageRef).then(url => {
       //   const xhr = new XMLHttpRequest();
       //   xhr.responseType = 'blob';
