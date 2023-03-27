@@ -43,13 +43,12 @@ const Header = (props: {
       });
   }
 
-  const image = userImage()
-
   function signOutUser() {
     router.push(`${process.env.NEXT_PUBLIC_API_URL}`);
     signOut(getAuth());
   }
 
+  userImage();
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
