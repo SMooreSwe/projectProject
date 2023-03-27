@@ -20,7 +20,7 @@ const Header = (props: {
 
   const userImage = () => {
       const storage = getStorage();
-      const filePath = `/users/${props.user.userid}`;
+      const filePath = `/users/${props.user.userid}.jpeg`;
       const storageRef = ref(storage, filePath);
 
        getDownloadURL(storageRef).then(url => {
