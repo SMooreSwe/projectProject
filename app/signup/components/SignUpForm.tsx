@@ -102,37 +102,37 @@ export const Form = () => {
       
 
       const storage = getStorage();
-      const filePath = '/users/ce40dacfd36a0bac514eb2ba97b4f7d1.jpg';
+      const filePath = '/users/StevensFavoriteImage.jpg';
       const storageRef = ref(storage, filePath);
 
       // gs://project-project-3e46d.appspot.com/users/ce40dacfd36a0bac514eb2ba97b4f7d1.jpg
       
-      console.log('HELLO!!!!!!!')
-      getDownloadURL(storageRef).then(url => {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-          console.log(blob)
-        };
-        xhr.open('GET', url);
-        xhr.send();
+      // console.log('HELLO!!!!!!!')
+      // getDownloadURL(storageRef).then(url => {
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.responseType = 'blob';
+      //   xhr.onload = (event) => {
+      //     const blob = xhr.response;
+      //     console.log(blob)
+      //   };
+      //   xhr.open('GET', url);
+      //   xhr.send();
 
-        console.log(url)
-        // Or inserted into an <img> element
-        // const img = document.getElementById('myimg');
-        // img.setAttribute('src', url);
-      })
-      .catch((error) => {
-        console.log(error)
-      });
+      //   console.log(url)
+      //   // Or inserted into an <img> element
+      //   // const img = document.getElementById('myimg');
+      //   // img.setAttribute('src', url);
+      // })
+      // .catch((error) => {
+      //   console.log(error)
+      // });
 
     
 
 
-      // uploadBytes(storageRef, files[0]).then((snapshot) => {
-      //   console.log("Uploaded a blob or file!")
-      // }).catch(error => console.log(error))
+      uploadBytes(storageRef, files[0]).then((snapshot) => {
+        console.log("Uploaded a blob or file!")
+      }).catch(error => console.log(error))
 
 
       reader.readAsBinaryString(fileRef);
