@@ -1,9 +1,9 @@
 "use client";
-import React, { ReactNode, useReducer, useRef } from "react";
+import React, { ReactNode, useReducer, useRef, useState } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import settingsButton from "../../../../public/settingsButton.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import CreateProject from "../modals/CreateProject";
@@ -17,12 +17,13 @@ const Header = (props: {
 }) => {
   const router = useRouter();
 
+  const [imageSrc, setImageSrc] = useState<string | StaticImageData>(profileImage)
 
   const imageSRC = useRef<HTMLImageElement>(null)
   const userImage = () => {
+    
       const storage = getStorage();
       const filePath = `/users/${props.user.userid}.jpeg`;
-      console.log(filePath)
       const storageRef = ref(storage, filePath);
 
        getDownloadURL(storageRef).then(url => {
@@ -35,11 +36,11 @@ const Header = (props: {
         xhr.open('GET', url);
         xhr.send();
 
+        setImageSrc(url)
         console.log(url)
-        imageSRC.current!.src = url
+        // imageSRC.current!.src = url
       })
       .catch((error) => {
-        imageSRC.current!.src = "../../../../public/profileImage.png"
         console.log(error)
       });
   }
@@ -67,7 +68,7 @@ const Header = (props: {
         <Image
           ref={imageSRC}
           className={styles.UserProfileImage}
-          src={''}
+          src={imageSrc}
           placeholder="blur"
           alt=""
         />
