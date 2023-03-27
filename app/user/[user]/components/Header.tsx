@@ -8,6 +8,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import CreateProject from "../modals/CreateProject";
 import CollaboratorsWidget from "../modals/CollaboratorsWidget";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 const Header = (props: {
   user: { email: string; username: string; userid: string };
@@ -15,6 +16,34 @@ const Header = (props: {
   children: ReactNode;
 }) => {
   const router = useRouter();
+
+
+  const userImage = () => {
+      const storage = getStorage();
+      const filePath = `/users/${props.user.userid}.jpg`;
+      const storageRef = ref(storage, filePath);
+
+       getDownloadURL(storageRef).then(url => {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+          console.log(blob)
+        };
+        xhr.open('GET', url);
+        xhr.send();
+
+        console.log(url)
+        return url
+      })
+      .catch((error) => {
+        console.log(error)
+        return profileImage
+
+      });
+  }
+
+  const image = userImage()
 
   function signOutUser() {
     router.push(`${process.env.NEXT_PUBLIC_API_URL}`);
@@ -44,7 +73,7 @@ const Header = (props: {
         <button className={styles.settingsButton} onClick={() => signOutUser()}>
           <Image
             className={styles.settingsImage}
-            src={settingsButton}
+            src={profileImage}
             placeholder="blur"
             alt=""
           />

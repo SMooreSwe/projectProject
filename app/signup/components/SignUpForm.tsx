@@ -23,7 +23,7 @@ import { getFirebaseConfig, auth } from "../../../firebase-config";
 export const Form = () => {
   const router = useRouter();
   const [image, setImage] = useState<string>("");
-  const [file, setFile] = useState<string>("");
+  const [file, setFile] = useState<File>();
   const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
@@ -72,17 +72,15 @@ export const Form = () => {
           const userid = await response.json();
 
 
-
           // // ATTEMPTING TO UPLOAD IMAGE TO FIRESTORE STORAGE!!!!!!!!!!
           if (image) {
             const storage = getStorage();
             const filePath = `/users/${userid}.jpeg`;
             const storageRef = ref(storage, filePath);
 
-            // 'file' comes from the Blob or File API
-            // uploadBytes(storageRef, file as Blob).then((snapshot) => {
-            //   console.log("Uploaded a blob or file!");
-            // });
+            uploadBytes(storageRef, file as Blob).then((snapshot) => {
+              console.log("Uploaded a blob or file!");
+            });
           }
           return response;
         }
@@ -105,8 +103,7 @@ export const Form = () => {
       const filePath = '/users/StevensFavoriteImage.jpg';
       const storageRef = ref(storage, filePath);
 
-      // gs://project-project-3e46d.appspot.com/users/ce40dacfd36a0bac514eb2ba97b4f7d1.jpg
-      
+    
       // console.log('HELLO!!!!!!!')
       // getDownloadURL(storageRef).then(url => {
       //   const xhr = new XMLHttpRequest();
@@ -126,14 +123,6 @@ export const Form = () => {
       // .catch((error) => {
       //   console.log(error)
       // });
-
-    
-
-
-      uploadBytes(storageRef, files[0]).then((snapshot) => {
-        console.log("Uploaded a blob or file!")
-      }).catch(error => console.log(error))
-
 
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
