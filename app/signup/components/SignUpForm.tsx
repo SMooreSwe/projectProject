@@ -71,6 +71,8 @@ export const Form = () => {
           initFirebaseAuth();
           const userid = await response.json();
 
+
+
           // // ATTEMPTING TO UPLOAD IMAGE TO FIRESTORE STORAGE!!!!!!!!!!
           if (image) {
             const storage = getStorage();
@@ -78,7 +80,7 @@ export const Form = () => {
             const storageRef = ref(storage, filePath);
 
             // 'file' comes from the Blob or File API
-            // uploadBytes(storageRef, file).then((snapshot) => {
+            // uploadBytes(storageRef, file as Blob).then((snapshot) => {
             //   console.log("Uploaded a blob or file!");
             // });
           }
@@ -96,6 +98,43 @@ export const Form = () => {
       const fileRef = files[0];
       const fileType: string = fileRef.type || "";
       const reader = new FileReader();
+
+      
+
+      const storage = getStorage();
+      const filePath = '/users/ce40dacfd36a0bac514eb2ba97b4f7d1.jpg';
+      const storageRef = ref(storage, filePath);
+
+      // gs://project-project-3e46d.appspot.com/users/ce40dacfd36a0bac514eb2ba97b4f7d1.jpg
+      
+      console.log('HELLO!!!!!!!')
+      getDownloadURL(storageRef).then(url => {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+          console.log(blob)
+        };
+        xhr.open('GET', url);
+        xhr.send();
+
+        console.log(url)
+        // Or inserted into an <img> element
+        // const img = document.getElementById('myimg');
+        // img.setAttribute('src', url);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+
+    
+
+
+      // uploadBytes(storageRef, files[0]).then((snapshot) => {
+      //   console.log("Uploaded a blob or file!")
+      // }).catch(error => console.log(error))
+
+
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
         uploadedImageName.current!.innerHTML = files[0].name;

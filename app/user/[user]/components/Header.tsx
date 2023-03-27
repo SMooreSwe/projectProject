@@ -7,9 +7,11 @@ import Image from "next/image";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import CreateProject from "../modals/CreateProject";
+import CollaboratorsWidget from "../modals/CollaboratorsWidget";
 
 const Header = (props: {
   user: { email: string; username: string; userid: string };
+  projectid: string;
   children: ReactNode;
 }) => {
   const router = useRouter();
@@ -29,7 +31,7 @@ const Header = (props: {
       </div>
       <div className={styles.collaborator__container}>
         <label htmlFor="">Collaborators</label>
-        <button className={styles.collaboratorBtn}></button>
+        <CollaboratorsWidget projectid={props.projectid} />
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>

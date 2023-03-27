@@ -1,16 +1,41 @@
 "use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "../userpage.module.css";
-import createButton from "../../../../public/createbutton.png";
-import Image from "next/image";
 import CreateWidget from "../modals/CreateWidget";
+import {
+  collection,
+  getFirestore,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { app } from "../../../../firebase-config";
+import { WidgetType } from "../../../Types";
+import Widget from "./Widget";
 
 const Canvas = (props: { children: ReactNode; project: string }) => {
-  useEffect(() => {
-    console.log("TEST");
-  }, [props.project]);
+  const [widgetList, setWidgetList] = useState<WidgetType[]>([]);
 
-  const createWidget = () => {};
+  const db = getFirestore(app) as any;
+
+  const getWidgets = async (projectid: string) => {
+    const docRef = query(
+      collection(db, "widgets"),
+      where("projectid", "==", projectid)
+    );
+    onSnapshot(docRef, (querySnapshot) => {
+      let data = [] as any[];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      setWidgetList(data);
+    });
+  };
+
+  useEffect(() => {
+    console.log(props.project);
+    getWidgets(props.project);
+  }, [props.project]);
 
   return (
     <>
@@ -18,7 +43,13 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
         <div>
           <CreateWidget projectid={props.project} />
         </div>
-        <div className="canvas">{props.children}</div>
+        <div className="canvas">
+          {widgetList && widgetList.map((widget) => {
+            return(
+              <Widget key={widget.widgetid} projectid={props.project} widgetid={widget.widgetid} date={widget.date}/>
+            )
+          })}
+        </div>
       </div>
     </>
   );

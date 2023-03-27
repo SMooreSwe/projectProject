@@ -9,11 +9,11 @@ import {
   query,
   QuerySnapshot,
   setDoc,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
 import { v4 } from "uuid";
-import { domainToASCII } from "url";
 
 const db = getFirestore(app) as any;
 
@@ -49,4 +49,14 @@ export const AddProject = async (name: string, userid: string) => {
     users: [userid],
   });
   return name;
+};
+
+export const AddWidget = async (date: Date, projectid: string) => {
+  const uuid = v4();
+  await setDoc(doc(db, "widgets", `${uuid}`), {
+    date: Timestamp.fromDate(new Date(date)),
+    widgetid: uuid,
+    projectid,
+  });
+  return date;
 };

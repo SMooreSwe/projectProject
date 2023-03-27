@@ -9,3 +9,9 @@ export type Project = {
   users: string[];
   projectid: string;
 };
+
+export type WidgetType = {
+  date: any;
+  projectid: string[];
+  widgetid: string;
+};

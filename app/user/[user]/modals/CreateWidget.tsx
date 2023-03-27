@@ -5,7 +5,7 @@ import createButton from "../../../../public/createbutton.png";
 import Image from "next/image";
 import styles from "../userpage.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AddProject } from "../utils/getMethods";
+import { AddProject, AddWidget } from "../utils/getMethods";
 
 function CreateWidget(props: { projectid: string }) {
   const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ function CreateWidget(props: { projectid: string }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [inputs, setInputs] = useState({
-    projectname: "",
+    date: "",
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
@@ -23,7 +23,13 @@ function CreateWidget(props: { projectid: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(inputs.projectname);
+    if (inputs.date.length > 0) {
+      setInputs((values) => ({ ...values, date: "" }));
+      const date = new Date(inputs.date);
+      await AddWidget(date, props.projectid);
+      handleClose();
+    }
+    console.log(inputs.date);
   };
 
   return (
@@ -55,8 +61,8 @@ function CreateWidget(props: { projectid: string }) {
               <input
                 className="inputField"
                 type="date"
-                name="projectname"
-                value={inputs.projectname}
+                name="date"
+                value={inputs.date}
                 onChange={handleChange}
               />
             </label>

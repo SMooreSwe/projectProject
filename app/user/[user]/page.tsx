@@ -71,7 +71,7 @@ const User = () => {
 
   return (
     <div className={styles.page}>
-      <Header user={user}>
+      <Header user={user} projectid={currentProject}>
         <ProjectDropdown
           projectList={projectList}
           projectSetter={projectSetter}
@@ -80,9 +80,6 @@ const User = () => {
       <Sidebar />
       <div className="project__container">
         <Canvas project={currentProject}>
-          <MonthContainer>
-            <Widget />
-          </MonthContainer>
         </Canvas>
       </div>
     </div>

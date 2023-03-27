@@ -4,9 +4,9 @@ import styles from "./userpage.module.css";
 const MonthContainer = (props: { children: ReactNode }) => {
   return (
     <>
-      <div>MonthContainer</div>
+      <div></div>
       {props.children}
-      <div>MonthContainer end</div>
+      <div></div>
     </>
   );
 };
