@@ -71,8 +71,6 @@ export const Form = () => {
           initFirebaseAuth();
           const userid = await response.json();
 
-
-          // // ATTEMPTING TO UPLOAD IMAGE TO FIRESTORE STORAGE!!!!!!!!!!
           if (image) {
             const storage = getStorage();
             const filePath = `/users/${userid}.jpeg`;
@@ -104,30 +102,6 @@ export const Form = () => {
       console.log('-------FILE REF----')
       console.log(files[0])
       console.log('-------FILE REF----')
-      
-      // const storage = getStorage();
-      // const filePath = '/users/StevensFavoriteImage.jpg';
-      // const storageRef = ref(storage, filePath);
-
-    
-      // getDownloadURL(storageRef).then(url => {
-      //   const xhr = new XMLHttpRequest();
-      //   xhr.responseType = 'blob';
-      //   xhr.onload = (event) => {
-      //     const blob = xhr.response;
-      //     console.log(blob)
-      //   };
-      //   xhr.open('GET', url);
-      //   xhr.send();
-
-      //   console.log(url)
-      //   // Or inserted into an <img> element
-      //   // const img = document.getElementById('myimg');
-      //   // img.setAttribute('src', url);
-      // })
-      // .catch((error) => {
-      //   console.log(error)
-      // });
 
       reader.readAsBinaryString(fileRef);
       reader.onload = (ev: any) => {
