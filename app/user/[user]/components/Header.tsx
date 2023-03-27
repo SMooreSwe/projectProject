@@ -36,9 +36,9 @@ const Header = (props: {
         xhr.open('GET', url);
         xhr.send();
 
-        const url2 = new URL(url).toString()
+        // const url2 = new URL(url).toString()
 
-        setImageSrc(url2)
+        setImageSrc(url)
         console.log(url)
         // imageSRC.current!.src = url
       })
@@ -70,6 +70,7 @@ const Header = (props: {
         <Image
           ref={imageSRC}
           className={styles.UserProfileImage}
+          srcset={imageSrc}
           src={imageSrc}
           placeholder="blur"
           alt=""
