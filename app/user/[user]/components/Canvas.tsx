@@ -23,7 +23,7 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
     const docRef = query(
       collection(db, "widgets"),
       where("projectid", "==", projectid),
-      orderBy('date')
+      orderBy("date")
     );
     onSnapshot(docRef, (querySnapshot) => {
       let data = [] as any[];
@@ -45,11 +45,17 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
           <CreateWidget projectid={props.project} />
         </div>
         <div className="canvas">
-          {widgetList && widgetList.map((widget) => {
-            return(
-              <Widget key={widget.widgetid} projectid={props.project} widgetid={widget.widgetid} date={widget.date}/>
-            )
-          })}
+          {widgetList &&
+            widgetList.map((widget) => {
+              return (
+                <Widget
+                  key={widget.widgetid}
+                  projectid={props.project}
+                  widgetid={widget.widgetid}
+                  date={widget.date}
+                />
+              );
+            })}
         </div>
       </div>
     </>

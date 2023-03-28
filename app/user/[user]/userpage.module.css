@@ -106,10 +106,37 @@
   cursor: pointer;
 }
 
+@font-face {
+  font-family: "Virgil";
+  src: url("/public/Virgil.woff2") format("woff2");
+  font-weight: 400;
+}
+
 .Sidebar__title {
   opacity: 0.8;
+  font-family: "Virgil";
 }
 
 .whiteboard {
   height: 68vh;
+}
+
+.tutorial__container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+}
+
+.tutorial__positioning {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-block: 30px;
+}
+
+.tutorial__text {
+  margin: 0;
+  padding: 0;
 }

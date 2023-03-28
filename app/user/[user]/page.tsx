@@ -27,7 +27,7 @@ const User = () => {
     email: "",
     username: "",
     userid: "",
-    projects: []
+    projects: [],
   });
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<string>("");
@@ -39,7 +39,7 @@ const User = () => {
     const docRef = query(
       collection(db, "projects"),
       where("users", "array-contains", userid),
-      orderBy('created', 'desc')
+      orderBy("created", "desc")
     );
     onSnapshot(docRef, (querySnapshot) => {
       let data = [] as any[];
@@ -47,8 +47,8 @@ const User = () => {
         data.push(doc.data());
       });
       setProjectList(data);
-      setCurrentProject(data[0].projectid)
-      setCurrentProjectName(data[0].name)
+      setCurrentProject(data[0].projectid);
+      setCurrentProjectName(data[0].name);
     });
   };
 
@@ -58,7 +58,7 @@ const User = () => {
       email: newuser!.email,
       username: newuser!.username,
       userid: userid,
-      projects: newuser!.projects
+      projects: newuser!.projects,
     });
   };
 
@@ -78,16 +78,19 @@ const User = () => {
 
   return (
     <div className={styles.page}>
-      <Header user={user} projectid={currentProject} projectname={currentProjectName}>
+      <Header
+        user={user}
+        projectid={currentProject}
+        projectname={currentProjectName}
+      >
         <ProjectDropdown
           projectList={projectList}
           projectSetter={projectSetter}
         />
       </Header>
-      <Sidebar user={user}/>
+      <Sidebar user={user} projectlist={projectList} />
       <div className="project__container">
-        <Canvas project={currentProject}>
-        </Canvas>
+        <Canvas project={currentProject}></Canvas>
       </div>
     </div>
   );
