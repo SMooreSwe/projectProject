@@ -41,7 +41,7 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
     onHide={handleClose}
     backdrop="static"
     keyboard={false}
-    fullscreen={fullscreen}
+    size='xl'
     >
     <Modal.Header closeButton>
       <Modal.Title>{widgetDate}</Modal.Title>

@@ -109,3 +109,7 @@
 .Sidebar__title {
   opacity: 0.8;
 }
+
+.whiteboard {
+  height: 68vh;
+}
