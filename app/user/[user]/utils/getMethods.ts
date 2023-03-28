@@ -1,5 +1,6 @@
 import { getAuth } from "firebase/auth";
 import {
+  arrayUnion,
   collection,
   doc,
   getDoc,
@@ -11,6 +12,7 @@ import {
   serverTimestamp,
   setDoc,
   Timestamp,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
@@ -49,6 +51,10 @@ export const AddProject = async (name: string, userid: string) => {
     projectid: uuid,
     users: [userid],
     created: serverTimestamp()
+  });
+  const docRef = doc(db, "users", userid);
+  await updateDoc(docRef, {
+    projects: arrayUnion(uuid),
   });
   return name;
 };

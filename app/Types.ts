@@ -4,6 +4,7 @@ export type User = {
   email: string;
   username: string;
   userid: string;
+  projects: string[];
 };
 
 export type Project = {
@@ -18,3 +19,10 @@ export type WidgetType = {
   projectid: string[];
   widgetid: string;
 };
+
+export type Invited = {
+  projectname: string,
+  projectid: string,
+  userinviting: string,
+  created: Timestamp
+}

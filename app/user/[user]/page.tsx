@@ -27,9 +27,11 @@ const User = () => {
     email: "",
     username: "",
     userid: "",
+    projects: []
   });
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<string>("");
+  const [currentProjectName, setCurrentProjectName] = useState<string>("");
 
   const db = getFirestore(app) as any;
 
@@ -46,6 +48,7 @@ const User = () => {
       });
       setProjectList(data);
       setCurrentProject(data[0].projectid)
+      setCurrentProjectName(data[0].name)
     });
   };
 
@@ -55,6 +58,7 @@ const User = () => {
       email: newuser!.email,
       username: newuser!.username,
       userid: userid,
+      projects: newuser!.projects
     });
   };
 
@@ -74,13 +78,13 @@ const User = () => {
 
   return (
     <div className={styles.page}>
-      <Header user={user} projectid={currentProject}>
+      <Header user={user} projectid={currentProject} projectname={currentProjectName}>
         <ProjectDropdown
           projectList={projectList}
           projectSetter={projectSetter}
         />
       </Header>
-      <Sidebar />
+      <Sidebar user={user}/>
       <div className="project__container">
         <Canvas project={currentProject}>
         </Canvas>

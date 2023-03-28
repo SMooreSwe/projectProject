@@ -17,6 +17,8 @@ const signUpUser = async (username: string, email: string, userid: string) => {
   await setDoc(doc(db, "users", `${userid}`), {
     username,
     email,
+    userid,
+    projects: [],
   });
   return userid;
 };

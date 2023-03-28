@@ -240,4 +240,31 @@ input[type="file"] {
 .collaborator__container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collaborator__infocontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.collaborator__name {
+  margin: 0;
+  padding: 0;
+}
+
+.collaborator__btn {
+  padding-inline: 10px;
+  padding-block: 5px;
+  border-radius: 7px;
+  border: none;
+  font-size: 0.8em;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  cursor: pointer;
+  height: 35px;
+  width: 70px;
 }

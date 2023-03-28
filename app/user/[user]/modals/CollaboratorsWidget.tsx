@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import profileImage from "../../../../public/profileImage.png";
@@ -8,72 +8,125 @@ import styles from "../userpage.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AddWidget } from "../utils/getMethods";
 import { User } from "../../../Types";
+import { getFirestore, query, collection, where, orderBy, onSnapshot, arrayRemove, arrayUnion, doc, updateDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { app } from "../../../../firebase-config";
+import { v4 } from "uuid";
 
-function CollaboratorsWidget(props: { projectid: string }) {
-  const [users, setUsers] = useState<User[]>([]);
+function CollaboratorsWidget(props: { projectid: string, username: string, projectname: string }) {
+  const [users, setUsers] = useState<User[]>([{
+    email: '',
+    username: '',
+    userid: '',
+    projects: []}]);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [inputs, setInputs] = useState({
-    invitedid: "",
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+
+  const db = getFirestore(app) as any;
+
+  const getUsers = async () => {
+    const docRef = query(
+      collection(db, "users"),
+    );
+    onSnapshot(docRef, (querySnapshot) => {
+      let data = [] as any[];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      setUsers(data);
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputs.invitedid.length > 0) {
-      setInputs((values) => ({ ...values, date: "" }));
-      // await AddWidget(inputs.invitedid, props.projectid);
-      handleClose();
-    }
-    console.log(inputs.invitedid);
+  useEffect(() => {
+    console.log('IS THIS WORKING?')
+    getUsers();
+  }, []);
+
+  const addCollaborator = async (e: any) => {
+    const uuid = v4();
+
+    console.log(props.projectname)
+    console.log(props.projectid)
+
+    const userid = e.target.value
+    await setDoc(doc(db, "notifications", `${userid}`, "usernotifications", uuid), {
+      projectname: props.projectname,
+      projectid: props.projectid,
+      userinviting: props.username,
+      created: serverTimestamp()
+    });
+    return name;
   };
 
+  const removeCollaborator = async (e: any) => {
+    const userid = e.target.elements.value
+    const docRef = doc(db, "projects", props.projectid);
+    await updateDoc(docRef, {
+      users: arrayRemove(userid),
+    });
+  };
+  
   const usersInProject = () => {
-    // const usersInProject = users.filter(user => {
-    //   return user.userid === props.projectid)
-    // }
-    if (users) {
-      return users.map((user: User) => {
-        <article key={user.userid} className="collaborator__container">
-          <Image
-            className={styles.UserProfileImage}
-            src={profileImage}
-            placeholder="blur"
-            alt=""
-          />
-          <p className="widget__date">{user.username}</p>
-          <button>ADD</button>
-        </article>
-      })
-    }
+    console.log(users)
+    return (
+      <>
+        <p className="card__title">
+          Project collaborators:
+        </p>
+        {users && users.map((user: User) => {
+          const userProjects = user.projects
+          if (userProjects.includes(props.projectid)) {
+            return (
+              <article key={user.userid} className="collaborator__container">
+                  <div className="collaborator__infocontainer" >
+                    <Image
+                      className={styles.UserProfileImage}
+                      src={profileImage}
+                      placeholder="blur"
+                      alt=""
+                    />
+                    <p className="collaborator__name">{user.username}</p>
+                  </div>
+                  <button value={user.userid} onClick={removeCollaborator} className="collaborator__btn">REMOVE</button>
+                </article>
+            )
+          }
+        
+        })}
+      </>
+    )
   }
 
   const usersNotInProject = () => {
-    // const usersInProject = users.filter(user => {
-    //   return user.userid === props.projectid)
-    // }
-    if (users) {
-      return users.map((user: User) => {
-        <article key={user.userid} className="collaborator__container">
-          <Image
-            className={styles.UserProfileImage}
-            src={profileImage}
-            placeholder="blur"
-            alt=""
-          />
-          <p className="widget__date">{user.username}</p>
-          <button>ADD</button>
-        </article>
-      })
-    }
-  }
-             
+    return (
+      <>
+        <p className="card__title">
+          Add collaborators:
+        </p>
+        {users && users.map((user: User) => {
+          const userProjects = user.projects
+          if (!userProjects.includes(props.projectid)) {
+            return (
+              <article key={user.userid} className="collaborator__container">
+                  <div className="collaborator__infocontainer" >
+                    <Image
+                      className={styles.UserProfileImage}
+                      src={profileImage}
+                      placeholder="blur"
+                      alt=""
+                    />
+                    <p className="collaborator__name">{user.username}</p>
+                  </div>
+                  <button value={user.userid} onClick={addCollaborator} className="collaborator__btn">ADD</button>
+                </article>
+            )
+          }
+        
+        })}
+      </>
+    )
+  }         
 
   return (
     <>
@@ -96,16 +149,16 @@ function CollaboratorsWidget(props: { projectid: string }) {
           <Modal.Title>Add a collaborator</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        {users && ( <>
+          {usersInProject()}
+         </>
+        )}
 
+        {users && ( <>
+          {usersNotInProject()}
+         </>
+        )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <button form="editmodal" className="formButton" type="submit">
-            Add
-          </button>
-        </Modal.Footer>
       </Modal>
     </>
   );

@@ -13,6 +13,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 const Header = (props: {
   user: { email: string; username: string; userid: string };
   projectid: string;
+  projectname: string;
   children: ReactNode;
 }) => {
   const router = useRouter();
@@ -25,8 +26,7 @@ const Header = (props: {
       const storage = getStorage();
       const filePath = `/users/${props.user.userid}.jpeg`;
       const storageRef = ref(storage, filePath);
-      // setImageSrc('https://firebasestorage.googleapis.com/v0/b/project-project-3e46d.appspot.com/o/users%2FhrJm7g9KRTcndvYJIX46OpaGFpz1.jpeg?alt=media&token=e223a526-d36c-42cb-9112-1b2f98520e3f')
-
+    
        getDownloadURL(storageRef).then(url => {
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
@@ -35,11 +35,7 @@ const Header = (props: {
         };
         xhr.open('GET', url);
         xhr.send();
-
-        // const url2 = new URL(url).toString()
-
         setImageSrc(url)
-        // imageSRC.current!.src = url
       })
       .catch((error) => {
         console.log(error)
@@ -65,7 +61,7 @@ const Header = (props: {
       </div>
       <div className={styles.collaborator__container}>
         <label htmlFor="">Collaborators</label>
-        <CollaboratorsWidget projectid={props.projectid} />
+        <CollaboratorsWidget projectid={props.projectid} username={props.user.username} projectname={props.projectname} />
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>
