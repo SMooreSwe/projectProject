@@ -35,7 +35,6 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
   };
 
   useEffect(() => {
-    console.log(props.project);
     getWidgets(props.project);
   }, [props.project]);
 
