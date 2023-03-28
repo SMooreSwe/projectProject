@@ -39,7 +39,6 @@ function CollaboratorsWidget(props: { projectid: string, username: string, proje
   };
 
   useEffect(() => {
-    console.log('IS THIS WORKING?')
     getUsers();
   }, []);
 

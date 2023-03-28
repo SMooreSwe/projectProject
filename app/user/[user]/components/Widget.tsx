@@ -4,14 +4,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "../userpage.module.css";
 import "../../../globals.css";
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, arrayRemove, deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { app } from "@/firebase-config";
 
 const Widget = (props: { projectid: string, widgetid: string, date: Timestamp }) => {
   const { projectid, widgetid, date} = props
   const widgetDate = date.toDate().toLocaleDateString()
   const [show, setShow] = useState(false);
-  const [fullscreen, setFullscreen] = useState(true)
+ 
+  const deleteWidget = async () => {
+    const db = getFirestore(app) as any;
+    const widgetRef = doc(db, "widgets", widgetid);
+    await deleteDoc(widgetRef)
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -33,7 +39,10 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
     <>
     <article className="widget" onClick={handleShow}>
       <p className="widget__date">{widgetDate}</p>
-      <div className="widget__main">{widgetid}</div>
+      <div className="widget__main">
+        {widgetid}
+        <button onClick={() => deleteWidget()} className="remove_btn">Delete this whiteboard</button>
+      </div>
     </article>
 
     <Modal
