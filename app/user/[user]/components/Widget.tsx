@@ -12,6 +12,7 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
   const { projectid, widgetid, date} = props
   const widgetDate = date.toDate().toLocaleDateString()
   const [show, setShow] = useState(false);
+  const [priority, setPriority] = useState('medium')
  
   const deleteWidget = async () => {
     const db = getFirestore(app) as any;
@@ -20,7 +21,7 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
   };
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (e: any) => {if (e.detail == 2) {setShow(true)}};
   const [inputs, setInputs] = useState({
     projectname: "",
   });
@@ -40,9 +41,14 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
     <article className="widget" onClick={handleShow}>
       <div className="widget-container">
         <p className="widget-container__date">{widgetDate}</p>
+        <select onChange={(e) => {setPriority(e.target.value)}}>
+          <option value="low">low</option>
+          <option selected={true} value="medium">medium</option>
+          <option value="high">high</option>
+        </select>
         <button onClick={() => deleteWidget()} className="widget-container__remove-btn">X</button>
       </div>
-      <div className="widget__main">
+      <div className={`widget__main ${priority}`}>
         {widgetid}
       </div>
     </article>
