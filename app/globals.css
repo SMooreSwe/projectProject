@@ -199,7 +199,7 @@ input[type="file"] {
 .canvas {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 400px 400px;
+  grid-template-rows: auto auto;
   grid-gap: 1em 1em;
   grid-auto-flow: row dense;
   height: 100%;
