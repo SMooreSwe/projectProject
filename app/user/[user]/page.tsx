@@ -90,7 +90,8 @@ const User = () => {
       </Header>
       <Sidebar user={user} projectlist={projectList} />
       <div className="project__container">
-        <Canvas project={currentProject}></Canvas>
+        <Canvas project={currentProject}>
+        </Canvas>
       </div>
     </div>
   );
