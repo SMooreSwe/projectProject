@@ -38,10 +38,12 @@ const Widget = (props: { projectid: string, widgetid: string, date: Timestamp })
   return (
     <>
     <article className="widget" onClick={handleShow}>
-      <p className="widget__date">{widgetDate}</p>
+      <div className="widget-container">
+        <p className="widget-container__date">{widgetDate}</p>
+        <button onClick={() => deleteWidget()} className="widget-container__remove-btn">X</button>
+      </div>
       <div className="widget__main">
         {widgetid}
-        <button onClick={() => deleteWidget()} className="remove_btn">Delete this whiteboard</button>
       </div>
     </article>
 
