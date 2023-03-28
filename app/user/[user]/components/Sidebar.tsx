@@ -4,8 +4,9 @@ import profileImage from "../../../../public/profileImage.png";
 import Image from "next/image";
 import { User } from "firebase/auth";
 import { Invited } from "../../../Types";
-import { collection, getFirestore, onSnapshot, query, serverTimestamp, Timestamp } from "firebase/firestore";
+import { arrayRemove, arrayUnion, collection, deleteDoc, doc, getFirestore, onSnapshot, query, serverTimestamp, Timestamp, updateDoc } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
+import { uuid } from "uuidv4";
 
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string }}) => {
@@ -28,17 +29,41 @@ const Sidebar = (props: {
 
   useEffect(() => {
     getInvited()
-    console.log('IS THIS WORKING?')
   }, [props.user]);
+
+  const AcceptProject = async (e: any) => {
+    const array = e.target.value
+    const arraySplit = array.split(',')
+    const projectid = arraySplit[0]
+    const invitationuid = arraySplit[1]
+
+    console.log(projectid)
+    console.log(invitationuid)
+
+    const projectRef = doc(db, "projects", projectid);
+    await updateDoc(projectRef, {
+      users: arrayUnion(props.user.userid),
+    });
+    const userRef = doc(db, "users", props.user.userid);
+    await updateDoc(userRef, {
+      projects: arrayUnion(projectid),
+    });
+    await deleteDoc(doc(db, "notifications", props.user.userid, "usernotifications", invitationuid));
+  };
+
+  const DeclineProject = async (e: any) => {
+    const invitationuid = e.target.value
+    await deleteDoc(doc(db, "notifications", props.user.userid, "usernotifications", invitationuid));
+  };
 
   const userInvited = () => {
     return (
       <>
         <h3 className={styles.Sidebar__title}>Activity</h3>
-        {inviteduser && inviteduser.map((user: Invited) => {
+        {inviteduser && inviteduser.map((invitation: Invited) => {
           
             return (
-              <div key={ user.projectname } className={styles.notification__container}>
+              <div key={ invitation.projectname } className={styles.notification__container}>
                 <div className={styles.notification__message}>
                   <Image
                     className={styles.UserProfileImage}
@@ -46,11 +71,11 @@ const Sidebar = (props: {
                     placeholder="blur"
                     alt=""
                   />
-                  <p>{user.userinviting} has invited you to join project {user.projectname}</p>
+                  <p>{invitation.userinviting} has invited you to join project {invitation.projectname}</p>
                 </div>
                 <div className={styles.notification__buttons}>
-                  <button className={styles.notification__button}>Accept</button>
-                  <button className={styles.notification__button}>Decline</button>
+                  <button value={[invitation.projectid, invitation.invitationuid]} onClick={AcceptProject} className={styles.notification__button}>Accept</button>
+                  <button value={invitation.invitationuid} onClick={DeclineProject} className={styles.notification__button}>Decline</button>
                 </div>
               </div>
             )

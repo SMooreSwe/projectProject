@@ -45,26 +45,28 @@ function CollaboratorsWidget(props: { projectid: string, username: string, proje
 
   const addCollaborator = async (e: any) => {
     const uuid = v4();
-
-    console.log(props.projectname)
-    console.log(props.projectid)
-
     const userid = e.target.value
     await setDoc(doc(db, "notifications", `${userid}`, "usernotifications", uuid), {
       projectname: props.projectname,
       projectid: props.projectid,
       userinviting: props.username,
+      invitationuid: uuid,
       created: serverTimestamp()
     });
-    return name;
+    handleClose()
   };
 
   const removeCollaborator = async (e: any) => {
-    const userid = e.target.elements.value
-    const docRef = doc(db, "projects", props.projectid);
-    await updateDoc(docRef, {
+    const userid = e.target.value
+    const projectRef = doc(db, "projects", props.projectid);
+    await updateDoc(projectRef, {
       users: arrayRemove(userid),
     });
+    const userRef = doc(db, "users", userid);
+    await updateDoc(userRef, {
+      projects: arrayRemove(props.projectid),
+    });
+    handleClose()
   };
   
   const usersInProject = () => {

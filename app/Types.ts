@@ -24,5 +24,6 @@ export type Invited = {
   projectname: string,
   projectid: string,
   userinviting: string,
+  invitationuid: string,
   created: Timestamp
 }
