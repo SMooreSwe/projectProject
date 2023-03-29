@@ -21,9 +21,6 @@ const Whiteboard = (props: {
       isResizable={true}
       resizeHandles={["se"]}
       onLayoutChange={(layout: Layout[]) => {
-        console.log("------LAYOUT CHANGE");
-        console.log(layout);
-        console.log("------LAYOUT CHANGE");
         props.setLayout(layout);
       }}
       // layouts={layouts}

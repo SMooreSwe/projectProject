@@ -60,45 +60,33 @@ function CollaboratorsWidget(props: {
 
   useEffect(() => {
     getUsers();
-    //getAllimages();
+    getAllimages();
   }, [props.projectid]);
 
-  const userImage = (userid: string) => {
+  const getAllimages = async () => {
+    console.log("Function called");
     const storage = getStorage();
-    const filePath = `/users/${userid}.jpeg`;
-    const storageRef = ref(storage, filePath);
 
-    return getDownloadURL(storageRef)
-      .then((url) => {
-        return url;
-      })
-      .catch((error) => {
-        console.log(error);
-        return;
-      });
+    const allUrls: any[] = [];
+    users.map((user: User) => {
+      const userProjects = user.projects;
+      if (userProjects.includes(props.projectid)) {
+        console.log("------A USER EXISTS!-----------");
+        const filePath = `/users/${user.userid}.jpeg`;
+        const storageRef = ref(storage, filePath);
+        getDownloadURL(storageRef).then((url) => {
+          console.log("-----------URL DOWNLOAD-----------");
+          console.log(url);
+          console.log("-----------URL DOWNLOAD-----------");
+          allUrls.push(url);
+        });
+      }
+    });
+    console.log("----ALLURLS ------");
+    console.log(allUrls);
+    console.log("----ALLURLS ------");
+    setAllimages(allUrls);
   };
-
-  // const getAllimages = async () => {
-  //   console.log("Function called");
-  //   const storage = getStorage();
-
-  //   const allUrls: any[] = [];
-  //   users.map((user: User) => {
-  //     const userProjects = user.projects;
-  //     if (userProjects.includes(props.projectid)) {
-  //       const filePath = `/users/${user.userid}.jpeg`;
-  //       const storageRef = ref(storage, filePath);
-  //       getDownloadURL(storageRef).then((url) => {
-  //         console.log("------URL-----------");
-  //         console.log(url);
-  //         allUrls.push(url);
-  //       });
-  //     }
-  //   });
-  //   console.log("----ALLURLS ------");
-  //   console.log(allUrls);
-  //   setAllimages(allUrls);
-  // };
 
   const addCollaborator = async (e: any) => {
     const uuid = v4();

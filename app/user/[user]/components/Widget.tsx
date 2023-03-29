@@ -51,9 +51,6 @@ const Widget = (props: {
 
   useEffect(() => {
     setLayout(JSON.parse(props.layout));
-    console.log("-----------PARSED----------");
-    console.log(JSON.parse(props.layout));
-    console.log("-----------PARSED----------");
   }, [show]);
 
   const db = getFirestore(app) as any;
@@ -88,14 +85,13 @@ const Widget = (props: {
           <p className="widget-container__date">{widgetDate}</p>
           <div>
             <select
+              defaultValue={"medium"}
               className="widget__select"
               onChange={(e) => {
                 widgetPriority(e.target.value);
               }}
             >
-              <option selected={true} value="medium">
-                none
-              </option>
+              <option value="medium">none</option>
               <option value="high">high priority</option>
             </select>
 
