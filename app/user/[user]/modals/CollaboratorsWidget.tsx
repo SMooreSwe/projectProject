@@ -158,7 +158,7 @@ function CollaboratorsWidget(props: {
   const filter = (userid: string) => {
     //const filterArray = allimages.filter((image) => /^.*%(.*)\./.test(image));
     const index = userindex.indexOf(userid);
-    if (index) {
+    if (index !== -1) {
       return (
         <img
           className={styles.UserProfileImage}
