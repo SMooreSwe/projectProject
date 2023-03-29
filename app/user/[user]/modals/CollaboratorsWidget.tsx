@@ -40,6 +40,7 @@ function CollaboratorsWidget(props: {
     },
   ]);
   const [allimages, setAllimages] = useState<string[]>([]);
+  const [userindex, setUserIndex] = useState<string[]>([]);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -67,7 +68,8 @@ function CollaboratorsWidget(props: {
     console.log("Function called");
     const storage = getStorage();
 
-    const allUrls: any[] = [];
+    const urls: any[] = [];
+    const userIndex: string[] = [];
     users.map((user: User) => {
       const userProjects = user.projects;
       if (!userProjects.includes(props.projectid)) {
@@ -78,14 +80,16 @@ function CollaboratorsWidget(props: {
           console.log("-----------URL DOWNLOAD-----------");
           console.log(url);
           console.log("-----------URL DOWNLOAD-----------");
-          allUrls.push(url);
+          urls.push(url);
+          userIndex.push(user.userid);
         });
       }
     });
     console.log("----ALLURLS ------");
-    console.log(allUrls);
+    console.log(urls);
     console.log("----ALLURLS ------");
-    setAllimages(allUrls);
+    setAllimages(urls);
+    setUserIndex(userIndex);
   };
 
   const addCollaborator = async (e: any) => {
@@ -151,6 +155,30 @@ function CollaboratorsWidget(props: {
     );
   };
 
+  const filter = (userid: string) => {
+    //const filterArray = allimages.filter((image) => /^.*%(.*)\./.test(image));
+    const index = userindex.indexOf(userid);
+    if (index) {
+      return (
+        <img
+          className={styles.UserProfileImage}
+          src={allimages[index]}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else {
+      return (
+        <img
+          className={styles.UserProfileImage}
+          src={"/profileImage.png"}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    }
+  };
+
   const usersNotInProject = () => {
     return (
       <>
@@ -162,12 +190,7 @@ function CollaboratorsWidget(props: {
               return (
                 <article key={user.userid} className="collaborator__container">
                   <div className="collaborator__infocontainer">
-                    <img
-                      className={styles.UserProfileImage}
-                      src={allimages[index]}
-                      placeholder="blur"
-                      alt=""
-                    />
+                    {allimages && <>{filter(user.userid)}</>}
                     <p className="collaborator__name">{user.username}</p>
                   </div>
                   <button
