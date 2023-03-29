@@ -61,7 +61,7 @@ function CollaboratorsWidget(props: {
   useEffect(() => {
     getUsers();
     getAllimages();
-  }, []);
+  }, [props.projectid]);
 
   const userImage = (userid: string) => {
     const storage = getStorage();
