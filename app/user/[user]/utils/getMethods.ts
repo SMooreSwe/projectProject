@@ -65,6 +65,7 @@ export const AddWidget = async (date: Date, projectid: string) => {
     date: Timestamp.fromDate(new Date(date)),
     widgetid: uuid,
     projectid,
+    priority: 'medium',
   });
   return date;
 };

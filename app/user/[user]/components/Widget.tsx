@@ -19,6 +19,8 @@ const Widget = (props: {
   projectid: string;
   widgetid: string;
   date: Timestamp;
+  priority: string;
+  prioritySetter: Function;
 }) => {
   const { projectid, widgetid, date } = props;
   const monthNames = [
@@ -41,13 +43,18 @@ const Widget = (props: {
 
   const widgetDate = day + " " + month;
   const [show, setShow] = useState(false);
-  const [priority, setPriority] = useState("medium");
-
+  const db = getFirestore(app) as any;
+  
   const deleteWidget = async () => {
-    const db = getFirestore(app) as any;
     const widgetRef = doc(db, "widgets", widgetid);
     await deleteDoc(widgetRef);
   };
+
+  const widgetPriority = async (priorityValue: string) => {
+    const widgetRef = doc(db, "widgets", widgetid);
+    await updateDoc(widgetRef, {priority: priorityValue})
+    props.prioritySetter(priorityValue);
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = (e: any) => {
@@ -58,20 +65,20 @@ const Widget = (props: {
 
   return (
     <>
-      <article className={`widget ${priority}`} onClick={handleShow}>
+      <article className={`widget ${props.priority}`} onClick={handleShow}>
         <div className="widget-container">
           <p className="widget-container__date">{widgetDate}</p>
           <div>
             <select
               className="widget__select"
               onChange={(e) => {
-                setPriority(e.target.value);
+                widgetPriority(e.target.value);
               }}
             >
               <option selected={true} value="medium">
                 none
               </option>
-              <option value="high">high</option>
+              <option value="high">high priority</option>
             </select>
             <button
               onClick={() => deleteWidget()}
@@ -81,7 +88,7 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-        <div className={`widget__main ${priority}`}></div>
+        <div className={`widget__main ${props.priority}`}></div>
       </article>
 
       <Modal

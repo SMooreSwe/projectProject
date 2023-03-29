@@ -16,7 +16,7 @@ import Widget from "./Widget";
 
 const Canvas = (props: { children: ReactNode; project: string }) => {
   const [widgetList, setWidgetList] = useState<WidgetType[]>([]);
-
+  const [priority, setPriority] = useState("medium");
   const db = getFirestore(app) as any;
 
   const getWidgets = async (projectid: string) => {
@@ -53,6 +53,8 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
                   projectid={props.project}
                   widgetid={widget.widgetid}
                   date={widget.date}
+                  priority={widget.priority}
+                  prioritySetter={setPriority}
                 />
               );
             })}

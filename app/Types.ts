@@ -18,6 +18,7 @@ export type WidgetType = {
   date: any;
   projectid: string[];
   widgetid: string;
+  priority: string;
 };
 
 export type Invited = {
