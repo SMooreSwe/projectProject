@@ -44,7 +44,7 @@ const Widget = (props: {
   const widgetDate = day + " " + month;
   const [show, setShow] = useState(false);
   const db = getFirestore(app) as any;
-  
+
   const deleteWidget = async () => {
     const widgetRef = doc(db, "widgets", widgetid);
     await deleteDoc(widgetRef);
@@ -52,9 +52,9 @@ const Widget = (props: {
 
   const widgetPriority = async (priorityValue: string) => {
     const widgetRef = doc(db, "widgets", widgetid);
-    await updateDoc(widgetRef, {priority: priorityValue})
+    await updateDoc(widgetRef, { priority: priorityValue });
     props.prioritySetter(priorityValue);
-  }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = (e: any) => {
