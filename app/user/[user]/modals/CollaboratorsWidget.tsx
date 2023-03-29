@@ -79,6 +79,7 @@ function CollaboratorsWidget(props: {
   };
 
   const getAllimages = async () => {
+    console.log("Function called");
     const storage = getStorage();
 
     const allUrls: any[] = [];
@@ -87,11 +88,14 @@ function CollaboratorsWidget(props: {
       if (userProjects.includes(props.projectid)) {
         const filePath = `/users/${user.userid}.jpeg`;
         const storageRef = ref(storage, filePath);
+        console.log(userProjects, props.projectid);
         getDownloadURL(storageRef).then((url) => {
+          console.log(url);
           allUrls.push(url);
         });
       }
     });
+    console.log(allUrls);
     setAllimages(allUrls);
   };
 
