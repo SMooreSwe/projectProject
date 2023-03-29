@@ -139,7 +139,7 @@ const Sidebar = (props: {
   };
 
   const Tutorial = () => {
-    if (props.projectlist.length > 0) {
+    if (props.projectlist.length === 0) {
       return (
         <>
           <div className={styles.tutorial__container}>
