@@ -72,15 +72,12 @@ function CollaboratorsWidget(props: {
     const userIndex: string[] = [];
 
     users.map((user: User) => {
-      const userProjects = user.projects;
-      if (!userProjects.includes(props.projectid)) {
-        const filePath = `/users/${user.userid}.jpeg`;
-        const storageRef = ref(storage, filePath);
-        getDownloadURL(storageRef).then((url) => {
-          urls.push(url);
-          userIndex.push(user.userid);
-        });
-      }
+      const filePath = `/users/${user.userid}.jpeg`;
+      const storageRef = ref(storage, filePath);
+      getDownloadURL(storageRef).then((url) => {
+        urls.push(url);
+        userIndex.push(user.userid);
+      });
     });
 
     setAllimages(urls);
