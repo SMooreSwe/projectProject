@@ -70,7 +70,7 @@ function CollaboratorsWidget(props: {
     const allUrls: any[] = [];
     users.map((user: User) => {
       const userProjects = user.projects;
-      if (userProjects.includes(props.projectid)) {
+      if (!userProjects.includes(props.projectid)) {
         console.log("------A USER EXISTS!-----------");
         const filePath = `/users/${user.userid}.jpeg`;
         const storageRef = ref(storage, filePath);
