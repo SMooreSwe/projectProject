@@ -1,5 +1,11 @@
 "use client";
-import React, { ReactNode, useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  ReactNode,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import settingsButton from "../../../../public/settingsButton.png";
@@ -18,29 +24,32 @@ const Header = (props: {
 }) => {
   const router = useRouter();
 
-  const [imageSrc, setImageSrc] = useState<string | StaticImageData>("/profileImage.png")
+  const [imageSrc, setImageSrc] = useState<string | StaticImageData>(
+    "/profileImage.png"
+  );
 
-  const imageSRC = useRef<HTMLImageElement>(null)
+  const imageSRC = useRef<HTMLImageElement>(null);
 
   const userImage = () => {
-      const storage = getStorage();
-      const filePath = `/users/${props.user.userid}.jpeg`;
-      const storageRef = ref(storage, filePath);
-    
-       getDownloadURL(storageRef).then(url => {
+    const storage = getStorage();
+    const filePath = `/users/${props.user.userid}.jpeg`;
+    const storageRef = ref(storage, filePath);
+
+    getDownloadURL(storageRef)
+      .then((url) => {
         const xhr = new XMLHttpRequest();
-        xhr.responseType = 'blob';
+        xhr.responseType = "blob";
         xhr.onload = (event) => {
           const blob = xhr.response;
         };
-        xhr.open('GET', url);
+        xhr.open("GET", url);
         xhr.send();
-        setImageSrc(url)
+        setImageSrc(url);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
-  }
+  };
 
   function signOutUser() {
     router.push(`${process.env.NEXT_PUBLIC_API_URL}`);
@@ -49,7 +58,7 @@ const Header = (props: {
 
   useEffect(() => {
     userImage();
-  },[props.user])
+  }, [props.user]);
 
   return (
     <nav className="Header">
@@ -61,7 +70,11 @@ const Header = (props: {
       </div>
       <div className={styles.collaborator__container}>
         <label htmlFor="">Collaborators</label>
-        <CollaboratorsWidget projectid={props.projectid} username={props.user.username} projectname={props.projectname} />
+        <CollaboratorsWidget
+          projectid={props.projectid}
+          username={props.user.username}
+          projectname={props.projectname}
+        />
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>

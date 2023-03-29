@@ -31,16 +31,18 @@ const Sidebar = (props: {
   const db = getFirestore(app) as any;
 
   const getInvited = async () => {
-    const docRef = query(
-      collection(db, "notifications", props.user.userid, "usernotifications")
-    );
-    onSnapshot(docRef, (querySnapshot) => {
-      let data = [] as any[];
-      querySnapshot.forEach((doc) => {
-        data.push(doc.data());
+    if (props.user.userid) {
+      const docRef = query(
+        collection(db, "notifications", props.user.userid, "usernotifications")
+      );
+      onSnapshot(docRef, (querySnapshot) => {
+        let data = [] as any[];
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        setInvitedUSer(data);
       });
-      setInvitedUSer(data);
-    });
+    }
   };
 
   useEffect(() => {

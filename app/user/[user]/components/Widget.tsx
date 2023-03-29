@@ -80,6 +80,22 @@ const Widget = (props: {
     await updateDoc(widgetRef, { layout: test });
   };
 
+  const createText = () => {
+    console.log("TEXT!!!");
+  };
+
+  const createPostit = () => {
+    console.log("POSTIT!!!");
+  };
+
+  const createImage = () => {
+    console.log("IMAGE!!!");
+  };
+
+  const createLink = () => {
+    console.log("LINK!!!");
+  };
+
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
@@ -94,7 +110,7 @@ const Widget = (props: {
               }}
             >
               <option value="medium">none</option>
-              <option value="high">high priority</option>
+              <option value="high">high</option>
             </select>
 
             <button
@@ -116,15 +132,84 @@ const Widget = (props: {
         size="xl"
         centered
       >
-        <Modal.Header closeButton className="whiteboard__header">
-          <Modal.Title className="whiteboard__title">{widgetDate}</Modal.Title>
-          <button
-            onClick={() => widgetLayout(layout)}
-            className="widget-container__save-btn"
-          >
-            Save
-          </button>
-        </Modal.Header>
+        <div className="whiteboard__header">
+          <h3 className="whiteboard__title">{widgetDate}</h3>
+          <div className="whiteboard__control-container">
+            <div className="whiteboard__controlers">
+              <div className="whiteboard__control">
+                <button
+                  onClick={createText}
+                  className="whiteboard__control-btn"
+                >
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    className="whiteboard__control-image"
+                    src="/text.png"
+                    alt=""
+                  />
+                </button>
+                <p className="whiteboard__control-text">Text</p>
+              </div>
+              <div className="whiteboard__control">
+                <button
+                  onClick={createPostit}
+                  className="whiteboard__control-btn"
+                >
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    className="whiteboard__control-image"
+                    src="/postit.png"
+                    alt=""
+                  />
+                </button>
+                <p className="whiteboard__control-text">Note</p>
+              </div>
+              <div className="whiteboard__control">
+                <button
+                  onClick={createImage}
+                  className="whiteboard__control-btn"
+                >
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    className="whiteboard__control-image"
+                    src="/image.png"
+                    alt=""
+                  />
+                </button>
+                <p className="whiteboard__control-text">Image</p>
+              </div>
+              <div className="whiteboard__control">
+                <button
+                  onClick={createLink}
+                  className="whiteboard__control-btn"
+                >
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    className="whiteboard__control-image"
+                    src="/link.png"
+                    alt=""
+                  />
+                </button>
+                <p className="whiteboard__control-text">Link</p>
+              </div>
+            </div>
+          </div>
+          <div className="widget__btn-container">
+            <button
+              onClick={() => widgetLayout(layout)}
+              className="widget-container__save-btn"
+            >
+              Save
+            </button>
+            <button
+              className="widget-container__close-btn"
+              onClick={() => handleClose()}
+            >
+              X
+            </button>
+          </div>
+        </div>
+
         <Modal.Body className="whiteboard__body">
           <div className={styles.whiteboard}>
             <Whiteboard

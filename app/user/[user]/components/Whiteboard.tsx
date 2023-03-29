@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
-import { app } from "@/firebase-config";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -14,7 +13,7 @@ const Whiteboard = (props: {
 }) => {
   return (
     <ResponsiveGridLayout
-      layouts={ {lg: props.layouts} }
+      layouts={{ lg: props.layouts }}
       className="layout"
       compactType={null}
       preventCollision={false}
