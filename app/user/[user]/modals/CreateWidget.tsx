@@ -6,12 +6,18 @@ import Image from "next/image";
 import styles from "../userpage.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AddProject, AddWidget } from "../utils/getMethods";
+import { Project } from "@/app/Types";
 
-function CreateWidget(props: { projectid: string }) {
+function CreateWidget(props: { projectid: string; projectList: Project[] }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    console.log(props.projectList)
+    if (props.projectList.length !== 0) {
+      setShow(true)
+    }
+  };
   const [inputs, setInputs] = useState({
     date: "",
   });

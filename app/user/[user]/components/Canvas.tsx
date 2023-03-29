@@ -11,10 +11,10 @@ import {
   where,
 } from "firebase/firestore";
 import { app } from "../../../../firebase-config";
-import { WidgetType } from "../../../Types";
+import { Project, WidgetType } from "../../../Types";
 import Widget from "./Widget";
 
-const Canvas = (props: { children: ReactNode; project: string }) => {
+const Canvas = (props: { children: ReactNode; project: string; projectList: Project[] }) => {
   const [widgetList, setWidgetList] = useState<WidgetType[]>([]);
   const [priority, setPriority] = useState("medium");
   const db = getFirestore(app) as any;
@@ -42,7 +42,7 @@ const Canvas = (props: { children: ReactNode; project: string }) => {
     <>
       <div className="canvas__container">
         <div>
-          <CreateWidget projectid={props.project} />
+          <CreateWidget projectid={props.project} projectList={props.projectList} />
         </div>
         <div className="canvas">
           {widgetList &&
