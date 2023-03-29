@@ -162,7 +162,7 @@ function CollaboratorsWidget(props: {
               return (
                 <article key={user.userid} className="collaborator__container">
                   <div className="collaborator__infocontainer">
-                    <Image
+                    <img
                       className={styles.UserProfileImage}
                       src={allimages[index]}
                       placeholder="blur"
