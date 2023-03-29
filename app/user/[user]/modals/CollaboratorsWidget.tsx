@@ -88,13 +88,14 @@ function CollaboratorsWidget(props: {
       if (userProjects.includes(props.projectid)) {
         const filePath = `/users/${user.userid}.jpeg`;
         const storageRef = ref(storage, filePath);
-        console.log(userProjects, props.projectid);
         getDownloadURL(storageRef).then((url) => {
+          console.log("------URL-----------");
           console.log(url);
           allUrls.push(url);
         });
       }
     });
+    console.log("----ALLURLS ------");
     console.log(allUrls);
     setAllimages(allUrls);
   };
