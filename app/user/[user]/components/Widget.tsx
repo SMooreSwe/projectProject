@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Whiteboard from "./Whiteboard" ;
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "../userpage.module.css";
@@ -102,7 +103,10 @@ const Widget = (props: {
           <Modal.Title>{widgetDate}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className={styles.whiteboard}>This is our whiteboard</div>
+          <div className={styles.whiteboard}>
+            This is our whiteboard
+            <Whiteboard />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
