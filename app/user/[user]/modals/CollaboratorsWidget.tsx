@@ -130,7 +130,6 @@ function CollaboratorsWidget(props: {
   };
 
   const usersInProject = () => {
-    console.log(users);
     return (
       <>
         <p className="card__title">Project collaborators:</p>
