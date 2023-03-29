@@ -101,9 +101,7 @@ const Widget = (props: {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title className={styles.whiteboard__title}>
-            {widgetDate}
-          </Modal.Title>
+          <Modal.Title className="whiteboard__title">{widgetDate}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="whiteboard__body">
           <div className={styles.whiteboard}>
