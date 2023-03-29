@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { Layout } from "react-grid-layout";
 
 export type User = {
   email: string;
@@ -19,12 +20,13 @@ export type WidgetType = {
   projectid: string[];
   widgetid: string;
   priority: string;
+  layout: string;
 };
 
 export type Invited = {
-  projectname: string,
-  projectid: string,
-  userinviting: string,
-  invitationuid: string,
-  created: Timestamp
-}
+  projectname: string;
+  projectid: string;
+  userinviting: string;
+  invitationuid: string;
+  created: Timestamp;
+};

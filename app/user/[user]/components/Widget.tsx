@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Whiteboard from "./Whiteboard";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -15,15 +15,18 @@ import {
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
+import { Layout } from "react-grid-layout";
 
 const Widget = (props: {
   projectid: string;
   widgetid: string;
   date: Timestamp;
   priority: string;
+  layout: string;
   prioritySetter: Function;
 }) => {
-  const { projectid, widgetid, date } = props;
+  const { widgetid, date } = props;
+
   const monthNames = [
     "Jan",
     "Feb",
@@ -44,8 +47,16 @@ const Widget = (props: {
 
   const widgetDate = day + " " + month;
   const [show, setShow] = useState(false);
-  const db = getFirestore(app) as any;
+  const [layout, setLayout] = useState<Layout[]>([]);
 
+  useEffect(() => {
+    setLayout(JSON.parse(props.layout));
+    console.log("-----------PARSED----------");
+    console.log(JSON.parse(props.layout));
+    console.log("-----------PARSED----------");
+  }, [show]);
+
+  const db = getFirestore(app) as any;
   const deleteWidget = async () => {
     const widgetRef = doc(db, "widgets", widgetid);
     await deleteDoc(widgetRef);
@@ -62,6 +73,12 @@ const Widget = (props: {
     if (e.detail == 2) {
       setShow(true);
     }
+  };
+
+  const widgetLayout = async (currentlayout: Layout[]) => {
+    const test = JSON.stringify(currentlayout);
+    const widgetRef = doc(db, "widgets", widgetid);
+    await updateDoc(widgetRef, { layout: test });
   };
 
   return (
@@ -81,6 +98,7 @@ const Widget = (props: {
               </option>
               <option value="high">high priority</option>
             </select>
+
             <button
               onClick={() => deleteWidget()}
               className="widget-container__remove-btn"
@@ -100,19 +118,24 @@ const Widget = (props: {
         size="xl"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="whiteboard__header">
           <Modal.Title className="whiteboard__title">{widgetDate}</Modal.Title>
+          <button
+            onClick={() => widgetLayout(layout)}
+            className="widget-container__save-btn"
+          >
+            Save
+          </button>
         </Modal.Header>
         <Modal.Body className="whiteboard__body">
           <div className={styles.whiteboard}>
-            <Whiteboard />
+            <Whiteboard
+              widgetid={widgetid}
+              layouts={layout}
+              setLayout={setLayout}
+            />
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

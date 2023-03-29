@@ -325,3 +325,8 @@ input[type="file"] {
 .whiteboard__title {
   font-family: "Virgil";
 }
+
+.whiteboard__header {
+  display: flex;
+  justify-content: flex-end;
+}

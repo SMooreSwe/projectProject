@@ -1,20 +1,31 @@
-import React from "react";
-import { Responsive, WidthProvider } from "react-grid-layout";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
+import { app } from "@/firebase-config";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Whiteboard = () => {
-  // {lg: layout1, md: layout2, ...}
-  //const layouts = getLayoutsFromSomewhere();
+const Whiteboard = (props: {
+  widgetid: string;
+  layouts: Layout[];
+  setLayout: Function;
+}) => {
   return (
     <ResponsiveGridLayout
+      layouts={{ lg: props.layouts }}
       className="layout"
       compactType={null}
       preventCollision={false}
       isResizable={true}
       resizeHandles={["se"]}
+      onLayoutChange={(layout: Layout[]) => {
+        console.log("------LAYOUT CHANGE");
+        console.log(layout);
+        console.log("------LAYOUT CHANGE");
+        props.setLayout(layout);
+      }}
       // layouts={layouts}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
