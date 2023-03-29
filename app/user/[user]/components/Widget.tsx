@@ -16,6 +16,8 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import { Layout } from "react-grid-layout";
+import html2canvas from "html2canvas";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const Widget = (props: {
   projectid: string;
@@ -75,9 +77,37 @@ const Widget = (props: {
   };
 
   const widgetLayout = async (currentlayout: Layout[]) => {
-    const test = JSON.stringify(currentlayout);
-    const widgetRef = doc(db, "widgets", widgetid);
-    await updateDoc(widgetRef, { layout: test });
+    console.log("happening?");
+    const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
+    console.log(input);
+    if (input) {
+      html2canvas(input, {
+        logging: true,
+        useCORS: true,
+      }).then((canvas) => {
+        const imgWidth = 208;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const imgData = canvas.toDataURL("img/png");
+
+        //var contents = fs.readFileSync("./dmv_file_reader.txt").toString();
+        var blob = new Blob([imgData], { type: "text/plain" });
+        var file = new File([blob], "foo.txt", { type: "text/plain" });
+
+        console.log(canvas);
+        console.log(imgData);
+
+        const storage = getStorage();
+        const filePath = `/widget/image.jpeg`;
+        const storageRef = ref(storage, filePath);
+        uploadBytes(storageRef, file).then((snapshot) => {
+          console.log("Uploaded a blob or file!");
+        });
+      });
+    }
+
+    // const test = JSON.stringify(currentlayout);
+    // const widgetRef = doc(db, "widgets", widgetid);
+    // await updateDoc(widgetRef, { layout: test });
   };
 
   const createText = () => {
@@ -209,16 +239,17 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-
-        <Modal.Body className="whiteboard__body">
-          <div className={styles.whiteboard}>
-            <Whiteboard
-              widgetid={widgetid}
-              layouts={layout}
-              setLayout={setLayout}
-            />
-          </div>
-        </Modal.Body>
+        <div className="whiteboard__photo">
+          <Modal.Body className="whiteboard__body">
+            <div className={styles.whiteboard}>
+              <Whiteboard
+                widgetid={widgetid}
+                layouts={layout}
+                setLayout={setLayout}
+              />
+            </div>
+          </Modal.Body>
+        </div>
       </Modal>
     </>
   );
