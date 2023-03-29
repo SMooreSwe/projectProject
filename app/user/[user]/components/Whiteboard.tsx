@@ -15,7 +15,6 @@ const Whiteboard = (props: {
   return (
     <ResponsiveGridLayout
       layouts={ {lg: props.layouts} }
-      breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
       className="layout"
       compactType={null}
       preventCollision={false}
