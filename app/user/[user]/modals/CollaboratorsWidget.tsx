@@ -60,7 +60,7 @@ function CollaboratorsWidget(props: {
 
   useEffect(() => {
     getUsers();
-    getAllimages();
+    //getAllimages();
   }, [props.projectid]);
 
   const userImage = (userid: string) => {
@@ -78,27 +78,27 @@ function CollaboratorsWidget(props: {
       });
   };
 
-  const getAllimages = async () => {
-    console.log("Function called");
-    const storage = getStorage();
+  // const getAllimages = async () => {
+  //   console.log("Function called");
+  //   const storage = getStorage();
 
-    const allUrls: any[] = [];
-    users.map((user: User) => {
-      const userProjects = user.projects;
-      if (userProjects.includes(props.projectid)) {
-        const filePath = `/users/${user.userid}.jpeg`;
-        const storageRef = ref(storage, filePath);
-        getDownloadURL(storageRef).then((url) => {
-          console.log("------URL-----------");
-          console.log(url);
-          allUrls.push(url);
-        });
-      }
-    });
-    console.log("----ALLURLS ------");
-    console.log(allUrls);
-    setAllimages(allUrls);
-  };
+  //   const allUrls: any[] = [];
+  //   users.map((user: User) => {
+  //     const userProjects = user.projects;
+  //     if (userProjects.includes(props.projectid)) {
+  //       const filePath = `/users/${user.userid}.jpeg`;
+  //       const storageRef = ref(storage, filePath);
+  //       getDownloadURL(storageRef).then((url) => {
+  //         console.log("------URL-----------");
+  //         console.log(url);
+  //         allUrls.push(url);
+  //       });
+  //     }
+  //   });
+  //   console.log("----ALLURLS ------");
+  //   console.log(allUrls);
+  //   setAllimages(allUrls);
+  // };
 
   const addCollaborator = async (e: any) => {
     const uuid = v4();
@@ -177,7 +177,7 @@ function CollaboratorsWidget(props: {
                   <div className="collaborator__infocontainer">
                     <Image
                       className={styles.UserProfileImage}
-                      src={allimages[index]}
+                      src={profileImage}
                       placeholder="blur"
                       alt=""
                     />
