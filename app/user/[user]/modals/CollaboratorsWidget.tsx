@@ -74,10 +74,14 @@ function CollaboratorsWidget(props: {
     users.map((user: User) => {
       const filePath = `/users/${user.userid}.jpeg`;
       const storageRef = ref(storage, filePath);
-      getDownloadURL(storageRef).then((url) => {
-        urls.push(url);
-        userIndex.push(user.userid);
-      });
+      getDownloadURL(storageRef)
+        .then((url) => {
+          urls.push(url);
+          userIndex.push(user.userid);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
 
     setAllimages(urls);
@@ -114,10 +118,10 @@ function CollaboratorsWidget(props: {
   };
 
   const filter = (userid: string) => {
-    //const filterArray = allimages.filter((image) => /^.*%(.*)\./.test(image));
     const index = userindex.indexOf(userid);
     if (index !== -1) {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.UserProfileImage}
           src={allimages[index]}
@@ -127,6 +131,7 @@ function CollaboratorsWidget(props: {
       );
     } else {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.UserProfileImage}
           src={"/profileImage.png"}
@@ -217,7 +222,6 @@ function CollaboratorsWidget(props: {
         </Modal.Header>
         <Modal.Body>
           {users && <>{usersInProject()}</>}
-
           {users && <>{usersNotInProject()}</>}
         </Modal.Body>
       </Modal>

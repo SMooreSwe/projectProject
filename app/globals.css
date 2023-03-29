@@ -330,3 +330,13 @@ input[type="file"] {
   display: flex;
   justify-content: flex-end;
 }
+
+.widget-container__save-btn {
+  display: flex;
+  right: 0;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+}
