@@ -41,6 +41,7 @@ function CollaboratorsWidget(props: {
   ]);
   const [allimages, setAllimages] = useState<string[]>([]);
   const [userindex, setUserIndex] = useState<string[]>([]);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -65,29 +66,23 @@ function CollaboratorsWidget(props: {
   }, [props.projectid]);
 
   const getAllimages = async () => {
-    console.log("Function called");
     const storage = getStorage();
 
     const urls: any[] = [];
     const userIndex: string[] = [];
+
     users.map((user: User) => {
       const userProjects = user.projects;
       if (!userProjects.includes(props.projectid)) {
-        console.log("------A USER EXISTS!-----------");
         const filePath = `/users/${user.userid}.jpeg`;
         const storageRef = ref(storage, filePath);
         getDownloadURL(storageRef).then((url) => {
-          console.log("-----------URL DOWNLOAD-----------");
-          console.log(url);
-          console.log("-----------URL DOWNLOAD-----------");
           urls.push(url);
           userIndex.push(user.userid);
         });
       }
     });
-    console.log("----ALLURLS ------");
-    console.log(urls);
-    console.log("----ALLURLS ------");
+
     setAllimages(urls);
     setUserIndex(userIndex);
   };
@@ -121,40 +116,6 @@ function CollaboratorsWidget(props: {
     handleClose();
   };
 
-  const usersInProject = () => {
-    return (
-      <>
-        <p className="card__title">Project collaborators:</p>
-        {users &&
-          users.map((user: User) => {
-            const userProjects = user.projects;
-            if (userProjects.includes(props.projectid)) {
-              return (
-                <article key={user.userid} className="collaborator__container">
-                  <div className="collaborator__infocontainer">
-                    <Image
-                      className={styles.UserProfileImage}
-                      src={profileImage}
-                      placeholder="blur"
-                      alt=""
-                    />
-                    <p className="collaborator__name">{user.username}</p>
-                  </div>
-                  <button
-                    value={user.userid}
-                    onClick={removeCollaborator}
-                    className="collaborator__btn"
-                  >
-                    REMOVE
-                  </button>
-                </article>
-              );
-            }
-          })}
-      </>
-    );
-  };
-
   const filter = (userid: string) => {
     //const filterArray = allimages.filter((image) => /^.*%(.*)\./.test(image));
     const index = userindex.indexOf(userid);
@@ -177,6 +138,35 @@ function CollaboratorsWidget(props: {
         />
       );
     }
+  };
+
+  const usersInProject = () => {
+    return (
+      <>
+        <p className="card__title">Project collaborators:</p>
+        {users &&
+          users.map((user: User) => {
+            const userProjects = user.projects;
+            if (userProjects.includes(props.projectid)) {
+              return (
+                <article key={user.userid} className="collaborator__container">
+                  <div className="collaborator__infocontainer">
+                    {allimages && <>{filter(user.userid)}</>}
+                    <p className="collaborator__name">{user.username}</p>
+                  </div>
+                  <button
+                    value={user.userid}
+                    onClick={removeCollaborator}
+                    className="collaborator__btn"
+                  >
+                    REMOVE
+                  </button>
+                </article>
+              );
+            }
+          })}
+      </>
+    );
   };
 
   const usersNotInProject = () => {
