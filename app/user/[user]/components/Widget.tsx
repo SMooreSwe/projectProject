@@ -91,7 +91,7 @@ const Widget = (props: {
 
         //var contents = fs.readFileSync("./dmv_file_reader.txt").toString();
         var blob = new Blob([imgData], { type: "text/plain" });
-        var file = new File([blob], "foo.txt", { type: "text/plain" });
+        var file = new File([blob], "foo.txt", { type: "img/jpeg" });
 
         console.log(canvas);
         console.log(imgData);
