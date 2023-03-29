@@ -164,7 +164,7 @@ function CollaboratorsWidget(props: {
                   <div className="collaborator__infocontainer">
                     <Image
                       className={styles.UserProfileImage}
-                      src={profileImage}
+                      src={allimages[index]}
                       placeholder="blur"
                       alt=""
                     />
