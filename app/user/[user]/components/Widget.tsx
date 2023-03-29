@@ -50,7 +50,9 @@ const Widget = (props: {
   const [layout, setLayout] = useState<Layout[]>([]);
 
   useEffect(() => {
-    setLayout(JSON.parse(props.layout));
+    if (props.layout) {
+      setLayout(JSON.parse(props.layout));
+    }
   }, [show]);
 
   const db = getFirestore(app) as any;

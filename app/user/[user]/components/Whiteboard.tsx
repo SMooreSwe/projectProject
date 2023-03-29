@@ -14,7 +14,7 @@ const Whiteboard = (props: {
 }) => {
   return (
     <ResponsiveGridLayout
-      layouts={{ lg: props.layouts }}
+      layouts={ {lg: props.layouts} }
       className="layout"
       compactType={null}
       preventCollision={false}
