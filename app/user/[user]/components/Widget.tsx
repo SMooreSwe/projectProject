@@ -57,7 +57,7 @@ const Widget = (props: {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
-  }, [show, props.widgetindex]);
+  }, [show, props.widgetid]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -124,14 +124,7 @@ const Widget = (props: {
   const widgetImage = (widgetid: string) => {
     const array = props.widgetindex;
     const index = array.indexOf(widgetid);
-    console.log("--------image index-------");
-    console.log(props.widgetindex);
-    console.log(widgetid);
-    console.log(index);
-    console.log(props.widgetimages[index]);
-    console.log("--------image index-------");
-    if (index !== -1) {
-      console.log("IMAGE DOES EXIST!!!");
+    if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -180,9 +173,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetindex && props.widgetindex.length && (
-            <>{widgetImage(props.widgetid)}</>
-          )}
+          {props.widgetindex.length && <>{widgetImage(props.widgetid)}</>}
         </div>
       </article>
 

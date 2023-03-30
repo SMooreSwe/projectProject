@@ -4,7 +4,7 @@
 // export const Image = React.forwardRef<HTMLDivElement>(({style, className, onMouseDown, onMouseUp, onTouchEnd, children, ...props}: any, ref) => {
 //   const imgUrl = () => {
 //     //return firestore image url for input
-//     return 'hello' 
+//     return 'hello'
 //   }
 
 //     return (

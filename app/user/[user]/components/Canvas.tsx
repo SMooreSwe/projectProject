@@ -25,7 +25,7 @@ const Canvas = (props: {
   const [priority, setPriority] = useState("medium");
 
   const [widgetimages, setWidgetImages] = useState<string[]>([]);
-  const [widgetindex, setWIdgetIndex] = useState<string[]>([]);
+  const [widgetindex, setWidgetIndex] = useState<string[]>([]);
 
   const db = getFirestore(app) as any;
 
@@ -47,7 +47,6 @@ const Canvas = (props: {
 
   const getWidgetImages = async (widgets: WidgetType[]) => {
     const storage = getStorage();
-
     const urls: any[] = [];
     const widgetIndex: string[] = [];
 
@@ -63,9 +62,8 @@ const Canvas = (props: {
           console.log(error);
         });
     });
-
     setWidgetImages(urls);
-    setWIdgetIndex(widgetIndex);
+    setWidgetIndex(widgetIndex);
   };
 
   useEffect(() => {
