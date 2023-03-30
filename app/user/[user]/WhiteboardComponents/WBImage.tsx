@@ -1,14 +1,15 @@
-import React from 'react'
+export {};
+// import React from 'react'
 
-//eslint-disable-next-line react/display-name
-export const WBImage = React.forwardRef<HTMLDivElement>(({style, className, onMouseDown, onMouseUp, onTouchEnd, children, ...props}: any, ref) => {
-  const imgUrl = () => {
-    //return firestore image url for input
-    return 'hello' 
-  }
+// //eslint-disable-next-line react/display-name
+// export const WBImage = React.forwardRef<HTMLDivElement>(({style, className, onMouseDown, onMouseUp, onTouchEnd, children, ...props}: any, ref) => {
+//   const imgUrl = () => {
+//     //return firestore image url for input
+//     return 'hello'
+//   }
 
-    return (
-    <img alt='test image' src={imgUrl()} style={style} className={className} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
-    </img>
-  );
-})
+//     return (
+//     <img alt='test image' src={imgUrl()} style={style} className={className} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
+//     </img>
+//   );
+// })
