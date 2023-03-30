@@ -50,6 +50,9 @@ const Canvas = (props: {
     const urls: any[] = [];
     const widgetIndex: string[] = [];
 
+    console.log("getWidgetIMages is GOING!");
+    console.log(widgetList);
+
     widgetList.map((widget: WidgetType) => {
       const filePath = `/widgets/${widget.widgetid}.jpeg`;
       console.log(FieldPath);
