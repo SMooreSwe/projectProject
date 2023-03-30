@@ -129,7 +129,7 @@ const Widget = (props: {
     console.log("--------------------------------");
 
     const array = props.widgetindex;
-    const index = array.indexOf(widgetid.toString());
+    const index = array.indexOf(widgetid);
     console.log("--------image index-------");
     console.log(props.widgetindex);
     console.log(widgetid);
