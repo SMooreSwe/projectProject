@@ -57,10 +57,12 @@ const Widget = (props: {
   const [postit, setPostit] = useState<Postit[]>([]);
 
   useEffect(() => {
+    console.log("CALLED!");
+    console.log(props.layout);
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
-  }, [show, props.widgetid]);
+  }, [show, props.widgetid, props.layout]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -292,6 +294,7 @@ const Widget = (props: {
                 layoutSetter={setLayout}
                 postits={postit}
                 setPostit={setPostit}
+                show={show}
               />
             </div>
           </div>

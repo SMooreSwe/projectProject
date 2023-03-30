@@ -16,8 +16,28 @@ const Whiteboard = (props: {
   layoutSetter: Function;
   postits: Postit[];
   setPostit: Function;
+  show: boolean;
 }) => {
   const { postits, layouts } = props;
+
+  const populate = () => {
+    postits.map((postit: Postit) => {
+      console.log("----------------------------------------------------");
+      console.log("searching.....");
+      console.log(props.layouts);
+      console.log("----------------------------------------------------");
+      const layout = layouts.find((x) => x.i === postit.id);
+      console.log(layout);
+      if (layout) {
+        return <PostIt key={postit.id} data-grid={layout} />;
+      }
+    });
+  };
+
+  useEffect(() => {
+    props.layoutSetter(props.layouts);
+    populate();
+  }, [props.show]);
 
   return (
     <ResponsiveGridLayout
@@ -33,21 +53,13 @@ const Whiteboard = (props: {
       preventCollision={false}
       isResizable={true}
       resizeHandles={["se"]}
-      onLayoutChange={(layout: Layout[]) => {
+      onDragStop={(layout: Layout[]) => {
         props.layoutSetter(layout);
       }}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
-      {postits &&
-        postits.map((postit: Postit) => {
-          console.log("searching.....");
-          const layout = layouts.find((x) => x.i === postit.id);
-          console.log(layout);
-          if (layout) {
-            return <PostIt key={postit.id} data-grid={layout} />;
-          }
-        })}
+      {postits && populate()}
       <PostIt key={"test"} data-grid={props.layouts[0]} />
       <Textblock key={"text"} data-grid={props.layouts[1]} />
     </ResponsiveGridLayout>
