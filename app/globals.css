@@ -112,6 +112,10 @@ body {
   cursor: pointer;
 }
 
+.profileimage__caption {
+  font-size: .75em;
+}
+
 .selectImage__container {
   display: flex;
   flex-direction: column;

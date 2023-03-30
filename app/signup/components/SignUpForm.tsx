@@ -126,7 +126,7 @@ export const Form = () => {
               />
               Choose image
             </label>
-            <p ref={uploadedImageName}>Select a Profile Image (Optional)</p>
+            <p className="profileimage__caption" ref={uploadedImageName}>Select a Profile Image (Optional)</p>
           </div>
         </div>
         <form className="form" onSubmit={handleSubmit}>
