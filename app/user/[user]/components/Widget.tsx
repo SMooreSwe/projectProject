@@ -85,29 +85,29 @@ const Widget = (props: {
         logging: true,
         useCORS: true,
       }).then((canvas) => {
-        const imgWidth = 208;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
         const imgData = canvas.toDataURL("img/png");
-
+        uploadToStorage(imgData);
         //var contents = fs.readFileSync("./dmv_file_reader.txt").toString();
-        var blob = new Blob([imgData], { type: "text/plain" });
-        var file = new File([blob], "foo.txt", { type: "img/jpeg" });
-
-        console.log(canvas);
-        console.log(imgData);
-
-        const storage = getStorage();
-        const filePath = `/widget/image.jpeg`;
-        const storageRef = ref(storage, filePath);
-        uploadBytes(storageRef, file).then((snapshot) => {
-          console.log("Uploaded a blob or file!");
-        });
+        // var blob = new Blob([imgData], { type: "text/plain" });
+        // var file = new File([blob], "foo.txt", { type: "img/jpeg" });
       });
     }
 
     // const test = JSON.stringify(currentlayout);
     // const widgetRef = doc(db, "widgets", widgetid);
     // await updateDoc(widgetRef, { layout: test });
+  };
+
+  const uploadToStorage = async (imgData: any) => {
+    const blob = await (await fetch(imgData)).blob();
+    //const file = new File([blob]), 'image.jpg'
+
+    const storage = getStorage();
+    const filePath = `/widget/image.jpeg`;
+    const storageRef = ref(storage, filePath);
+    uploadBytes(storageRef, blob).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
   };
 
   const createText = () => {
