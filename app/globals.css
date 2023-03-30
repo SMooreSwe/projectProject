@@ -408,3 +408,41 @@ input[type="file"] {
   outline: 0.1px solid rgb(204, 204, 204);
   border-radius: 5px;
 }
+
+.whiteboard__photo {
+  height: 100%;
+  width: 100%;
+}
+.postit {
+  background-color: yellow;
+}
+
+
+.postit__text {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 5px 10px;
+}
+
+.postit__text:hover {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+}
+
+.textblock__text {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.textblock__text:hover {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+}

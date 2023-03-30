@@ -4,6 +4,8 @@ import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
+import { Textblock } from "../WhiteboardComponents/Text";
+import { WBImage } from "../WhiteboardComponents/WBImage";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -27,12 +29,9 @@ const Whiteboard = (props: {
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
       <PostIt key={'test'} data-grid={props.layouts[0]} />
-      <div className="box" key="2">
-        2
-      </div>
-      <div className="box" key="3">
-        3
-      </div>
+      <Textblock key={'text'} data-grid={props.layouts[1]}/>
+      <WBImage key={'image'} data-grid={props.layouts[2]}/>
+      
     </ResponsiveGridLayout>
   );
 };

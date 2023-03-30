@@ -7,9 +7,9 @@ export const PostIt = React.forwardRef<HTMLDivElement>(({style, className, onMou
   }
 
   return (
-  <p style={style} className={className} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
-   {(e: any) => typingFunction(e)}
+  <div style={style} className={["postit", className].join(' ')} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
+   <textarea name="" id="" onChange={(e) => console.log(e.target.value)} className='postit__text' placeholder='press enter to save'></textarea>
    {children}
-  </p>
+  </div>
 );
 })
