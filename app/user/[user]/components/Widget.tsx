@@ -18,6 +18,8 @@ import { app } from "@/firebase-config";
 import { Layout } from "react-grid-layout";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { Postit } from "../../../Types";
+import { v4 } from "uuid";
 
 const Widget = (props: {
   projectid: string;
@@ -52,6 +54,7 @@ const Widget = (props: {
   const widgetDate = day + " " + month;
   const [show, setShow] = useState(false);
   const [layout, setLayout] = useState<Layout[]>([]);
+  const [postit, setPostit] = useState<Postit[]>([]);
 
   useEffect(() => {
     if (props.layout) {
@@ -78,7 +81,10 @@ const Widget = (props: {
     }
   };
 
-  const widgetLayout = async (currentlayout: Layout[]) => {
+  const widgetLayout = async (
+    currentlayout: Layout[],
+    currentpostits: Postit[]
+  ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
     if (input) {
       html2canvas(input, {
@@ -89,9 +95,14 @@ const Widget = (props: {
         uploadToStorage(imgData);
       });
     }
-    const test = JSON.stringify(currentlayout);
+    const allLayouts = JSON.stringify(currentlayout);
+    const allPostits = JSON.stringify(currentpostits);
+
     const widgetRef = doc(db, "widgets", widgetid);
-    await updateDoc(widgetRef, { layout: test });
+    await updateDoc(widgetRef, {
+      layout: allLayouts,
+      postits: allPostits,
+    });
     handleClose();
   };
 
@@ -110,7 +121,17 @@ const Widget = (props: {
   };
 
   const createPostit = () => {
+    const uuid = v4();
     console.log("POSTIT!!!");
+    const newPostit = { id: uuid, postittext: "" };
+    const newPostitArray = [...postit, newPostit];
+    console.log(newPostitArray);
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    setPostit(newPostitArray);
+    setLayout(newLayoutArray);
   };
 
   const createImage = () => {
@@ -249,7 +270,7 @@ const Widget = (props: {
           </div>
           <div className="widget__btn-container">
             <button
-              onClick={() => widgetLayout(layout)}
+              onClick={() => widgetLayout(layout, postit)}
               className="widget-container__save-btn"
             >
               Save
@@ -268,7 +289,9 @@ const Widget = (props: {
               <Whiteboard
                 widgetid={widgetid}
                 layouts={layout}
-                setLayout={setLayout}
+                layoutSetter={setLayout}
+                postits={postit}
+                setPostit={setPostit}
               />
             </div>
           </div>

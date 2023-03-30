@@ -1,10 +1,11 @@
 import { doc, getFirestore, updateDoc } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
 import { Textblock } from "../WhiteboardComponents/Text";
+import { Postit } from "../../../Types";
 //import { WBImage } from "../WhiteboardComponents/WBImage";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -12,8 +13,12 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const Whiteboard = (props: {
   widgetid: string;
   layouts: Layout[];
-  setLayout: Function;
+  layoutSetter: Function;
+  postits: Postit[];
+  setPostit: Function;
 }) => {
+  const { postits, layouts } = props;
+
   return (
     <ResponsiveGridLayout
       layouts={{
@@ -29,11 +34,20 @@ const Whiteboard = (props: {
       isResizable={true}
       resizeHandles={["se"]}
       onLayoutChange={(layout: Layout[]) => {
-        props.setLayout(layout);
+        props.layoutSetter(layout);
       }}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
+      {postits &&
+        postits.map((postit: Postit) => {
+          console.log("searching.....");
+          const layout = layouts.find((x) => x.i === postit.id);
+          console.log(layout);
+          if (layout) {
+            return <PostIt key={postit.id} data-grid={layout} />;
+          }
+        })}
       <PostIt key={"test"} data-grid={props.layouts[0]} />
       <Textblock key={"text"} data-grid={props.layouts[1]} />
     </ResponsiveGridLayout>

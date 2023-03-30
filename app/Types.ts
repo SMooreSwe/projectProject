@@ -30,3 +30,8 @@ export type Invited = {
   invitationuid: string;
   created: Timestamp;
 };
+
+export type Postit = {
+  id: string;
+  postittext: string;
+};
