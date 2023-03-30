@@ -132,7 +132,9 @@ const Widget = (props: {
     console.log("--------image index-------");
     console.log(props.widgetindex);
     console.log(widgetid);
-    console.log("--------image index------");
+    console.log(index);
+    console.log(props.widgetimages[index]);
+    console.log("--------image index-------");
     if (index !== -1) {
       console.log("IMAGE DOES EXIST!!!");
       return (

@@ -191,7 +191,7 @@ const Sidebar = (props: {
     <div className="Sidebar">
       {inviteduser && <>{userInvited()}</>}
       <div>
-        <h3 className={styles.Sidebar__title}></h3>
+        <h3 className={styles.Sidebar__title}>Comments</h3>
       </div>
       <div>
         <h3 className={styles.Sidebar__title}></h3>
