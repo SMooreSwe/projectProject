@@ -4,6 +4,7 @@ import styles from "../userpage.module.css";
 import CreateWidget from "../modals/CreateWidget";
 import {
   collection,
+  FieldPath,
   getFirestore,
   onSnapshot,
   orderBy,
@@ -51,11 +52,12 @@ const Canvas = (props: {
 
     widgetList.map((widget: WidgetType) => {
       const filePath = `/widgets/${widget.widgetid}.jpeg`;
+      console.log(FieldPath);
       const storageRef = ref(storage, filePath);
       getDownloadURL(storageRef)
         .then((url) => {
           urls.push(url);
-          console.log("THIS WIDGET IMAGE EXISTS!!!!!!");
+          console.log("THIS WIDGET IMAGE EXISTS!!!");
           widgetIndex.push(widget.widgetid);
         })
         .catch((error) => {
