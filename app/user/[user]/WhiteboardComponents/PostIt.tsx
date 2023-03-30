@@ -16,10 +16,10 @@ import React, { ReactNode } from 'react'
 // }
 
 //eslint-disable-next-line react/display-name
-export const PostIt = React.forwardRef<HTMLDivElement>(({style, className, onMouseDown, onMouseUp, onTouchEnd, children, key}: any, ref) => {
+export const PostIt = React.forwardRef<HTMLDivElement>(({style, className, onMouseDown, onMouseUp, onTouchEnd, children, ...props}: any, ref) => {
   return (
-    <div key={key} style={style} className={className} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
-    Hello
+    <div key={props.key} style={style} className={className} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onTouchEnd={onTouchEnd}>
+    hello
       {children}
     </div>
   );
