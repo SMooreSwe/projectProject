@@ -25,8 +25,8 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
-  widgetimages: any[];
-  widgetindex: any[];
+  widgetimages: string[];
+  widgetindex: string[];
   prioritySetter: Function;
 }) => {
   const { widgetid, date } = props;
