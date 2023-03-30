@@ -173,7 +173,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetindex.length && <>{widgetImage(props.widgetid)}</>}
+          {props.widgetindex && <>{widgetImage(props.widgetid)}</>}
         </div>
       </article>
 
@@ -262,17 +262,17 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-          <Modal.Body className="whiteboard__body">
+        <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
-              <div className={styles.whiteboard}>
-                <Whiteboard
-                  widgetid={widgetid}
-                  layouts={layout}
-                  setLayout={setLayout}
-                />
-              </div>
+            <div className={styles.whiteboard}>
+              <Whiteboard
+                widgetid={widgetid}
+                layouts={layout}
+                setLayout={setLayout}
+              />
+            </div>
           </div>
-          </Modal.Body>
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -41,9 +41,12 @@ const Canvas = (props: {
         data.push(doc.data());
       });
       setWidgetList(data);
-      getWidgetImages(data);
     });
   };
+
+  useEffect(() => {
+    getWidgetImages(widgetList);
+  }, [widgetList]);
 
   const getWidgetImages = async (widgets: WidgetType[]) => {
     const storage = getStorage();
