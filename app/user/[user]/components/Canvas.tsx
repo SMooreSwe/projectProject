@@ -13,6 +13,7 @@ import {
 import { app } from "../../../../firebase-config";
 import { Project, WidgetType } from "../../../Types";
 import Widget from "./Widget";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Canvas = (props: {
   children: ReactNode;
@@ -21,6 +22,10 @@ const Canvas = (props: {
 }) => {
   const [widgetList, setWidgetList] = useState<WidgetType[]>([]);
   const [priority, setPriority] = useState("medium");
+
+  const [widgetimages, setWidgetImages] = useState<string[]>([]);
+  const [widgetindex, setWIdgetIndex] = useState<string[]>([]);
+
   const db = getFirestore(app) as any;
 
   const getWidgets = async (projectid: string) => {
@@ -38,8 +43,32 @@ const Canvas = (props: {
     });
   };
 
+  const getWidgetImages = async () => {
+    const storage = getStorage();
+
+    const urls: any[] = [];
+    const widgetIndex: string[] = [];
+
+    widgetList.map((widget: WidgetType) => {
+      const filePath = `/widget/${widget.widgetid}.jpeg`;
+      const storageRef = ref(storage, filePath);
+      getDownloadURL(storageRef)
+        .then((url) => {
+          urls.push(url);
+          widgetIndex.push(widget.widgetid);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
+    setWidgetImages(urls);
+    setWIdgetIndex(widgetIndex);
+  };
+
   useEffect(() => {
     getWidgets(props.project);
+    getWidgetImages();
   }, [props.project]);
 
   return (
@@ -63,6 +92,8 @@ const Canvas = (props: {
                   priority={widget.priority}
                   prioritySetter={setPriority}
                   layout={widget.layout}
+                  widgetimages={widgetimages}
+                  widgetindex={widgetindex}
                 />
               );
             })}

@@ -25,6 +25,8 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
+  widgetimages: any[];
+  widgetindex: any[];
   prioritySetter: Function;
 }) => {
   const { widgetid, date } = props;
@@ -119,6 +121,31 @@ const Widget = (props: {
     console.log("LINK!!!");
   };
 
+  const widgetImage = (widgetid: string) => {
+    const index = props.widgetindex.indexOf(widgetid);
+    if (index !== -1) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.widgetImage}
+          src={props.widgetimages[index]}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.widgetImage}
+          src={"/editme.png"}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    }
+  };
+
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
@@ -144,7 +171,9 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-        <div className={`widget__main ${props.priority}`}></div>
+        <div className={`widget__main ${props.priority}`}>
+          {layout && <>{widgetImage(props.widgetid)}</>}
+        </div>
       </article>
 
       <Modal
