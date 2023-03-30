@@ -90,7 +90,7 @@ const Header = (props: {
             className={styles.settingsImage}
             src={settingsButton}
             placeholder="blur"
-            alt=""
+            alt="hamburger menu"
           />
         </button>
       </div>
