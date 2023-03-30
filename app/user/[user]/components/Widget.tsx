@@ -25,6 +25,8 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
+  widgetimages: any[];
+  widgetindex: any[];
   prioritySetter: Function;
 }) => {
   const { widgetid, date } = props;
@@ -55,7 +57,7 @@ const Widget = (props: {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
-  }, [show]);
+  }, [show, props.widgetimages]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -96,7 +98,7 @@ const Widget = (props: {
   const uploadToStorage = async (imgData: any) => {
     const blob = await (await fetch(imgData)).blob();
     const storage = getStorage();
-    const filePath = `/widget/${widgetid}.jpeg`;
+    const filePath = `/widgets/${widgetid}.jpeg`;
     const storageRef = ref(storage, filePath);
     uploadBytes(storageRef, blob).then((snapshot) => {
       console.log("Uploaded a blob or file!");
@@ -117,6 +119,37 @@ const Widget = (props: {
 
   const createLink = () => {
     console.log("LINK!!!");
+  };
+
+  const widgetImage = (widgetid: string) => {
+    console.log("---------------------------------");
+    console.log(widgetid);
+    console.log(props.widgetindex);
+    console.log(props.widgetimages);
+    console.log("---------------------------------");
+
+    const index = props.widgetindex.indexOf(widgetid);
+    if (index !== -1) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.widgetImage}
+          src={props.widgetimages[index]}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.widgetImage}
+          src={"/editme.png"}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    }
   };
 
   return (
@@ -144,7 +177,9 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-        <div className={`widget__main ${props.priority}`}></div>
+        <div className={`widget__main ${props.priority}`}>
+          {props.widgetimages && <>{widgetImage(props.widgetid)}</>}
+        </div>
       </article>
 
       <Modal

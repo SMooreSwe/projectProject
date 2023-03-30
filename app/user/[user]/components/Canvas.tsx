@@ -4,6 +4,7 @@ import styles from "../userpage.module.css";
 import CreateWidget from "../modals/CreateWidget";
 import {
   collection,
+  FieldPath,
   getFirestore,
   onSnapshot,
   orderBy,
@@ -13,6 +14,7 @@ import {
 import { app } from "../../../../firebase-config";
 import { Project, WidgetType } from "../../../Types";
 import Widget from "./Widget";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Canvas = (props: {
   children: ReactNode;
@@ -21,6 +23,10 @@ const Canvas = (props: {
 }) => {
   const [widgetList, setWidgetList] = useState<WidgetType[]>([]);
   const [priority, setPriority] = useState("medium");
+
+  const [widgetimages, setWidgetImages] = useState<string[]>([]);
+  const [widgetindex, setWIdgetIndex] = useState<string[]>([]);
+
   const db = getFirestore(app) as any;
 
   const getWidgets = async (projectid: string) => {
@@ -35,7 +41,36 @@ const Canvas = (props: {
         data.push(doc.data());
       });
       setWidgetList(data);
+      getWidgetImages(data);
     });
+  };
+
+  const getWidgetImages = async (widgets: WidgetType[]) => {
+    const storage = getStorage();
+
+    const urls: any[] = [];
+    const widgetIndex: string[] = [];
+
+    console.log("getWidgetIMages is GOING!");
+    console.log(widgets);
+
+    widgets.map((widget: WidgetType) => {
+      const filePath = `/widgets/${widget.widgetid}.jpeg`;
+      console.log(FieldPath);
+      const storageRef = ref(storage, filePath);
+      getDownloadURL(storageRef)
+        .then((url) => {
+          urls.push(url);
+          console.log("THIS WIDGET IMAGE EXISTS!!!");
+          widgetIndex.push(widget.widgetid);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
+    setWidgetImages(urls);
+    setWIdgetIndex(widgetIndex);
   };
 
   useEffect(() => {
@@ -63,6 +98,8 @@ const Canvas = (props: {
                   priority={widget.priority}
                   prioritySetter={setPriority}
                   layout={widget.layout}
+                  widgetimages={widgetimages}
+                  widgetindex={widgetindex}
                 />
               );
             })}

@@ -39,7 +39,7 @@ function CollaboratorsWidget(props: {
       projects: [],
     },
   ]);
-  const [allimages, setAllimages] = useState<string[]>([]);
+  const [allimages, setAllImages] = useState<string[]>([]);
   const [userindex, setUserIndex] = useState<string[]>([]);
 
   const [show, setShow] = useState(false);
@@ -84,7 +84,7 @@ function CollaboratorsWidget(props: {
         });
     });
 
-    setAllimages(urls);
+    setAllImages(urls);
     setUserIndex(userIndex);
   };
 
