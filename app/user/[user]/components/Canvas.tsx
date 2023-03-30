@@ -41,19 +41,20 @@ const Canvas = (props: {
         data.push(doc.data());
       });
       setWidgetList(data);
+      getWidgetImages(data);
     });
   };
 
-  const getWidgetImages = async () => {
+  const getWidgetImages = async (widgets: WidgetType[]) => {
     const storage = getStorage();
 
     const urls: any[] = [];
     const widgetIndex: string[] = [];
 
     console.log("getWidgetIMages is GOING!");
-    console.log(widgetList);
+    console.log(widgets);
 
-    widgetList.map((widget: WidgetType) => {
+    widgets.map((widget: WidgetType) => {
       const filePath = `/widgets/${widget.widgetid}.jpeg`;
       console.log(FieldPath);
       const storageRef = ref(storage, filePath);
@@ -72,13 +73,8 @@ const Canvas = (props: {
     setWIdgetIndex(widgetIndex);
   };
 
-  const callingWIdgets = async () => {
-    await getWidgets(props.project);
-    getWidgetImages();
-  };
-
   useEffect(() => {
-    callingWIdgets();
+    getWidgets(props.project);
   }, [props.project]);
 
   return (
