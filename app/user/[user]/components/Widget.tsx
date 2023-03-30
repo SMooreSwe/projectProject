@@ -122,12 +122,6 @@ const Widget = (props: {
   };
 
   const widgetImage = (widgetid: string) => {
-    console.log("--------------------------------");
-    console.log(widgetid);
-    console.log(props.widgetindex);
-    console.log(props.widgetimages);
-    console.log("--------------------------------");
-
     const array = props.widgetindex;
     const index = array.indexOf(widgetid);
     console.log("--------image index-------");
@@ -186,7 +180,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetimages && <>{widgetImage(props.widgetid)}</>}
+          {props.widgetid?.length && <>{widgetImage(props.widgetid)}</>}
         </div>
       </article>
 
