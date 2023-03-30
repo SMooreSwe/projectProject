@@ -61,7 +61,7 @@ const Canvas = (props: {
       getDownloadURL(storageRef)
         .then((url) => {
           urls.push(url);
-          console.log("THIS WIDGET IMAGE EXISTS!!!");
+          console.log("THIS WIDGET IMAGE EXISTS!!");
           console.log(url);
           console.log("THIS WIDGET IMAGE EXISTS!!!");
           widgetIndex.push(widget.widgetid);
