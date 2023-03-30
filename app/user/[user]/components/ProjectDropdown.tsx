@@ -17,7 +17,7 @@ const ProjectDropdown = (props: {
   const populate = () => {
 
     if (props.projectList.length === 0) {
-      return <option value="">Please create a project...</option>;
+      return <option value="">Select a project...</option>;
     } else {
       return props.projectList.map((project) => (
         <option key={project.projectid} value={project.projectid}>
