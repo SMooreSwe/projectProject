@@ -128,7 +128,8 @@ const Widget = (props: {
     console.log(props.widgetimages);
     console.log("--------------------------------");
 
-    const index = props.widgetindex.indexOf(widgetid.toString());
+    const array = props.widgetindex;
+    const index = array.indexOf(widgetid.toString());
     console.log("--------image index-------");
     console.log(props.widgetindex);
     console.log(widgetid);
