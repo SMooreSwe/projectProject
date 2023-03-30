@@ -59,7 +59,7 @@ const Whiteboard = (props: {
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
-      {postits && populate()}
+      {postits && <>populate()</>}
       <PostIt key={"test"} data-grid={props.layouts[0]} />
       <Textblock key={"text"} data-grid={props.layouts[1]} />
     </ResponsiveGridLayout>
