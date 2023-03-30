@@ -194,7 +194,7 @@ const Widget = (props: {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        size="xl"
+        fullscreen
         centered
       >
         <div className="whiteboard__header">
@@ -274,17 +274,17 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-        <div className="whiteboard__photo">
           <Modal.Body className="whiteboard__body">
-            <div className={styles.whiteboard}>
-              <Whiteboard
-                widgetid={widgetid}
-                layouts={layout}
-                setLayout={setLayout}
-              />
-            </div>
+          <div className="whiteboard__photo">
+              <div className={styles.whiteboard}>
+                <Whiteboard
+                  widgetid={widgetid}
+                  layouts={layout}
+                  setLayout={setLayout}
+                />
+              </div>
+          </div>
           </Modal.Body>
-        </div>
       </Modal>
     </>
   );
