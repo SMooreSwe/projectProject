@@ -129,7 +129,12 @@ const Widget = (props: {
     console.log("---------------------------------");
 
     const index = props.widgetindex.indexOf(widgetid);
+    console.log("--------image index-------");
+    console.log(props.widgetindex);
+    console.log(widgetid);
+    console.log("--------image index------");
     if (index !== -1) {
+      console.log("IMAGE DOES EXIST!!!");
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img

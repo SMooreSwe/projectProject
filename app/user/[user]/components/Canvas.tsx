@@ -51,19 +51,12 @@ const Canvas = (props: {
     const urls: any[] = [];
     const widgetIndex: string[] = [];
 
-    console.log("getWidgetIMages is GOING!");
-    console.log(widgets);
-
     widgets.map((widget: WidgetType) => {
       const filePath = `/widgets/${widget.widgetid}.jpeg`;
-      console.log(filePath);
       const storageRef = ref(storage, filePath);
       getDownloadURL(storageRef)
         .then((url) => {
           urls.push(url);
-          console.log("THIS WIDGET IMAGE EXISTS!!");
-          console.log(url);
-          console.log("THIS WIDGET IMAGE EXISTS!!!");
           widgetIndex.push(widget.widgetid);
         })
         .catch((error) => {
