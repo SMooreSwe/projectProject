@@ -14,7 +14,7 @@ const Whiteboard = (props: {
 }) => {
   return (
     <ResponsiveGridLayout
-      layouts={{ lg: props.layouts }}
+      layouts={{ lg: props.layouts, md: props.layouts, sm: props.layouts, xs: props.layouts, xxs: props.layouts }}
       className="layout"
       compactType={null}
       preventCollision={false}
@@ -23,13 +23,10 @@ const Whiteboard = (props: {
       onLayoutChange={(layout: Layout[]) => {
         props.setLayout(layout);
       }}
-      // layouts={layouts}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
-      <PostIt refStyle={{border: '1px solid black'}}
-      refClassName={'grid-item'} 
-      key={'test'} >
+      <PostIt key={'test'} data-grid={props.layouts[0]} >
       </PostIt>
       <div className="box" key="2">
         2
