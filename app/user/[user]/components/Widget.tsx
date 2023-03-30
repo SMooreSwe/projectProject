@@ -100,7 +100,10 @@ const Widget = (props: {
 
   const uploadToStorage = async (imgData: any) => {
     const blob = await (await fetch(imgData)).blob();
-    //const file = new File([blob]), 'image.jpg'
+    const file = new File([blob], "fileName.jpeg", {
+      type: "image/jpeg",
+      lastModified: 20,
+    });
 
     const storage = getStorage();
     const filePath = `/widget/image.jpeg`;
