@@ -19,6 +19,7 @@ import {
 } from "firebase/storage";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getFirebaseConfig, auth } from "../../../firebase-config";
+import { validate } from "uuid";
 
 export const Form = () => {
   const router = useRouter();
@@ -31,19 +32,23 @@ export const Form = () => {
     password: "",
     confirmpassword: "",
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
+
   function authStateObserver(user: any) {
     if (user) {
       router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
     }
   }
+
   function initFirebaseAuth() {
     onAuthStateChanged(getAuth(), authStateObserver);
   }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -155,7 +160,7 @@ export const Form = () => {
             <br></br>
             <input
               className="inputField"
-              type="text"
+              type="password"
               name="password"
               value={inputs.password || ""}
               onChange={handleChange}
@@ -167,7 +172,7 @@ export const Form = () => {
             <br></br>
             <input
               className="inputField"
-              type="text"
+              type="password"
               name="confirmpassword"
               value={inputs.confirmpassword || ""}
               onChange={handleChange}
