@@ -28,31 +28,31 @@ const About = () => {
       <h2 className='section__title'>How We Did It</h2>
       <p>From the beginning, we found balance between thorough planning and remaining agile. We planned our must-haves, like which components, collections, documents, queries, and CRUD operations our application absolutely needed. How we implemented these things and how it would ultimatley look remained agile. If an approach or library did not work for us within a few hours, we scrapped it and searched for something more effective and time efficient.</p>
       <Image 
-        src="/../../public/first-sketch.jpg"
+        src="/first-sketch.jpg"
         alt="[project Project]'s very first UI sketch"
         width={800}
         height={500}
       />
       <Image 
-      src="/../../public/component-mapping.jpg"
+      src="/component-mapping.jpg"
       alt="first draft of our components and application architecture"
       width={800}
       height={500}
       />
       <Image 
-      src="/../../public/mvp.png"
+      src="/mvp.png"
       alt="sketch of our original mvp"
       width={800}
       height={500}
       />
       <Image 
-      src="/../../public/query-logic.png"
+      src="/query-logic.png"
       alt="mapping of our query logic"
       width={800}
       height={500}
       />
       <Image 
-      src="/../../public/data-model.png"
+      src="/data-model.png"
       alt="sketch of our data model"
       width={800}
       height={500}
