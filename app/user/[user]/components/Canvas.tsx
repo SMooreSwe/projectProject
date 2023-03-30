@@ -72,9 +72,13 @@ const Canvas = (props: {
     setWIdgetIndex(widgetIndex);
   };
 
-  useEffect(() => {
-    getWidgets(props.project);
+  const callingWIdgets = async () => {
+    await getWidgets(props.project);
     getWidgetImages();
+  };
+
+  useEffect(() => {
+    callingWIdgets();
   }, [props.project]);
 
   return (
