@@ -175,7 +175,7 @@ const Sidebar = (props: {
                 alt=""
               />
               <p className={styles.tutorial__text}>
-                Click on collaborators about to invite others to your project and collaborate!
+                Click on collaborators to invite others to your project and collaborate!
               </p>
             </div>
           </div>
