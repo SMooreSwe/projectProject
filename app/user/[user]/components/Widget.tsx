@@ -77,9 +77,7 @@ const Widget = (props: {
   };
 
   const widgetLayout = async (currentlayout: Layout[]) => {
-    console.log("happening?");
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
-    console.log(input);
     if (input) {
       html2canvas(input, {
         logging: true,
@@ -87,26 +85,18 @@ const Widget = (props: {
       }).then((canvas) => {
         const imgData = canvas.toDataURL("img/png");
         uploadToStorage(imgData);
-        //var contents = fs.readFileSync("./dmv_file_reader.txt").toString();
-        // var blob = new Blob([imgData], { type: "text/plain" });
-        // var file = new File([blob], "foo.txt", { type: "img/jpeg" });
       });
     }
-
-    // const test = JSON.stringify(currentlayout);
-    // const widgetRef = doc(db, "widgets", widgetid);
-    // await updateDoc(widgetRef, { layout: test });
+    const test = JSON.stringify(currentlayout);
+    const widgetRef = doc(db, "widgets", widgetid);
+    await updateDoc(widgetRef, { layout: test });
+    handleClose();
   };
 
   const uploadToStorage = async (imgData: any) => {
     const blob = await (await fetch(imgData)).blob();
-    const file = new File([blob], "fileName.jpeg", {
-      type: "image/jpeg",
-      lastModified: 20,
-    });
-
     const storage = getStorage();
-    const filePath = `/widget/image.jpeg`;
+    const filePath = `/widget/${widgetid}.jpeg`;
     const storageRef = ref(storage, filePath);
     uploadBytes(storageRef, blob).then((snapshot) => {
       console.log("Uploaded a blob or file!");
