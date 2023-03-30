@@ -57,7 +57,7 @@ const Widget = (props: {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
-  }, [show]);
+  }, [show, props.widgetimages]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -122,6 +122,12 @@ const Widget = (props: {
   };
 
   const widgetImage = (widgetid: string) => {
+    console.log("---------------------------------");
+    console.log(widgetid);
+    console.log(props.widgetindex);
+    console.log(props.widgetimages);
+    console.log("---------------------------------");
+
     const index = props.widgetindex.indexOf(widgetid);
     if (index !== -1) {
       return (
@@ -172,7 +178,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {layout && <>{widgetImage(props.widgetid)}</>}
+          {props.widgetimages && <>{widgetImage(props.widgetid)}</>}
         </div>
       </article>
 
