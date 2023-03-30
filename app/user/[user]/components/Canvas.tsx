@@ -56,11 +56,13 @@ const Canvas = (props: {
 
     widgets.map((widget: WidgetType) => {
       const filePath = `/widgets/${widget.widgetid}.jpeg`;
-      console.log(FieldPath);
+      console.log(filePath);
       const storageRef = ref(storage, filePath);
       getDownloadURL(storageRef)
         .then((url) => {
           urls.push(url);
+          console.log("THIS WIDGET IMAGE EXISTS!!!");
+          console.log(url);
           console.log("THIS WIDGET IMAGE EXISTS!!!");
           widgetIndex.push(widget.widgetid);
         })
