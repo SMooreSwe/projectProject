@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+* {
+    font-family:'Open Sans', sans-serif;
+    margin: 0 auto;
+}
+
+.main__about-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 250px;
+}
+
+.section {
+    margin: 15px;
+}
+
+.section__title {
+    margin-bottom: 10px;
+}
+
+.ul__project-why {
+    padding: 10px 5px;
+}
