@@ -85,9 +85,6 @@ const Canvas = (props: {
         <div className="canvas">
           {widgetList &&
             widgetList.map((widget) => {
-              console.log("---------------WIDGETS!------------------");
-              console.log(widget.layout);
-              console.log("---------------------------------");
               return (
                 <Widget
                   key={widget.widgetid}

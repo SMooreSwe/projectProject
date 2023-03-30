@@ -22,10 +22,6 @@ const Whiteboard = (props: {
 
   const populate = () => {
     postits.map((postit: Postit) => {
-      console.log("----------------------------------------------------");
-      console.log("searching.....");
-      console.log(props.layouts);
-      console.log("----------------------------------------------------");
       const layout = layouts.find((x) => x.i === postit.id);
       console.log(layout);
       if (layout) {

@@ -62,6 +62,7 @@ const Widget = (props: {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
+    widgetImage();
   }, [show, props.widgetid, props.layout]);
 
   const db = getFirestore(app) as any;
@@ -144,9 +145,9 @@ const Widget = (props: {
     console.log("LINK!!!");
   };
 
-  const widgetImage = (widgetid: string) => {
+  const widgetImage = () => {
     const array = props.widgetindex;
-    const index = array.indexOf(widgetid);
+    const index = array.indexOf(props.widgetid);
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -196,7 +197,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetindex && <>{widgetImage(props.widgetid)}</>}
+          {props.widgetindex && <>{widgetImage()}</>}
         </div>
       </article>
 
