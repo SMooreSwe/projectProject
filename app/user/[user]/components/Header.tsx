@@ -65,7 +65,7 @@ const Header = (props: {
       <div className="Logo">[project Project]</div>
       {props.children}
       <div className={styles.createproject__container}>
-        <label htmlFor="">New Project</label>
+        <label htmlFor="">Create A New Project</label>
         <CreateProject user={props.user} />
       </div>
       <div className={styles.collaborator__container}>
