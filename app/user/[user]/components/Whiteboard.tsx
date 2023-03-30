@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
+import { PostIt } from "../WhiteboardComponents/PostIt";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -26,9 +27,10 @@ const Whiteboard = (props: {
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
-      <div className="box" key="1">
-        1
-      </div>
+      <PostIt refStyle={{border: '1px solid black'}}
+      refClassName={'grid-item'} 
+      key={'test'} >
+      </PostIt>
       <div className="box" key="2">
         2
       </div>
