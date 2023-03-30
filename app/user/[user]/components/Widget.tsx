@@ -122,11 +122,11 @@ const Widget = (props: {
   };
 
   const widgetImage = (widgetid: string) => {
-    console.log("---------------------------------");
+    console.log("--------------------------------");
     console.log(widgetid);
     console.log(props.widgetindex);
     console.log(props.widgetimages);
-    console.log("---------------------------------");
+    console.log("--------------------------------");
 
     const index = props.widgetindex.indexOf(widgetid);
     console.log("--------image index-------");
