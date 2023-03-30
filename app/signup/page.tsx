@@ -4,7 +4,7 @@ import { Form } from "./components/SignUpForm";
 const Signup = () => {
   return (
     <>
-      <div>
+      <div className="main">
         <h1 className="signup__title"> [project Project]</h1>
         <p className="signup__subtitle">Please create an account</p>
       </div>
