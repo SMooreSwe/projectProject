@@ -98,7 +98,7 @@ const Widget = (props: {
   const uploadToStorage = async (imgData: any) => {
     const blob = await (await fetch(imgData)).blob();
     const storage = getStorage();
-    const filePath = `/widget/${widgetid}.jpeg`;
+    const filePath = `/widgets/${widgetid}.jpeg`;
     const storageRef = ref(storage, filePath);
     uploadBytes(storageRef, blob).then((snapshot) => {
       console.log("Uploaded a blob or file!");
