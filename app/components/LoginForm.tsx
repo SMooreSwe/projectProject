@@ -63,21 +63,24 @@ export const Form = () => {
             onChange={handleChange}
           />
         </label>
+        {/* <div className="password-div"> */}
         <label className="inputLabel">
           {" "}
           Password:
           <br></br>
           <input
-            className="inputField"
+            className="inputField inputField--password"
             type={passwordType}
             name="password"
             value={inputs.password || ""}
             onChange={handleChange}
           />
-        </label>
-        <button className="formPasswordVisibility" onClick={togglePassword}>
-          {passwordType==="password" ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+          <button className="formPasswordVisibility" onClick={togglePassword}>
+          {passwordType==="password" ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20}/>}
         </button>
+        </label>
+        
+        {/* </div> */}
         <button className="formButton" type="submit">
           Login
         </button>

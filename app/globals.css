@@ -446,3 +446,25 @@ input[type="file"] {
   outline: 0.1px solid rgb(204, 204, 204);
   border-radius: 5px;
 }
+
+/* .password-div {
+  display: flex;
+
+} */
+
+.inputField--password {
+  position: relative;
+  /* padding: 5px 10px; */
+
+
+}
+
+.formPasswordVisibility {
+  cursor: pointer;
+  position: absolute;
+  right: 4px;
+  bottom: 55px;
+  border: none;
+  background: transparent;
+  margin: 2px ;
+} 
