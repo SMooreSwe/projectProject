@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { auth } from "../../firebase-config";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
