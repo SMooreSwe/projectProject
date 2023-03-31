@@ -21,6 +21,7 @@ const Header = (props: {
   projectid: string;
   projectname: string;
   children: ReactNode;
+  collaboratorsArray: string[];
 }) => {
   const router = useRouter();
 
@@ -58,26 +59,40 @@ const Header = (props: {
 
   useEffect(() => {
     userImage();
-  }, [props.user]);
+  }, [props.user, props.projectid]);
+
+  const members = () => {
+    console.log("triggered?");
+    console.log(props.collaboratorsArray.length);
+    return (
+      <>
+        <label className={styles.collaborators__number} htmlFor="">
+          +{props.collaboratorsArray.length}
+        </label>
+      </>
+    );
+  };
 
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
-      {props.children}
-      <div className={styles.createproject__container}>
-        <label htmlFor="">Create A New Project</label>
+      <div className="createProject__container">
+        {props.children}
         <CreateProject user={props.user} />
       </div>
+
       <div className={styles.collaborator__container}>
-        <label htmlFor="">Collaborators</label>
+        <label htmlFor="">Add Collaborators</label>
         <CollaboratorsWidget
           projectid={props.projectid}
           username={props.user.username}
           projectname={props.projectname}
         />
+        {props.collaboratorsArray.length > 1 && <>{members()}</>}
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>
+        {/*eslint-disable-next-line @next/next/no-img-element*/}
         <img
           ref={imageSRC}
           className={styles.UserProfileImage}
@@ -86,12 +101,7 @@ const Header = (props: {
           alt=""
         />
         <button className={styles.settingsButton} onClick={() => signOutUser()}>
-          <Image
-            className={styles.settingsImage}
-            src={settingsButton}
-            placeholder="blur"
-            alt="hamburger menu"
-          />
+          <p>logout</p>
         </button>
       </div>
     </nav>

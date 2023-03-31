@@ -69,7 +69,11 @@ const Widget = (props: {
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
+    }
+    if (props.newPostits) {
       setPostit(JSON.parse(props.newPostits));
+    }
+    if (props.newTextbox) {
       setTextbox(JSON.parse(props.newTextbox));
     }
   }, [show, props.widgetid, props.layout]);
@@ -174,12 +178,6 @@ const Widget = (props: {
   };
 
   const widgetImage = () => {
-    console.log("-------------------");
-    console.log(images);
-    console.log(props.widgetindex);
-    console.log(props.widgetimages);
-    console.log("-------------------");
-
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
     console.log(index);
