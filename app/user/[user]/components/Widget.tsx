@@ -165,8 +165,15 @@ const Widget = (props: {
   };
 
   const widgetImage = () => {
+    console.log("-------------------");
+    console.log(images);
+    console.log(props.widgetindex);
+    console.log(props.widgetimages);
+    console.log("-------------------");
+
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
+    console.log();
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
