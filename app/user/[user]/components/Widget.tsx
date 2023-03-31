@@ -176,7 +176,7 @@ const Widget = (props: {
 
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
-    console.log();
+    console.log(index);
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -327,7 +327,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {images && <>{widgetImage()}</>}
+          {images.length > 0 && <>{widgetImage()}</>}
         </div>
       </article>
 
