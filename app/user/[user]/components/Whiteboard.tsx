@@ -32,8 +32,8 @@ const Whiteboard = (props: {
 
   useEffect(() => {
     props.layoutSetter(props.layouts);
-    populate();
-  }, [props.show]);
+    //populate();
+  }, [props.show, props.layouts, props.postits]);
 
   return (
     <ResponsiveGridLayout
@@ -55,9 +55,15 @@ const Whiteboard = (props: {
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
-      {postits && <>populate()</>}
-      <PostIt key={"test"} data-grid={props.layouts[0]} />
-      <Textblock key={"text"} data-grid={props.layouts[1]} />
+      {/*postits && <>populate()</>*/}
+      {postits &&
+        postits.map((postit: Postit) => {
+          const layout = layouts.find((x) => x.i === postit.id);
+          console.log(layout);
+          if (layout) {
+            return <PostIt key={postit.id} data-grid={layout} />;
+          }
+        })}
     </ResponsiveGridLayout>
   );
 };

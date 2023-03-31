@@ -21,6 +21,7 @@ export type WidgetType = {
   widgetid: string;
   priority: string;
   layout: string;
+  postits: string;
 };
 
 export type Invited = {

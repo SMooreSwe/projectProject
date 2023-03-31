@@ -15,11 +15,17 @@ import {
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
-import { Layout } from "react-grid-layout";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { Postit } from "../../../Types";
 import { v4 } from "uuid";
+
+import { Layout, Responsive, WidthProvider } from "react-grid-layout";
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
+import { PostIt } from "../WhiteboardComponents/PostIt";
+import { Textblock } from "../WhiteboardComponents/Text";
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Widget = (props: {
   projectid: string;
@@ -27,6 +33,7 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
+  newpostits: string;
   widgetimages: string[];
   widgetindex: string[];
   prioritySetter: Function;
@@ -61,6 +68,7 @@ const Widget = (props: {
     console.log(props.layout);
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
+      setPostit(JSON.parse(props.newpostits));
     }
     widgetImage();
   }, [show, props.widgetid, props.layout]);
@@ -89,6 +97,7 @@ const Widget = (props: {
     currentpostits: Postit[]
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
+    console.log("FIRESTORE FUNCTION IS CALLED!");
     if (input) {
       html2canvas(input, {
         logging: true,
@@ -100,6 +109,11 @@ const Widget = (props: {
     }
     const allLayouts = JSON.stringify(currentlayout);
     const allPostits = JSON.stringify(currentpostits);
+
+    console.log("-----------------");
+    console.log(allLayouts);
+    console.log(allPostits);
+    console.log("-----------------");
 
     const widgetRef = doc(db, "widgets", widgetid);
     await updateDoc(widgetRef, {
@@ -125,10 +139,9 @@ const Widget = (props: {
 
   const createPostit = () => {
     const uuid = v4();
-    console.log("POSTIT!!!");
+    console.log("POSTIT BUTTON PRESSED!!!");
     const newPostit = { id: uuid, postittext: "" };
     const newPostitArray = [...postit, newPostit];
-    console.log(newPostitArray);
     const newLayoutArray = [
       ...layout,
       { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
@@ -169,6 +182,44 @@ const Widget = (props: {
         />
       );
     }
+  };
+
+  const hello = () => {
+    console.log("WHITEBOARD IS BEING CALLED!!!!!!!!");
+    console.log(postit);
+    return (
+      <ResponsiveGridLayout
+        layouts={{
+          lg: layout,
+          md: layout,
+          sm: layout,
+          xs: layout,
+          xxs: layout,
+        }}
+        className="layout"
+        compactType={null}
+        preventCollision={false}
+        isResizable={true}
+        resizeHandles={["se"]}
+        onLayoutChange={(layout: Layout[]) => {
+          setLayout(layout);
+        }}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+      >
+        {/*postits && <>populate()</>*/}
+        {postit &&
+          postit.map((apostit: Postit) => {
+            const flayout = layout.find((x) => x.i === apostit.id);
+            console.log(flayout);
+            console.log(layout);
+            if (layout) {
+              console.log("exists");
+              return <PostIt key={apostit.id} data-grid={flayout} />;
+            }
+          })}
+      </ResponsiveGridLayout>
+    );
   };
 
   return (
@@ -289,14 +340,7 @@ const Widget = (props: {
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>
-              <Whiteboard
-                widgetid={widgetid}
-                layouts={layout}
-                layoutSetter={setLayout}
-                postits={postit}
-                setPostit={setPostit}
-                show={show}
-              />
+              {postit && show === true && <>{hello()}</>}
             </div>
           </div>
         </Modal.Body>
