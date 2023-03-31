@@ -208,6 +208,7 @@ const Widget = (props: {
                   logger={logger}
                   coordinates={singleLayout.i}
                   text={text}
+                  deleter={deleter}
                 />
               );
             }
@@ -223,6 +224,17 @@ const Widget = (props: {
         (element) => element.id === array[1]
       );
       nextState[postitIndex].postittext = array[0];
+      return nextState;
+    });
+  }
+
+  function deleter(id: string) {
+    setPostit((prevState) => {
+      let nextState = [...prevState];
+      const postitIndex = nextState.findIndex(
+        (element) => element.id === id
+      );
+      nextState.splice(postitIndex, 1);
       return nextState;
     });
   }
