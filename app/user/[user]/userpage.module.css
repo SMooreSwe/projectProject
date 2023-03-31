@@ -158,7 +158,9 @@
 
 .Sidebar__container {
   display: flex;
+  flex-direction: column;
   height: 80%;
+  gap: 10px
 }
 
 .Sidebar__messagebox {
@@ -168,4 +170,33 @@
   width: 100%;
   border-radius: 7px;
   border: none;
+}
+
+.Sidebar__typingbox {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  height: 50px;
+  width: 100%;
+  border-radius: 7px;
+  border: none;
+}
+
+.Sidebar__typingField {
+  width: 100%;
+  height:100%;
+  border: none;
+}
+
+.Sidebar__sendbtn {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border-radius: 7px;
+  padding-inline: 10px;
+  border: none;
+}
+
+.Sidebar__typingField[input=text] {
+  padding-right: 10px;
 }

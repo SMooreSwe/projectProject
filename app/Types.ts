@@ -42,3 +42,9 @@ export type Textbox = {
   id: string;
   text: string;
 };
+
+export type WhiteboardImage = {
+  id: string;
+  file: string;
+};
+

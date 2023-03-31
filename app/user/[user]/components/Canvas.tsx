@@ -81,9 +81,6 @@ const Canvas = (props: {
             widgetimages &&
             widgetindex &&
             widgetList.map((widget) => {
-              console.log("TEST 5");
-              console.log(widgetimages);
-
               return (
                 <Widget
                   key={widget.widgetid}

@@ -15,7 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { Postit, Textbox } from "../../../Types";
+import { Postit, Textbox, WhiteboardImage } from "../../../Types";
 import { v4 } from "uuid";
 
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
@@ -23,6 +23,7 @@ import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
 import { Text } from "../WhiteboardComponents/Text";
+import { Image } from "../WhiteboardComponents/Image";
 import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -63,14 +64,15 @@ const Widget = (props: {
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
   const [textbox, setTextbox] = useState<Textbox[]>([]);
+  const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);
+
+  boardImage;
 
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
-    }
-    if (props.newPostits) {
       setPostit(JSON.parse(props.newPostits));
     }
     if (props.newTextbox) {
@@ -170,7 +172,18 @@ const Widget = (props: {
   };
 
   const createImage = () => {
-    console.log("IMAGE BUTTON!!!");
+    const uuid = v4();
+    const newImage = { id: uuid, file: "" };
+    const newImageArray = [...boardImage, newImage];
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    console.log("----IMAGEARRAY----");
+    console.log(newImageArray);
+    console.log("--------");
+    setBoardImage(newImageArray);
+    setLayout(newLayoutArray);
   };
 
   const createLink = () => {
@@ -261,6 +274,25 @@ const Widget = (props: {
               );
             }
           })}
+        {boardImage &&
+          boardImage.map((singleImage: WhiteboardImage) => {
+            const singleLayout = layout.find((x) => x.i === singleImage.id);
+            const imagefile = singleImage.file;
+            if (singleLayout) {
+              return (
+                // eslint-disable-next-line jsx-a11y/alt-text
+                <Image
+                  key={singleImage.id}
+                  data-grid={singleLayout}
+                  // @ts-ignore: Unreachable code error
+                  logger={imagelogger}
+                  coordinates={singleLayout.i}
+                  file={imagefile}
+                  deleter={imagedeleter}
+                />
+              );
+            }
+          })}
       </ResponsiveGridLayout>
     );
   };
@@ -287,6 +319,17 @@ const Widget = (props: {
     });
   }
 
+  function imagelogger(array: string[]) {
+    setBoardImage((prevState) => {
+      let nextState = [...prevState];
+      const texttIndex = nextState.findIndex(
+        (element) => element.id === array[1]
+      );
+      nextState[texttIndex].file = array[0];
+      return nextState;
+    });
+  }
+
   function deleter(id: string) {
     setPostit((prevState) => {
       let nextState = [...prevState];
@@ -299,14 +342,21 @@ const Widget = (props: {
   function textdeleter(id: string) {
     setTextbox((prevState) => {
       let nextState = [...prevState];
-      const postitIndex = nextState.findIndex((element) => element.id === id);
-      nextState.splice(postitIndex, 1);
+      const textboxIndex = nextState.findIndex((element) => element.id === id);
+      nextState.splice(textboxIndex, 1);
       return nextState;
     });
   }
 
-  console.log("First image");
-  console.log(images[0]);
+  function imagedeleter(id: string) {
+    setBoardImage((prevState) => {
+      let nextState = [...prevState];
+      const imageIndex = nextState.findIndex((element) => element.id === id);
+      nextState.splice(imageIndex, 1);
+      return nextState;
+    });
+  }
+
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>

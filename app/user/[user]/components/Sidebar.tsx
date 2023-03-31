@@ -193,7 +193,12 @@ const Sidebar = (props: {
             <h3 className={styles.Sidebar__title}>Comments</h3>
             <div className={styles.Sidebar__container}>
               <div className={styles.Sidebar__messagebox}></div>
-              <div className={styles.Sidebar__typingbox}></div>
+              <div >
+              <form className={styles.Sidebar__typingbox}>
+                <input className={styles.Sidebar__typingField} type="text" name="name" />
+                <input className={styles.Sidebar__sendbtn} type="submit" value="Submit" />
+              </form>
+              </div>
             </div>
           </div>
         </>
