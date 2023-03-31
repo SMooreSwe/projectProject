@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 //eslint-disable-next-line react/display-name
 export const PostIt = React.forwardRef<any>(
@@ -14,6 +14,14 @@ export const PostIt = React.forwardRef<any>(
     }: any,
     ref
   ) => {
+    const { text } = props;
+    const postitText = useRef<HTMLTextAreaElement>(null);
+    console.log(text);
+    const test = postitText.current;
+    if (test) {
+      test.value = text;
+    }
+
     return (
       <div
         style={style}
@@ -26,7 +34,8 @@ export const PostIt = React.forwardRef<any>(
         <textarea
           name=""
           id=""
-          onChange={(e) => props.logger(e.target.value)}
+          ref={postitText}
+          onChange={(e) => props.logger([e.target.value, props.coordinates])}
           className="postit__text"
           placeholder="press enter to save"
         ></textarea>

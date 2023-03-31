@@ -23,6 +23,7 @@ import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
 import { Textblock } from "../WhiteboardComponents/Text";
+import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Widget = (props: {
@@ -197,13 +198,16 @@ const Widget = (props: {
         {postit &&
           postit.map((singlePostit: Postit) => {
             const singleLayout = layout.find((x) => x.i === singlePostit.id);
-            if (layout) {
+            const text = singlePostit.postittext;
+            if (singleLayout) {
               return (
                 <PostIt
                   key={singlePostit.id}
                   data-grid={singleLayout}
                   // @ts-ignore: Unreachable code error
                   logger={logger}
+                  coordinates={singleLayout.i}
+                  text={text}
                 />
               );
             }
@@ -212,9 +216,13 @@ const Widget = (props: {
     );
   };
 
-  function logger(text: string) {
-    console.log("WIDGET TRIGGER!");
-    console.log(text);
+  function logger(array: string[]) {
+    const postitIndex = postit.findIndex((element) => element.id === array[1]);
+    postit.map((element: Postit, index) => {
+      if (index === postitIndex) {
+        element.postittext = `${array[0]}`;
+      }
+    });
   }
 
   return (
