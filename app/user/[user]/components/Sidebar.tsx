@@ -195,7 +195,8 @@ const Sidebar = (props: {
       <div>
         <h3 className={styles.Sidebar__title}>Comments</h3>
         <div className={styles.Sidebar__container}>
-          <div className={styles.Sidebar__container}></div>
+          <div className={styles.Sidebar__messagebox}></div>
+          <div className={styles.Sidebar__typingbox}></div>
         </div>
       </div>
       <div>

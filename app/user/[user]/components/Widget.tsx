@@ -301,6 +301,8 @@ const Widget = (props: {
     });
   }
 
+  console.log("First image");
+  console.log(images[0]);
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
