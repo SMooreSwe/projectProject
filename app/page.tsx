@@ -9,12 +9,8 @@ export default function Home() {
         <h1 className="login__title">[project Project]</h1>
         <p className="login__subtitle">Login with your email and password.</p>
         <Form />
-        <Link className="login__message link" href="/signup">
-          Dont have an account? Click <a href="/signup">here</a> to sign up.
-        </Link>
-        <Link href="/about" className="link">
-            Learn more about us <a href="/about">here</a>.
-        </Link>
+        <p>Dont have an account? Click <Link className="login__message link" href="/signup" >here</Link> to sign up.</p>
+        <p>Learn more about us <Link href="/about" className="link">here</Link>.</p>
       </main>
     </>
   );
