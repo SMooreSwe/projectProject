@@ -27,7 +27,7 @@ body {
 }
 
 .link {
-  color: #4059AD;
+  color: #4059ad;
 }
 
 .Header {
@@ -421,7 +421,7 @@ input[type="file"] {
   width: 100%;
 }
 .postit {
-  background-color: yellow;
+  background-color: rgb(237, 231, 128);
 }
 
 .postit__text {

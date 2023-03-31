@@ -217,11 +217,13 @@ const Widget = (props: {
   };
 
   function logger(array: string[]) {
-    const postitIndex = postit.findIndex((element) => element.id === array[1]);
-    postit.map((element: Postit, index) => {
-      if (index === postitIndex) {
-        element.postittext = `${array[0]}`;
-      }
+    setPostit((prevState) => {
+      let nextState = [...prevState];
+      const postitIndex = nextState.findIndex(
+        (element) => element.id === array[1]
+      );
+      nextState[postitIndex].postittext = array[0];
+      return nextState;
     });
   }
 
