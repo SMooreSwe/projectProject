@@ -84,6 +84,8 @@ const Canvas = (props: {
         </div>
         <div className="canvas">
           {widgetList &&
+            widgetimages &&
+            widgetindex &&
             widgetList.map((widget) => {
               return (
                 <Widget

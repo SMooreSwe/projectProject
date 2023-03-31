@@ -67,6 +67,11 @@ const Widget = (props: {
       setLayout(JSON.parse(props.layout));
       setPostit(JSON.parse(props.newpostits));
     }
+
+    console.log("--------------------");
+    console.log(props.widgetimages);
+    console.log(props.widgetindex);
+    console.log("--------------------");
     widgetImage();
   }, [show, props.widgetid, props.layout]);
 
@@ -253,7 +258,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetindex && <>{widgetImage()}</>}
+          {props.widgetimages && <>{widgetImage()}</>}
         </div>
       </article>
 
