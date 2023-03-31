@@ -30,14 +30,14 @@ export const PostIt = React.forwardRef<any>(
         onMouseUp={onMouseUp}
         onTouchEnd={onTouchEnd}
       >
-        <button onClick={() => props.deleter(props.coordinates)}>Delete</button>
+        <button className="postit__btn" onClick={() => props.deleter(props.coordinates)}>X</button>
         <textarea
           name=""
           id=""
           ref={postitText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
           className="postit__text"
-          placeholder="press enter to save"
+          placeholder="Write a note!"
         ></textarea>
         {children}
       </div>
