@@ -194,12 +194,11 @@ input[type="file"] {
   justify-content: center;
   align-items: center;
   align-self: center;
-  padding-block: 10px;
-  padding-inline: 20px;
-  border-radius: 5px;
-  border: 0.1px solid black;
 }
+
 .error__text {
+  color: red;
+  font-size: .85em;
 }
 
 .canvas__container {

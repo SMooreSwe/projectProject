@@ -25,7 +25,7 @@ export const Form = () => {
   const router = useRouter();
   const [image, setImage] = useState<string>("");
   const [file, setFile] = useState<any>();
-  const [error, setError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -75,7 +75,6 @@ export const Form = () => {
           const response = await data;
           initFirebaseAuth();
           const userid = await response.json();
-
           if (image) {
             const storage = getStorage();
             const filePath = `/users/${userid}.jpeg`;
@@ -86,7 +85,18 @@ export const Form = () => {
           }
           return response;
         }
-      );
+      ).catch((error: any) => {
+        console.log(error.code, error.message);
+        if (!error?.response) {
+          setErrorMessage('No server response')
+        } else if (error.code === 'auth/internal-error') {
+          setErrorMessage('Please enter a password.')
+        } else if (error.code === 'auth/email-already-in-use') {
+          setErrorMessage('This email is already in use. Please enter a different one.');
+        } else {
+          setErrorMessage('Something went wrong. Try again.');
+        };
+      });
     }
   };
 
@@ -178,17 +188,16 @@ export const Form = () => {
               onChange={handleChange}
             />
           </label>
-
+          {errorMessage && (
+            <div className="error__container">
+              <p className="error__text">{errorMessage}</p>
+            </div>
+          )}
           <button className="formButton" type="submit">
             Login
           </button>
         </form>
       </div>
-      {error && (
-        <div className="error__container">
-          <p className="error__text">{error}ERROR</p>
-        </div>
-      )}
     </div>
   );
 };
