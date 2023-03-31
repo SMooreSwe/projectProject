@@ -198,7 +198,7 @@ input[type="file"] {
 
 .error__text {
   color: red;
-  font-size: .85em;
+  font-size: 0.85em;
 }
 
 .canvas__container {
@@ -426,6 +426,11 @@ input[type="file"] {
   background-color: rgb(237, 231, 128);
 }
 
+.textblock {
+  display: flex;
+  flex-direction: column;
+}
+
 .postit__text {
   border: none;
   width: 100%;
@@ -444,7 +449,8 @@ input[type="file"] {
   border-radius: 5px;
 }
 
-.postit__btn {
+.postit__btn,
+.textblock__btn {
   background-color: transparent;
   border: none;
   align-self: flex-end;
@@ -483,25 +489,25 @@ input[type="file"] {
 
 .inputField--signupPassword {
   position: relative;
-  }
-  .inputField--signupConfirmPassword {
-    position: relative;
-  }
-  
-  .formSignupPasswordVisibility {
+}
+.inputField--signupConfirmPassword {
+  position: relative;
+}
+
+.formSignupPasswordVisibility {
   cursor: pointer;
   position: absolute;
   border: none;
   background: transparent;
   right: 36.1rem;
-  bottom: 7.9rem
-  }
-  
-  .formSignupConfirmPasswordVisibility {
+  bottom: 7.9rem;
+}
+
+.formSignupConfirmPasswordVisibility {
   cursor: pointer;
   position: absolute;
   border: none;
   background: transparent;
   right: 36.1rem;
   bottom: 3.6rem;
-  }
+}
