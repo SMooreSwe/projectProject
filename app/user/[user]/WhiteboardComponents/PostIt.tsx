@@ -31,7 +31,7 @@ export const PostIt = React.forwardRef<any>(
         onMouseUp={onMouseUp}
         onTouchEnd={onTouchEnd}
       >
-        <button onClick={() => props.deleter(props.coordinates)}>X</button>
+        <button onClick={() => props.deleter(props.coordinates)}>Delete</button>
         <textarea
           name=""
           id=""
