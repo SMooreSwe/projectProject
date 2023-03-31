@@ -202,7 +202,8 @@ const Widget = (props: {
                 <PostIt
                   key={singlePostit.id}
                   data-grid={singleLayout}
-                  postitSetter={setPostit}
+                  // @ts-ignore: Unreachable code error
+                  logger={logger}
                 />
               );
             }
@@ -210,6 +211,11 @@ const Widget = (props: {
       </ResponsiveGridLayout>
     );
   };
+
+  function logger(text: string) {
+    console.log("WIDGET TRIGGER!");
+    console.log(text);
+  }
 
   return (
     <>

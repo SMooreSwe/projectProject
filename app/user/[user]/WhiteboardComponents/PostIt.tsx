@@ -1,7 +1,7 @@
 import React from "react";
 
 //eslint-disable-next-line react/display-name
-export const PostIt = React.forwardRef<HTMLDivElement>(
+export const PostIt = React.forwardRef<any>(
   (
     {
       style,
@@ -10,13 +10,10 @@ export const PostIt = React.forwardRef<HTMLDivElement>(
       onMouseUp,
       onTouchEnd,
       children,
-      props: { postitSetter },
+      ...props
     }: any,
     ref
   ) => {
-    // const typingFunction = (text) => {
-    //   props.postitSetter();
-    // };
     return (
       <div
         style={style}
@@ -29,6 +26,7 @@ export const PostIt = React.forwardRef<HTMLDivElement>(
         <textarea
           name=""
           id=""
+          onChange={(e) => props.logger(e.target.value)}
           className="postit__text"
           placeholder="press enter to save"
         ></textarea>
