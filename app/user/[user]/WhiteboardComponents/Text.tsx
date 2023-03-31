@@ -42,7 +42,7 @@ export const Text = React.forwardRef<HTMLDivElement>(
           ref={boxText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
           className="textblock__text"
-          placeholder="press enter to save"
+          placeholder="Write some text!"
         ></textarea>
         {children}
       </div>
