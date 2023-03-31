@@ -68,8 +68,12 @@ const Widget = (props: {
 
   useEffect(() => {
     if (props.layout) {
-      setLayout(JSON.parse(props.layout));
+      setLayout(JSON.parse(props.layout)); 
+    }
+    if (props.newPostits) {
       setPostit(JSON.parse(props.newPostits));
+    }
+    if (props.newTextbox) {
       setTextbox(JSON.parse(props.newTextbox));
     }
   }, [show, props.widgetid, props.layout]);
