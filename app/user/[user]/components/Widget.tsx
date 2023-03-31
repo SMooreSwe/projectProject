@@ -71,9 +71,7 @@ const Widget = (props: {
     console.log(props.widgetimages);
     console.log(props.widgetindex);
     console.log("--------------------");
-
-    widgetImage();
-  }, [show, props.widgetid, props.layout]);
+  }, [show, props.widgetid, props.layout, props.widgetimages]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -154,9 +152,11 @@ const Widget = (props: {
   };
 
   const widgetImage = () => {
+    console.log("function widgetimages");
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
     if (props.widgetindex.length && index !== -1) {
+      console.log("MAP ---> HAS AN IMAGE");
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -167,6 +167,7 @@ const Widget = (props: {
         />
       );
     } else {
+      console.log("MAP ---> HAS NOOOOOOOOOO IMAGE");
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -236,9 +237,7 @@ const Widget = (props: {
   function deleter(id: string) {
     setPostit((prevState) => {
       let nextState = [...prevState];
-      const postitIndex = nextState.findIndex(
-        (element) => element.id === id
-      );
+      const postitIndex = nextState.findIndex((element) => element.id === id);
       nextState.splice(postitIndex, 1);
       return nextState;
     });

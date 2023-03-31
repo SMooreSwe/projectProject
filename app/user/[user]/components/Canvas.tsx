@@ -33,13 +33,7 @@ const Canvas = (props: {
     getWidgets(props.project);
   }, [props.project]);
 
-  // const getAllData = async () => {
-  //   await getWidgets(props.project);
-  //   getWidgetImages(widgetList);
-  // };
-
   const getWidgets = async (projectid: string) => {
-    console.log("TEST 1");
     const docRef = query(
       collection(db, "widgets"),
       where("projectid", "==", projectid),
@@ -50,14 +44,12 @@ const Canvas = (props: {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-      console.log("TEST 2");
 
       const storage = getStorage();
       const urls: any[] = [];
       const widgetIndex: string[] = [];
 
       data.map((widget: WidgetType) => {
-        console.log("TEST 3");
         const filePath = `/widgets/${widget.widgetid}.jpeg`;
         const storageRef = ref(storage, filePath);
         getDownloadURL(storageRef)
@@ -69,7 +61,6 @@ const Canvas = (props: {
             console.log(error);
           });
       });
-      console.log("TEST 4");
       setWidgetList(data);
       setWidgetImages(urls);
       setWidgetIndex(widgetIndex);
