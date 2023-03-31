@@ -15,14 +15,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { Postit } from "../../../Types";
+import { Postit, Textbox } from "../../../Types";
 import { v4 } from "uuid";
 
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
-import { Textblock } from "../WhiteboardComponents/Text";
+import { Text } from "../WhiteboardComponents/Text";
 import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -32,7 +32,8 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
-  newpostits: string;
+  newPostits: string;
+  newTextbox: string;
   widgetimages: string[];
   widgetindex: string[];
   prioritySetter: Function;
@@ -61,19 +62,17 @@ const Widget = (props: {
   const [show, setShow] = useState(false);
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
+  const [textbox, setTextbox] = useState<Textbox[]>([]);
 
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
-      setPostit(JSON.parse(props.newpostits));
+      setPostit(JSON.parse(props.newPostits));
+      setTextbox(JSON.parse(props.newTextbox));
     }
-    console.log("--------------------");
-    console.log(props.widgetimages);
-    console.log(props.widgetindex);
     setImages(props.widgetimages);
-    console.log("--------------------");
   }, [show, props.widgetid, props.layout, props.widgetimages]);
 
   const db = getFirestore(app) as any;
@@ -97,7 +96,8 @@ const Widget = (props: {
 
   const widgetLayout = async (
     currentlayout: Layout[],
-    currentpostits: Postit[]
+    currentpostits: Postit[],
+    currenttextboxes: Textbox[]
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
     if (input) {
@@ -111,11 +111,13 @@ const Widget = (props: {
     }
     const allLayouts = JSON.stringify(currentlayout);
     const allPostits = JSON.stringify(currentpostits);
+    const allTextboxes = JSON.stringify(currenttextboxes);
 
     const widgetRef = doc(db, "widgets", widgetid);
     await updateDoc(widgetRef, {
       layout: allLayouts,
       postits: allPostits,
+      textboxes: allTextboxes,
     });
     handleClose();
   };
@@ -131,7 +133,15 @@ const Widget = (props: {
   };
 
   const createText = () => {
-    console.log("TEXT BUTTON!!!");
+    const uuid = v4();
+    const newTextbox = { id: uuid, text: "" };
+    const newTextboxArray = [...textbox, newTextbox];
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    setTextbox(newTextboxArray);
+    setLayout(newLayoutArray);
   };
 
   const createPostit = () => {
@@ -155,14 +165,9 @@ const Widget = (props: {
   };
 
   const widgetImage = () => {
-    console.log("--------function widgetimages--------");
-    console.log(props.widgetindex);
-    console.log(images);
-    console.log("--------function widgetimages--------");
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
     if (props.widgetindex.length && index !== -1) {
-      console.log("MAP ---> HAS AN IMAGE");
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -173,7 +178,6 @@ const Widget = (props: {
         />
       );
     } else {
-      console.log("MAP ---> HAS NOOOOOOOOOO IMAGE");
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -225,6 +229,24 @@ const Widget = (props: {
               );
             }
           })}
+        {textbox &&
+          textbox.map((singletextbox: Textbox) => {
+            const singleLayout = layout.find((x) => x.i === singletextbox.id);
+            const text = singletextbox.text;
+            if (singleLayout) {
+              return (
+                <Text
+                  key={singletextbox.id}
+                  data-grid={singleLayout}
+                  // @ts-ignore: Unreachable code error
+                  logger={textlogger}
+                  coordinates={singleLayout.i}
+                  text={text}
+                  deleter={textdeleter}
+                />
+              );
+            }
+          })}
       </ResponsiveGridLayout>
     );
   };
@@ -240,7 +262,27 @@ const Widget = (props: {
     });
   }
 
+  function textlogger(array: string[]) {
+    setTextbox((prevState) => {
+      let nextState = [...prevState];
+      const texttIndex = nextState.findIndex(
+        (element) => element.id === array[1]
+      );
+      nextState[texttIndex].text = array[0];
+      return nextState;
+    });
+  }
+
   function deleter(id: string) {
+    setPostit((prevState) => {
+      let nextState = [...prevState];
+      const postitIndex = nextState.findIndex((element) => element.id === id);
+      nextState.splice(postitIndex, 1);
+      return nextState;
+    });
+  }
+
+  function textdeleter(id: string) {
     setPostit((prevState) => {
       let nextState = [...prevState];
       const postitIndex = nextState.findIndex((element) => element.id === id);
@@ -351,7 +393,7 @@ const Widget = (props: {
           </div>
           <div className="widget__btn-container">
             <button
-              onClick={() => widgetLayout(layout, postit)}
+              onClick={() => widgetLayout(layout, postit, textbox)}
               className="widget-container__save-btn"
             >
               Save
