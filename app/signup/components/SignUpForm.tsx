@@ -20,6 +20,7 @@ import {
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getFirebaseConfig, auth } from "../../../firebase-config";
 import { validate } from "uuid";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Form = () => {
   const router = useRouter();
@@ -32,6 +33,16 @@ export const Form = () => {
     password: "",
     confirmpassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+  
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
@@ -170,11 +181,14 @@ export const Form = () => {
             <br></br>
             <input
               className="inputField"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               value={inputs.password || ""}
               onChange={handleChange}
             />
+             <button className="formSignupPasswordVisibility" onClick={togglePasswordVisibility}>
+          {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
+        </button>
           </label>
           <label className="inputLabel">
             {" "}
@@ -182,11 +196,14 @@ export const Form = () => {
             <br></br>
             <input
               className="inputField"
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               name="confirmpassword"
               value={inputs.confirmpassword || ""}
               onChange={handleChange}
             />
+             <button className="formSignupConfirmPasswordVisibility" onClick={toggleConfirmPasswordVisibility}>
+          {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
+        </button>
           </label>
           {errorMessage && (
             <div className="error__container">
