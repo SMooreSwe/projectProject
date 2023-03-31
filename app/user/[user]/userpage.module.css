@@ -5,8 +5,11 @@
 }
 
 .userprofile__name {
-  font-size: 1em;
+  font-size: 1.4em;
   margin: 0px;
+  margin-right: 5px;
+  font-family: "Virgil";
+  opacity: 0.8;
 }
 
 .headerSearchField {
@@ -25,7 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 9px;
+  gap: 15px;
 }
 
 .notification__container {
@@ -72,6 +75,12 @@
   align-items: center;
   border: none;
   cursor: pointer;
+}
+
+.collaborators__number {
+  font-size: 1.4em;
+  font-family: "Virgil";
+  opacity: 0.8;
 }
 
 .createProjectBtn {

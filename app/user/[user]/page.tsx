@@ -32,6 +32,9 @@ const User = () => {
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<string>("");
   const [currentProjectName, setCurrentProjectName] = useState<string>("");
+  const [currentProjectMembers, setCurrentProjectMembers] = useState<string[]>(
+    []
+  );
 
   const db = getFirestore(app) as any;
 
@@ -49,6 +52,7 @@ const User = () => {
       setProjectList(data);
       setCurrentProject(data[0].projectid);
       setCurrentProjectName(data[0].name);
+      setCurrentProjectMembers(data[0].users);
     });
   };
 
@@ -74,6 +78,12 @@ const User = () => {
 
   const projectSetter = (projectid: string) => {
     setCurrentProject(projectid);
+    const newproject = projectList.find(
+      (element) => element.projectid === projectid
+    );
+    if (newproject) {
+      setCurrentProjectMembers(newproject.users);
+    }
   };
 
   return (
@@ -82,6 +92,7 @@ const User = () => {
         user={user}
         projectid={currentProject}
         projectname={currentProjectName}
+        collaboratorsArray={currentProjectMembers}
       >
         <ProjectDropdown
           projectList={projectList}
@@ -90,8 +101,7 @@ const User = () => {
       </Header>
       <Sidebar user={user} projectlist={projectList} />
       <div className="project__container">
-        <Canvas project={currentProject} projectList={projectList}>
-        </Canvas>
+        <Canvas project={currentProject} projectList={projectList}></Canvas>
       </div>
     </div>
   );
