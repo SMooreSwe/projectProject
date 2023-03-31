@@ -10,15 +10,13 @@ export const PostIt = React.forwardRef<HTMLDivElement>(
       onMouseUp,
       onTouchEnd,
       children,
-      postitSetter,
+      props: { postitSetter },
     }: any,
     ref
   ) => {
     // const typingFunction = (text) => {
-
-    //   postitSetter()
-    // }
-
+    //   props.postitSetter();
+    // };
     return (
       <div
         style={style}

@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Whiteboard from "./Whiteboard";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "../userpage.module.css";
 import "../../../globals.css";
@@ -64,8 +62,6 @@ const Widget = (props: {
   const [postit, setPostit] = useState<Postit[]>([]);
 
   useEffect(() => {
-    console.log("CALLED!");
-    console.log(props.layout);
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
       setPostit(JSON.parse(props.newpostits));
@@ -97,7 +93,6 @@ const Widget = (props: {
     currentpostits: Postit[]
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
-    console.log("FIRESTORE FUNCTION IS CALLED!");
     if (input) {
       html2canvas(input, {
         logging: true,
@@ -109,11 +104,6 @@ const Widget = (props: {
     }
     const allLayouts = JSON.stringify(currentlayout);
     const allPostits = JSON.stringify(currentpostits);
-
-    console.log("-----------------");
-    console.log(allLayouts);
-    console.log(allPostits);
-    console.log("-----------------");
 
     const widgetRef = doc(db, "widgets", widgetid);
     await updateDoc(widgetRef, {
@@ -134,12 +124,11 @@ const Widget = (props: {
   };
 
   const createText = () => {
-    console.log("TEXT!!!");
+    console.log("TEXT BUTTON!!!");
   };
 
   const createPostit = () => {
     const uuid = v4();
-    console.log("POSTIT BUTTON PRESSED!!!");
     const newPostit = { id: uuid, postittext: "" };
     const newPostitArray = [...postit, newPostit];
     const newLayoutArray = [
@@ -151,11 +140,11 @@ const Widget = (props: {
   };
 
   const createImage = () => {
-    console.log("IMAGE!!!");
+    console.log("IMAGE BUTTON!!!");
   };
 
   const createLink = () => {
-    console.log("LINK!!!");
+    console.log("LINK BUTTON!!!");
   };
 
   const widgetImage = () => {
@@ -184,9 +173,7 @@ const Widget = (props: {
     }
   };
 
-  const hello = () => {
-    console.log("WHITEBOARD IS BEING CALLED!!!!!!!!");
-    console.log(postit);
+  const populateWhiteboard = () => {
     return (
       <ResponsiveGridLayout
         layouts={{
@@ -207,15 +194,17 @@ const Widget = (props: {
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       >
-        {/*postits && <>populate()</>*/}
         {postit &&
-          postit.map((apostit: Postit) => {
-            const flayout = layout.find((x) => x.i === apostit.id);
-            console.log(flayout);
-            console.log(layout);
+          postit.map((singlePostit: Postit) => {
+            const singleLayout = layout.find((x) => x.i === singlePostit.id);
             if (layout) {
-              console.log("exists");
-              return <PostIt key={apostit.id} data-grid={flayout} />;
+              return (
+                <PostIt
+                  key={singlePostit.id}
+                  data-grid={singleLayout}
+                  postitSetter={setPostit}
+                />
+              );
             }
           })}
       </ResponsiveGridLayout>
@@ -340,7 +329,7 @@ const Widget = (props: {
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>
-              {postit && show === true && <>{hello()}</>}
+              {postit && show === true && <>{populateWhiteboard()}</>}
             </div>
           </div>
         </Modal.Body>
