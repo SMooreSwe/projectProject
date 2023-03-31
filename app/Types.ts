@@ -22,6 +22,7 @@ export type WidgetType = {
   priority: string;
   layout: string;
   postits: string;
+  textboxes: string;
 };
 
 export type Invited = {
@@ -35,4 +36,9 @@ export type Invited = {
 export type Postit = {
   id: string;
   postittext: string;
+};
+
+export type Textbox = {
+  id: string;
+  text: string;
 };

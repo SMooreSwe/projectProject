@@ -119,6 +119,7 @@ const Canvas = (props: {
                   widgetimages={widgetimages}
                   widgetindex={widgetindex}
                   newpostits={widget.postits}
+                  newTextbox={widget.textboxes}
                 />
               );
             })}

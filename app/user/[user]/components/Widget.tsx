@@ -15,14 +15,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { Postit } from "../../../Types";
+import { Postit, Textbox } from "../../../Types";
 import { v4 } from "uuid";
 
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { PostIt } from "../WhiteboardComponents/PostIt";
-import { Textblock } from "../WhiteboardComponents/Text";
+import { Text } from "../WhiteboardComponents/Text";
 import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -33,6 +33,7 @@ const Widget = (props: {
   priority: string;
   layout: string;
   newpostits: string;
+  newTextbox: string;
   widgetimages: string[];
   widgetindex: string[];
   prioritySetter: Function;
@@ -61,11 +62,17 @@ const Widget = (props: {
   const [show, setShow] = useState(false);
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
+  const [textbox, setTextbox] = useState<Textbox[]>([]);
 
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
-      setPostit(JSON.parse(props.newpostits));
+      if (props.newpostits) {
+        setPostit(JSON.parse(props.newpostits));
+      }
+      if (props.newTextbox) {
+        setTextbox(JSON.parse(props.newTextbox));
+      }
     }
     console.log("--------------------");
     console.log(props.widgetimages);
@@ -90,11 +97,12 @@ const Widget = (props: {
     if (e.detail == 2) {
       setShow(true);
     }
-  };
+  };ßß
 
   const widgetLayout = async (
     currentlayout: Layout[],
-    currentpostits: Postit[]
+    currentpostits: Postit[],
+    currenttextboxes: Textbox[],
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
     if (input) {
@@ -108,11 +116,15 @@ const Widget = (props: {
     }
     const allLayouts = JSON.stringify(currentlayout);
     const allPostits = JSON.stringify(currentpostits);
+    const allTextboxes = JSON.stringify(currenttextboxes)
 
     const widgetRef = doc(db, "widgets", widgetid);
+    console.log('textbox....',allTextboxes)
+    console.log('postits....',allPostits)
     await updateDoc(widgetRef, {
       layout: allLayouts,
       postits: allPostits,
+      textboxes: allTextboxes
     });
     handleClose();
   };
@@ -128,7 +140,15 @@ const Widget = (props: {
   };
 
   const createText = () => {
-    console.log("TEXT BUTTON!!!");
+    const uuid = v4();
+    const newTextbox = { id: uuid, text: "" };
+    const newTextboxArray = [...textbox, newTextbox];
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    setTextbox(newTextboxArray);
+    setLayout(newLayoutArray);
   };
 
   const createPostit = () => {
@@ -213,10 +233,28 @@ const Widget = (props: {
                   key={singlePostit.id}
                   data-grid={singleLayout}
                   // @ts-ignore: Unreachable code error
-                  logger={logger}
+                  logger={postitlogger}
                   coordinates={singleLayout.i}
                   text={text}
-                  deleter={deleter}
+                  deleter={postitdeleter}
+                />
+              );
+            }
+          })}
+          {textbox &&
+          textbox.map((singletextbox: Textbox) => {
+            const singleLayout = layout.find((x) => x.i === singletextbox.id);
+            const text = singletextbox.text;
+            if (singleLayout) {
+              return (
+                <Text
+                  key={singletextbox.id}
+                  data-grid={singleLayout}
+                  // @ts-ignore: Unreachable code error
+                  logger={textlogger}
+                  coordinates={singleLayout.i}
+                  text={text}
+                  deleter={textdeleter}
                 />
               );
             }
@@ -225,7 +263,7 @@ const Widget = (props: {
     );
   };
 
-  function logger(array: string[]) {
+  function postitlogger(array: string[]) {
     setPostit((prevState) => {
       let nextState = [...prevState];
       const postitIndex = nextState.findIndex(
@@ -236,7 +274,27 @@ const Widget = (props: {
     });
   }
 
-  function deleter(id: string) {
+  function textlogger(array: string[]) {
+    setTextbox((prevState) => {
+      let nextState = [...prevState];
+      const texttIndex = nextState.findIndex(
+        (element) => element.id === array[1]
+      );
+      nextState[texttIndex].text = array[0];
+      return nextState;
+    });
+  }
+
+  function postitdeleter(id: string) {
+    setTextbox((prevState) => {
+      let nextState = [...prevState];
+      const textIndex = nextState.findIndex((element) => element.id === id);
+      nextState.splice(textIndex, 1);
+      return nextState;
+    });
+  }
+
+  function textdeleter(id: string) {
     setPostit((prevState) => {
       let nextState = [...prevState];
       const postitIndex = nextState.findIndex((element) => element.id === id);
