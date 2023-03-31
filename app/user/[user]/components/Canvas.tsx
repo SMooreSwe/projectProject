@@ -56,14 +56,14 @@ const Canvas = (props: {
           .then((url) => {
             urls.push(url);
             widgetIndex.push(widget.widgetid);
+            setWidgetImages([...urls]);
+            setWidgetIndex([...widgetIndex]);
           })
           .catch((error) => {
             console.log(error);
           });
       });
       setWidgetList(data);
-      setWidgetImages(urls);
-      setWidgetIndex(widgetIndex);
     });
   };
 
