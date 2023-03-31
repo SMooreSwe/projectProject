@@ -67,11 +67,11 @@ const Widget = (props: {
       setLayout(JSON.parse(props.layout));
       setPostit(JSON.parse(props.newpostits));
     }
-
     console.log("--------------------");
     console.log(props.widgetimages);
     console.log(props.widgetindex);
     console.log("--------------------");
+
     widgetImage();
   }, [show, props.widgetid, props.layout]);
 

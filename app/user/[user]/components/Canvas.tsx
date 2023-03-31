@@ -29,7 +29,17 @@ const Canvas = (props: {
 
   const db = getFirestore(app) as any;
 
+  useEffect(() => {
+    getAllData();
+  }, [props.project]);
+
+  const getAllData = async () => {
+    await getWidgets(props.project);
+    getWidgetImages(widgetList);
+  };
+
   const getWidgets = async (projectid: string) => {
+    console.log("TEST 1");
     const docRef = query(
       collection(db, "widgets"),
       where("projectid", "==", projectid),
@@ -40,15 +50,13 @@ const Canvas = (props: {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
+      console.log("TEST 1.1");
       setWidgetList(data);
     });
   };
 
-  useEffect(() => {
-    getWidgetImages(widgetList);
-  }, [widgetList]);
-
   const getWidgetImages = async (widgets: WidgetType[]) => {
+    console.log("TEST 2");
     const storage = getStorage();
     const urls: any[] = [];
     const widgetIndex: string[] = [];
@@ -69,10 +77,6 @@ const Canvas = (props: {
     setWidgetIndex(widgetIndex);
   };
 
-  useEffect(() => {
-    getWidgets(props.project);
-  }, [props.project]);
-
   return (
     <>
       <div className="canvas__container">
@@ -87,6 +91,9 @@ const Canvas = (props: {
             widgetimages &&
             widgetindex &&
             widgetList.map((widget) => {
+              console.log("TEST 3");
+              console.log(widgetimages);
+
               return (
                 <Widget
                   key={widget.widgetid}
