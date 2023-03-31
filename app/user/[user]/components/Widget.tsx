@@ -72,8 +72,11 @@ const Widget = (props: {
       setPostit(JSON.parse(props.newPostits));
       setTextbox(JSON.parse(props.newTextbox));
     }
+  }, [show, props.widgetid, props.layout]);
+
+  useEffect(() => {
     setImages(props.widgetimages);
-  }, [show, props.widgetid, props.layout, props.widgetimages]);
+  }, [props.widgetimages]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
