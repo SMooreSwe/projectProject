@@ -13,6 +13,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 export const Form = () => {
   const router = useRouter();
   const [passwordType, setPasswordType] = useState("password");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -26,8 +27,8 @@ export const Form = () => {
 
   const togglePassword = () => {
     if (passwordType === "password") {
-     setPasswordType("text")
-     return;
+      setPasswordType("text")
+      return;
     } setPasswordType("password")
   }
 
@@ -45,9 +46,18 @@ export const Form = () => {
       router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
       return true;
     } catch (error: any) {
-      return { error: error.message };
+      if (!error?.response) {
+        setErrorMessage('No Server Response');
+      } else if (error.code === 'auth/user-not-found') {
+        setErrorMessage('User not found, please enter a valid email.');
+      } else if (error.code === 'auth/wrong-password') {
+        setErrorMessage('Password is incorrect. Please enter a valid password.');
+      } else {
+        setErrorMessage('Something went wrong. Try again.');
+      }
     }
   };
+
   return (
     <div>
       <form className="form" onSubmit={handleSubmit}>
@@ -63,24 +73,28 @@ export const Form = () => {
             onChange={handleChange}
           />
         </label>
-        {/* <div className="password-div"> */}
-        <label className="inputLabel">
-          {" "}
-          Password:
-          <br></br>
-          <input
-            className="inputField inputField--password"
-            type={passwordType}
-            name="password"
-            value={inputs.password || ""}
-            onChange={handleChange}
-          />
-          <button className="formPasswordVisibility" onClick={togglePassword}>
-          {passwordType==="password" ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20}/>}
-        </button>
-        </label>
-        
-        {/* </div> */}
+        <div className="login-form-password-div">
+          <label className="inputLabel">
+            {" "}
+            Password:
+            <br></br>
+            <input
+              className="inputField inputField--password"
+              type={passwordType}
+              name="password"
+              value={inputs.password || ""}
+              onChange={handleChange}
+            />
+            <button className="formPasswordVisibility" onClick={togglePassword}>
+              {passwordType === "password" ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
+            </button>
+          </label>
+        </div>
+        {errorMessage && (
+          <div className="error__container">
+            <p className="error__text">{errorMessage}</p>
+          </div>
+        )}
         <button className="formButton" type="submit">
           Login
         </button>
