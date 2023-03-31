@@ -78,14 +78,13 @@ function CollaboratorsWidget(props: {
         .then((url) => {
           urls.push(url);
           userIndex.push(user.userid);
+          setAllimages([...urls]);
+          setUserIndex([...userIndex]);
         })
         .catch((error) => {
           console.log(error);
         });
     });
-
-    setAllimages(urls);
-    setUserIndex(userIndex);
   };
 
   const addCollaborator = async (e: any) => {

@@ -90,7 +90,13 @@ const Widget = (props: {
     props.prioritySetter(priorityValue);
   };
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setImages((prevState) => {
+      let nextState = [...prevState];
+      return nextState;
+    });
+    setShow(false);
+  };
   const handleShow = (e: any) => {
     if (e.detail == 2) {
       setShow(true);
