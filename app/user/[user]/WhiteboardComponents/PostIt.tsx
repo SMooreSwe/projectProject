@@ -16,7 +16,6 @@ export const PostIt = React.forwardRef<any>(
   ) => {
     const { text } = props;
     const postitText = useRef<HTMLTextAreaElement>(null);
-    console.log(text);
     const test = postitText.current;
     if (test) {
       test.value = text;
