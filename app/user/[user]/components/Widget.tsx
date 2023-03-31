@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Whiteboard from "./Whiteboard";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "../userpage.module.css";
 import "../../../globals.css";
@@ -15,11 +13,17 @@ import {
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
-import { Layout } from "react-grid-layout";
 import html2canvas from "html2canvas";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { Postit } from "../../../Types";
 import { v4 } from "uuid";
+
+import { Layout, Responsive, WidthProvider } from "react-grid-layout";
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
+import { PostIt } from "../WhiteboardComponents/PostIt";
+import { Textblock } from "../WhiteboardComponents/Text";
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Widget = (props: {
   projectid: string;
@@ -27,6 +31,7 @@ const Widget = (props: {
   date: Timestamp;
   priority: string;
   layout: string;
+  newpostits: string;
   widgetimages: string[];
   widgetindex: string[];
   prioritySetter: Function;
@@ -59,8 +64,10 @@ const Widget = (props: {
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
+      setPostit(JSON.parse(props.newpostits));
     }
-  }, [show, props.widgetid]);
+    widgetImage();
+  }, [show, props.widgetid, props.layout]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -117,15 +124,13 @@ const Widget = (props: {
   };
 
   const createText = () => {
-    console.log("TEXT!!!");
+    console.log("TEXT BUTTON!!!");
   };
 
   const createPostit = () => {
     const uuid = v4();
-    console.log("POSTIT!!!");
     const newPostit = { id: uuid, postittext: "" };
     const newPostitArray = [...postit, newPostit];
-    console.log(newPostitArray);
     const newLayoutArray = [
       ...layout,
       { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
@@ -135,16 +140,16 @@ const Widget = (props: {
   };
 
   const createImage = () => {
-    console.log("IMAGE!!!");
+    console.log("IMAGE BUTTON!!!");
   };
 
   const createLink = () => {
-    console.log("LINK!!!");
+    console.log("LINK BUTTON!!!");
   };
 
-  const widgetImage = (widgetid: string) => {
+  const widgetImage = () => {
     const array = props.widgetindex;
-    const index = array.indexOf(widgetid);
+    const index = array.indexOf(props.widgetid);
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -166,6 +171,44 @@ const Widget = (props: {
         />
       );
     }
+  };
+
+  const populateWhiteboard = () => {
+    return (
+      <ResponsiveGridLayout
+        layouts={{
+          lg: layout,
+          md: layout,
+          sm: layout,
+          xs: layout,
+          xxs: layout,
+        }}
+        className="layout"
+        compactType={null}
+        preventCollision={false}
+        isResizable={true}
+        resizeHandles={["se"]}
+        onLayoutChange={(layout: Layout[]) => {
+          setLayout(layout);
+        }}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+      >
+        {postit &&
+          postit.map((singlePostit: Postit) => {
+            const singleLayout = layout.find((x) => x.i === singlePostit.id);
+            if (layout) {
+              return (
+                <PostIt
+                  key={singlePostit.id}
+                  data-grid={singleLayout}
+                  postitSetter={setPostit}
+                />
+              );
+            }
+          })}
+      </ResponsiveGridLayout>
+    );
   };
 
   return (
@@ -194,7 +237,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetindex && <>{widgetImage(props.widgetid)}</>}
+          {props.widgetindex && <>{widgetImage()}</>}
         </div>
       </article>
 
@@ -286,13 +329,7 @@ const Widget = (props: {
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>
-              <Whiteboard
-                widgetid={widgetid}
-                layouts={layout}
-                layoutSetter={setLayout}
-                postits={postit}
-                setPostit={setPostit}
-              />
+              {postit && show === true && <>{populateWhiteboard()}</>}
             </div>
           </div>
         </Modal.Body>
