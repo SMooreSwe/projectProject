@@ -182,7 +182,7 @@ const Widget = (props: {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.widgetImage}
-          src={props.widgetimages[index]}
+          src={images[index]}
           placeholder="blur"
           alt=""
         />
@@ -293,7 +293,7 @@ const Widget = (props: {
   }
 
   function textdeleter(id: string) {
-    setPostit((prevState) => {
+    setTextbox((prevState) => {
       let nextState = [...prevState];
       const postitIndex = nextState.findIndex((element) => element.id === id);
       nextState.splice(postitIndex, 1);

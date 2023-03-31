@@ -146,3 +146,11 @@
   width: 100%;
   object-fit: cover;
 }
+
+.Sidebar__container {
+  display: flex;
+}
+
+.Sidebar__messagebox {
+  background-color: white;
+}

@@ -155,7 +155,8 @@ const Sidebar = (props: {
                 alt=""
               />
               <p className={styles.tutorial__text}>
-                Click the Create New Project button above to start a new project!
+                Click the Create New Project button above to start a new
+                project!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
@@ -166,7 +167,8 @@ const Sidebar = (props: {
                 alt=""
               />
               <p className={styles.tutorial__text}>
-                Once you have a project, create new events by selecting the + button to the left!
+                Once you have a project, create new events by selecting the +
+                button to the left!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
@@ -177,7 +179,8 @@ const Sidebar = (props: {
                 alt=""
               />
               <p className={styles.tutorial__text}>
-                Click on collaborators to invite others to your project and collaborate!
+                Click on collaborators to invite others to your project and
+                collaborate!
               </p>
             </div>
           </div>
@@ -191,6 +194,9 @@ const Sidebar = (props: {
       {inviteduser && <>{userInvited()}</>}
       <div>
         <h3 className={styles.Sidebar__title}>Comments</h3>
+        <div className={styles.Sidebar__container}>
+          <div className={styles.Sidebar__container}></div>
+        </div>
       </div>
       <div>
         <h3 className={styles.Sidebar__title}></h3>
