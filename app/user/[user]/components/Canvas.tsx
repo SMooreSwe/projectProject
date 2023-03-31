@@ -67,29 +67,6 @@ const Canvas = (props: {
     });
   };
 
-  // const getWidgetImages = async (widgets: WidgetType[]) => {
-  //   console.log("TEST 2");
-  //   const storage = getStorage();
-  //   const urls: any[] = [];
-  //   const widgetIndex: string[] = [];
-
-  //   widgets.map((widget: WidgetType) => {
-  //     const filePath = `/widgets/${widget.widgetid}.jpeg`;
-  //     const storageRef = ref(storage, filePath);
-  //     getDownloadURL(storageRef)
-  //       .then((url) => {
-  //         urls.push(url);
-  //         widgetIndex.push(widget.widgetid);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   });
-  //   setWidgetImages(urls);
-  //   setWidgetIndex(widgetIndex);
-  //   console.log("TEST 3");
-  // };
-
   return (
     <>
       <div className="canvas__container">

@@ -62,6 +62,8 @@ const Widget = (props: {
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
 
+  const [images, setImages] = useState<string[]>([]);
+
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
@@ -70,6 +72,7 @@ const Widget = (props: {
     console.log("--------------------");
     console.log(props.widgetimages);
     console.log(props.widgetindex);
+    setImages(props.widgetimages);
     console.log("--------------------");
   }, [show, props.widgetid, props.layout, props.widgetimages]);
 
@@ -154,6 +157,7 @@ const Widget = (props: {
   const widgetImage = () => {
     console.log("--------function widgetimages--------");
     console.log(props.widgetindex);
+    console.log(images);
     console.log("--------function widgetimages--------");
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
@@ -271,7 +275,7 @@ const Widget = (props: {
           </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {props.widgetimages.length && <>{widgetImage()}</>}
+          {images && <>{widgetImage()}</>}
         </div>
       </article>
 
