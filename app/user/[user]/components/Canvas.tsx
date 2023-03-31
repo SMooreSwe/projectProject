@@ -30,13 +30,13 @@ const Canvas = (props: {
   const db = getFirestore(app) as any;
 
   useEffect(() => {
-    getAllData();
+    getWidgets(props.project);
   }, [props.project]);
 
-  const getAllData = async () => {
-    await getWidgets(props.project);
-    getWidgetImages(widgetList);
-  };
+  // const getAllData = async () => {
+  //   await getWidgets(props.project);
+  //   getWidgetImages(widgetList);
+  // };
 
   const getWidgets = async (projectid: string) => {
     console.log("TEST 1");
@@ -50,32 +50,54 @@ const Canvas = (props: {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-      console.log("TEST 1.1");
+      console.log("TEST 2");
+
+      const storage = getStorage();
+      const urls: any[] = [];
+      const widgetIndex: string[] = [];
+
+      data.map((widget: WidgetType) => {
+        console.log("TEST 3");
+        const filePath = `/widgets/${widget.widgetid}.jpeg`;
+        const storageRef = ref(storage, filePath);
+        getDownloadURL(storageRef)
+          .then((url) => {
+            urls.push(url);
+            widgetIndex.push(widget.widgetid);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      console.log("TEST 4");
       setWidgetList(data);
+      setWidgetImages(urls);
+      setWidgetIndex(widgetIndex);
     });
   };
 
-  const getWidgetImages = async (widgets: WidgetType[]) => {
-    console.log("TEST 2");
-    const storage = getStorage();
-    const urls: any[] = [];
-    const widgetIndex: string[] = [];
+  // const getWidgetImages = async (widgets: WidgetType[]) => {
+  //   console.log("TEST 2");
+  //   const storage = getStorage();
+  //   const urls: any[] = [];
+  //   const widgetIndex: string[] = [];
 
-    widgets.map((widget: WidgetType) => {
-      const filePath = `/widgets/${widget.widgetid}.jpeg`;
-      const storageRef = ref(storage, filePath);
-      getDownloadURL(storageRef)
-        .then((url) => {
-          urls.push(url);
-          widgetIndex.push(widget.widgetid);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-    setWidgetImages(urls);
-    setWidgetIndex(widgetIndex);
-  };
+  //   widgets.map((widget: WidgetType) => {
+  //     const filePath = `/widgets/${widget.widgetid}.jpeg`;
+  //     const storageRef = ref(storage, filePath);
+  //     getDownloadURL(storageRef)
+  //       .then((url) => {
+  //         urls.push(url);
+  //         widgetIndex.push(widget.widgetid);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
+  //   setWidgetImages(urls);
+  //   setWidgetIndex(widgetIndex);
+  //   console.log("TEST 3");
+  // };
 
   return (
     <>
@@ -91,7 +113,7 @@ const Canvas = (props: {
             widgetimages &&
             widgetindex &&
             widgetList.map((widget) => {
-              console.log("TEST 3");
+              console.log("TEST 5");
               console.log(widgetimages);
 
               return (
