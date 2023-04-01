@@ -426,6 +426,24 @@ input[type="file"] {
   border-radius: 5px;
 }
 
+.image-options-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding-top: 10px;
+  padding-inline: 25px;
+}
+
+.image-options-container {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+}
+
 .whiteboard__photo {
   height: 70%;
   width: 100%;
@@ -471,6 +489,16 @@ input[type="file"] {
   padding-right: 10px;
 }
 
+.wbImageItem__img {
+  position: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.wbImageItem__btn {
+  position: relative;
+  bottom: 15px;
+}
 .inputField--password {
   position: relative;
 }

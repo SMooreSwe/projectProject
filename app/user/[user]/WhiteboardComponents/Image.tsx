@@ -1,5 +1,5 @@
 export {};
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {} from "../../../../public/profileImage.png";
 
 //eslint-disable-next-line react/display-name
@@ -16,21 +16,34 @@ export const Image = React.forwardRef<any>(
     }: any,
     ref
   ) => {
-    const imgUrl = () => {
-      //return firestore image url for input
-      return "/profileImage.png";
-    };
+    const [image, setImage] = useState<any>()
+    
+    useEffect(()=> {
+      if (props.file) {
+        const fileRef = props.file;
+        const fileType: string = fileRef.type || "";
+        const reader = new FileReader();
+        reader.readAsBinaryString(fileRef);
+        reader.onload = (ev: any) => { 
+          console.log(ev.target.result)
+          setImage(`data:${fileType};base64,${btoa(ev.target.result)}`) 
+        }
+      } else  {
+        setImage("/profileImage.png");
+      }
+    }, [props.file])
+    
     return (
       <div
-        style={{border: '1px solid black'}}
-        className={["", className].join(" ")}
+        style={style}
+        className={["wbImageItem", className].join(" ")}
         ref={ref}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onTouchEnd={onTouchEnd}
       >
         <button
-          className=""
+          className="wbImageItem__btn"
           onClick={() => props.deleter(props.coordinates)}
         >
           X
@@ -39,13 +52,10 @@ export const Image = React.forwardRef<any>(
         {/* eslint-disable-next-line @next/next/no-img-element*/}
         <img
           alt="Alt"
-          src={imgUrl()}
+          src={image}
           //src={"/profileImage.png"}
-          className={className}
+          className={["wbImageItem__img", className].join(" ")}
           ref={ref}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
-          onTouchEnd={onTouchEnd}
         >
         </img>
         {children}

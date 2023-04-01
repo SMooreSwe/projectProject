@@ -55,5 +55,5 @@ export type Textbox = {
 
 export type WhiteboardImage = {
   id: string;
-  file: string;
+  file: any;
 };

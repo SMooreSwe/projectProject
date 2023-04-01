@@ -64,9 +64,7 @@ const Widget = (props: {
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
   const [textbox, setTextbox] = useState<Textbox[]>([]);
-  const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);
-
-  boardImage;
+  const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);  
 
   const [images, setImages] = useState<string[]>([]);
 
@@ -171,17 +169,14 @@ const Widget = (props: {
     setLayout(newLayoutArray);
   };
 
-  const createImage = () => {
+  const createImage = (image: File) => {
     const uuid = v4();
-    const newImage = { id: uuid, file: "" };
+    const newImage = { id: uuid, file: image};
     const newImageArray = [...boardImage, newImage];
     const newLayoutArray = [
       ...layout,
       { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
     ];
-    console.log("----IMAGEARRAY----");
-    console.log(newImageArray);
-    console.log("--------");
     setBoardImage(newImageArray);
     setLayout(newLayoutArray);
   };
@@ -357,6 +352,19 @@ const Widget = (props: {
     });
   }
 
+  function addImageFromGallery(files: any) {
+    const uuid = v4();
+    if (files) {
+      const fileRef = files[0];
+      const fileType: string = fileRef.type || "";
+      if (fileType ==='image/jpeg') {
+        createImage(files[0])
+      } else {
+        console.log('only jpeg!')
+      }
+    };
+  }
+
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
@@ -386,7 +394,6 @@ const Widget = (props: {
           {images.length > 0 && <>{widgetImage()}</>}
         </div>
       </article>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -429,7 +436,7 @@ const Widget = (props: {
               </div>
               <div className="whiteboard__control">
                 <button
-                  onClick={createImage}
+                  
                   className="whiteboard__control-btn"
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
@@ -470,6 +477,17 @@ const Widget = (props: {
             >
               X
             </button>
+          </div>
+        </div>
+        <div className="image-options-header">
+          <div className="image-options-container">
+            <div className="whiteboard__control">
+                  
+                <label className="custom-file-upload">
+                <input type="file" onChange={(e) => addImageFromGallery(e.target.files)}/>
+                Gallery
+                </label>
+            </div>
           </div>
         </div>
         <Modal.Body className="whiteboard__body">
