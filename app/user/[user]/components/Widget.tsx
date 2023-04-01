@@ -14,7 +14,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Postit, Textbox, WhiteboardImage } from "../../../Types";
 import { v4 } from "uuid";
 
@@ -37,6 +37,7 @@ const Widget = (props: {
   newTextbox: string;
   widgetimages: string[];
   widgetindex: string[];
+  newBoardImages: string;
   prioritySetter: Function;
 }) => {
   const { widgetid, date } = props;
@@ -71,10 +72,15 @@ const Widget = (props: {
   useEffect(() => {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
+    }
+    if (props.newPostits){
       setPostit(JSON.parse(props.newPostits));
     }
     if (props.newTextbox) {
       setTextbox(JSON.parse(props.newTextbox));
+    }
+    if (props.newBoardImages){
+      setBoardImage(JSON.parse(props.newBoardImages))
     }
   }, [show, props.widgetid, props.layout]);
 
@@ -110,7 +116,8 @@ const Widget = (props: {
   const widgetLayout = async (
     currentlayout: Layout[],
     currentpostits: Postit[],
-    currenttextboxes: Textbox[]
+    currenttextboxes: Textbox[],
+    currentBoardImages: WhiteboardImage[],
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
     if (input) {
@@ -125,12 +132,14 @@ const Widget = (props: {
     const allLayouts = JSON.stringify(currentlayout);
     const allPostits = JSON.stringify(currentpostits);
     const allTextboxes = JSON.stringify(currenttextboxes);
+    const allBoardImages = JSON.stringify(currentBoardImages);
 
     const widgetRef = doc(db, "widgets", widgetid);
     await updateDoc(widgetRef, {
       layout: allLayouts,
       postits: allPostits,
       textboxes: allTextboxes,
+      boardImages: allBoardImages,
     });
     handleClose();
   };
@@ -151,7 +160,7 @@ const Widget = (props: {
     const newTextboxArray = [...textbox, newTextbox];
     const newLayoutArray = [
       ...layout,
-      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+      { w: 2, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
     ];
     setTextbox(newTextboxArray);
     setLayout(newLayoutArray);
@@ -163,7 +172,7 @@ const Widget = (props: {
     const newPostitArray = [...postit, newPostit];
     const newLayoutArray = [
       ...layout,
-      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+      { w: 2, h: 2, x: 1, y: 1, i: uuid, moved: false, static: false },
     ];
     setPostit(newPostitArray);
     setLayout(newLayoutArray);
@@ -171,14 +180,25 @@ const Widget = (props: {
 
   const createImage = (image: File) => {
     const uuid = v4();
-    const newImage = { id: uuid, file: image};
-    const newImageArray = [...boardImage, newImage];
-    const newLayoutArray = [
-      ...layout,
-      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
-    ];
-    setBoardImage(newImageArray);
-    setLayout(newLayoutArray);
+    if (image) {
+      const storage = getStorage();
+      const filePath = `/widgets/${props.widgetid}/${uuid}.jpeg`;
+      const storageRef = ref(storage, filePath);
+      uploadBytes(storageRef, image)
+      .then((snapshot) => {
+        return getDownloadURL(snapshot.ref)
+      })
+      .then(downloadURL => {
+        const newImage = { id: uuid, url: downloadURL};
+        const newImageArray = [...boardImage, newImage];
+        const newLayoutArray = [
+          ...layout,
+          { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+        ];
+        setBoardImage(newImageArray);
+        setLayout(newLayoutArray);
+      })
+    }
   };
 
   const createLink = () => {
@@ -272,7 +292,7 @@ const Widget = (props: {
         {boardImage &&
           boardImage.map((singleImage: WhiteboardImage) => {
             const singleLayout = layout.find((x) => x.i === singleImage.id);
-            const imagefile = singleImage.file;
+            const imagefile = singleImage.url;
             if (singleLayout) {
               return (
                 // eslint-disable-next-line jsx-a11y/alt-text
@@ -320,7 +340,7 @@ const Widget = (props: {
       const texttIndex = nextState.findIndex(
         (element) => element.id === array[1]
       );
-      nextState[texttIndex].file = array[0];
+      nextState[texttIndex].url = array[0];
       return nextState;
     });
   }
@@ -466,7 +486,7 @@ const Widget = (props: {
           </div>
           <div className="widget__btn-container">
             <button
-              onClick={() => widgetLayout(layout, postit, textbox)}
+              onClick={() => widgetLayout(layout, postit, textbox, boardImage)}
               className="widget-container__save-btn"
             >
               Save

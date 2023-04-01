@@ -20,14 +20,7 @@ export const Image = React.forwardRef<any>(
     
     useEffect(()=> {
       if (props.file) {
-        const fileRef = props.file;
-        const fileType: string = fileRef.type || "";
-        const reader = new FileReader();
-        reader.readAsBinaryString(fileRef);
-        reader.onload = (ev: any) => { 
-          console.log(ev.target.result)
-          setImage(`data:${fileType};base64,${btoa(ev.target.result)}`) 
-        }
+          setImage(props.file) 
       } else  {
         setImage("/profileImage.png");
       }

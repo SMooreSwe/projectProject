@@ -23,6 +23,7 @@ export type WidgetType = {
   layout: string;
   postits: string;
   textboxes: string;
+  boardImages: string;
 };
 
 export type Invited = {
@@ -55,5 +56,5 @@ export type Textbox = {
 
 export type WhiteboardImage = {
   id: string;
-  file: any;
+  url: string;
 };
