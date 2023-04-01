@@ -99,10 +99,9 @@ const User = () => {
           projectSetter={projectSetter}
         />
       </Header>
-      <Sidebar user={user} projectlist={projectList} />
+      <Sidebar user={user} projectlist={projectList}/>
       <div className="project__container">
-        <Canvas project={currentProject} projectList={projectList}>
-        </Canvas>
+        <Canvas project={currentProject} projectList={projectList}> </Canvas>
       </div>
     </div>
   );

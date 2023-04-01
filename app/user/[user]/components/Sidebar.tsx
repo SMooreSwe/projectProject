@@ -3,7 +3,7 @@ import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import Image from "next/image";
 import { User } from "firebase/auth";
-import { Invited } from "../../../Types";
+import { Invited, UserUpdate } from "../../../Types";
 import {
   arrayRemove,
   arrayUnion,
@@ -14,6 +14,7 @@ import {
   onSnapshot,
   query,
   serverTimestamp,
+  setDoc,
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
@@ -21,42 +22,51 @@ import { app } from "../../../../firebase-config";
 import { uuid } from "uuidv4";
 import createButton from "../../../../public/createbutton.png";
 import { Project } from "../../../Types";
+import { v4 } from "uuid";
 
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string };
   projectlist: Project[];
+
 }) => {
-  const [inviteduser, setInvitedUSer] = useState<Invited[]>([]);
+  const [invitedUser, setInvitedUSer] = useState<Invited[]>([]);
+  const [userUpdates, setUserUpdates] = useState<UserUpdate[]>([]);
 
   const db = getFirestore(app) as any;
 
-  const getInvited = async () => {
+  const getNotifications = async () => {
     if (props.user.userid) {
       const docRef = query(
         collection(db, "notifications", props.user.userid, "usernotifications")
       );
       onSnapshot(docRef, (querySnapshot) => {
-        let data = [] as any[];
+        let invites = [] as any[];
+        let updates = [] as any[];
         querySnapshot.forEach((doc) => {
-          data.push(doc.data());
+          if (doc.data().invitationuid) {
+            invites.push(doc.data());
+            setInvitedUSer([...invites]);
+          } else {
+            updates.push(doc.data());
+            setUserUpdates([...updates]);
+          }
         });
-        setInvitedUSer(data);
       });
     }
   };
 
   useEffect(() => {
-    getInvited();
+    getNotifications();
   }, [props.user, props.projectlist]);
 
   const AcceptProject = async (e: any) => {
     const array = e.target.value;
     const arraySplit = array.split(",");
+
     const projectid = arraySplit[0];
     const invitationuid = arraySplit[1];
-
-    console.log(projectid);
-    console.log(invitationuid);
+    const userinvitingid = arraySplit[2];
+    const projectname = arraySplit[3];
 
     const projectRef = doc(db, "projects", projectid);
     await updateDoc(projectRef, {
@@ -75,10 +85,29 @@ const Sidebar = (props: {
         invitationuid
       )
     );
+    const uuid = v4();
+    await setDoc(
+      doc(db, "notifications", `${userinvitingid}`, "usernotifications", uuid),
+      {
+        projectname: projectname,
+        projectid: projectid,
+        usersendingupdate: props.user.username,
+        usermessage: 'has accepted your invitation to project',
+        updateuid: uuid,
+        created: serverTimestamp(),
+      }
+    );
   };
 
   const DeclineProject = async (e: any) => {
-    const invitationuid = e.target.value;
+    const array = e.target.value;
+    const arraySplit = array.split(",");
+
+    const projectid = arraySplit[0];
+    const invitationuid = arraySplit[1];
+    const userinvitingid = arraySplit[2];
+    const projectname = arraySplit[3];
+
     await deleteDoc(
       doc(
         db,
@@ -88,21 +117,42 @@ const Sidebar = (props: {
         invitationuid
       )
     );
+    const uuid = v4();
+    await setDoc(
+      doc(db, "notifications", `${userinvitingid}`, "usernotifications", uuid),
+      {
+        projectname: projectname,
+        projectid: projectid,
+        usersendingupdate: props.user.username,
+        usermessage: 'has declined your invitation to project',
+        updateuid: uuid,
+        created: serverTimestamp(),
+      }
+    );
   };
 
-  const userInvited = () => {
-    let title = "";
-    if (inviteduser.length > 0) {
-      title = "Activity";
-    }
+  const removeAfterReadingUpdate = async (e: any) => {
+    const updateuid = e.target.value;
+    await deleteDoc(
+      doc(
+        db,
+        "notifications",
+        props.user.userid,
+        "usernotifications",
+        updateuid
+      )
+    );
+  };
+
+  const userInvitedMessage = () => {
+    notificationsTitle();
     return (
       <>
-        <h3 className={styles.Sidebar__title}>{title}</h3>
-        {inviteduser &&
-          inviteduser.map((invitation: Invited) => {
+        {invitedUser &&
+          invitedUser.map((invitation: Invited) => {
             return (
               <div
-                key={invitation.projectname}
+                key={invitation.invitationuid}
                 className={styles.notification__container}
               >
                 <div className={styles.notification__message}>
@@ -113,20 +163,20 @@ const Sidebar = (props: {
                     alt=""
                   />
                   <p>
-                    {invitation.userinviting} has invited you to join project{" "}
+                    {invitation.userinvitingname} has invited you to join project{" "}
                     {invitation.projectname}
                   </p>
                 </div>
                 <div className={styles.notification__buttons}>
                   <button
-                    value={[invitation.projectid, invitation.invitationuid]}
+                    value={[invitation.projectid, invitation.invitationuid, invitation.userinvitingid, invitation.projectname]}
                     onClick={AcceptProject}
                     className={styles.notification__button}
                   >
                     Accept
                   </button>
                   <button
-                    value={invitation.invitationuid}
+                    value={[invitation.projectid, invitation.invitationuid, invitation.userinvitingid, invitation.projectname]}
                     onClick={DeclineProject}
                     className={styles.notification__button}
                   >
@@ -136,6 +186,57 @@ const Sidebar = (props: {
               </div>
             );
           })}
+      </>
+    );
+  };
+
+  const userUpdateMessage = () => {
+    notificationsTitle();
+    return (
+      <>
+        {userUpdates &&
+          userUpdates.map((userupdate: UserUpdate) => {
+            return (
+              <div
+                key={userupdate.updateuid}
+                className={styles.notification__container}
+              >
+                <div className={styles.notification__message}>
+                  <Image
+                    className={styles.UserProfileImage}
+                    src={profileImage}
+                    placeholder="blur"
+                    alt=""
+                  />
+                  <p>
+                    {userupdate.usersendingupdate} {userupdate.usermessage}{" "}
+                    {userupdate.projectname}
+                  </p>
+                </div>
+                <div className={styles.notification__buttons}>
+                  <button
+                    value={[userupdate.projectid, userupdate.updateuid]}
+                    onClick={removeAfterReadingUpdate}
+                    className={styles.notification__button}
+                  >
+                    Ok
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+      </>
+    );
+  };
+
+  const notificationsTitle = () => {
+    let title = "";
+    if (invitedUser.length > 0 || userUpdates.length > 0) {
+      title = "Activity";
+    }
+    return (
+      <>
+        <h3 className={styles.Sidebar__title}>{title}</h3>
       </>
     );
   };
@@ -193,11 +294,19 @@ const Sidebar = (props: {
             <h3 className={styles.Sidebar__title}>Comments</h3>
             <div className={styles.Sidebar__container}>
               <div className={styles.Sidebar__messagebox}></div>
-              <div >
-              <form className={styles.Sidebar__typingbox}>
-                <input className={styles.Sidebar__typingField} type="text" name="name" />
-                <input className={styles.Sidebar__sendbtn} type="submit" value="Submit" />
-              </form>
+              <div>
+                <form className={styles.Sidebar__typingbox}>
+                  <input
+                    className={styles.Sidebar__typingField}
+                    type="text"
+                    name="name"
+                  />
+                  <input
+                    className={styles.Sidebar__sendbtn}
+                    type="submit"
+                    value="Submit"
+                  />
+                </form>
               </div>
             </div>
           </div>
@@ -208,7 +317,9 @@ const Sidebar = (props: {
 
   return (
     <div className="Sidebar">
-      {inviteduser && <>{userInvited()}</>}
+      {<>{notificationsTitle()}</>}
+      {invitedUser && <>{userInvitedMessage()}</>}
+      {userUpdates && <>{userUpdateMessage()}</>}
       <div>
         <h3 className={styles.Sidebar__title}></h3>
         {<>{Tutorial()}</>}

@@ -28,8 +28,18 @@ export type WidgetType = {
 export type Invited = {
   projectname: string;
   projectid: string;
-  userinviting: string;
+  userinvitingname: string;
+  userinvitingid: string;
   invitationuid: string;
+  created: Timestamp;
+};
+
+export type UserUpdate = {
+  projectname: string;
+  projectid: string;
+  usersendingupdate: string;
+  usermessage: string;
+  updateuid: string;
   created: Timestamp;
 };
 
@@ -47,4 +57,3 @@ export type WhiteboardImage = {
   id: string;
   file: string;
 };
-
