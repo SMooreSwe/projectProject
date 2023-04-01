@@ -141,7 +141,11 @@ const Sidebar = (props: {
 
   const removeAfterReadingUpdate = async (e: any) => {
     console.log('ReadingupdateCalled!!!!!!!')
+
     const updateuid = e.target.value;
+    console.log(props.user.userid)
+    console.log(updateuid)
+
     await deleteDoc(
       doc(
         db,
@@ -224,7 +228,7 @@ const Sidebar = (props: {
                 </div>
                 <div className={styles.notification__buttons}>
                   <button
-                    value={[userupdate.projectid, userupdate.updateuid]}
+                    value={userupdate.updateuid}
                     onClick={removeAfterReadingUpdate}
                     className={styles.notification__button}
                   >
