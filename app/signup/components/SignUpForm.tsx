@@ -110,7 +110,9 @@ export const Form = () => {
       });
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
-    }
+    } else if (inputs.username === '') {
+      setErrorMessage('Please input a username ')
+  };
   };
 
   const uploadedImageName = useRef<HTMLParagraphElement>(null);
