@@ -101,8 +101,8 @@ const Header = (props: {
           placeholder="blur"
           alt=""
         />
-        <button className={styles.settingsButton} onClick={() => signOutUser()}>
-          <p>logout</p>
+        <button className={styles.logoutBtn} onClick={() => signOutUser()}>
+          Logout
         </button>
       </div>
     </nav>
