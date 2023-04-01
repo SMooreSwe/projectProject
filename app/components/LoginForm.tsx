@@ -46,9 +46,7 @@ export const Form = () => {
       router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
       return true;
     } catch (error: any) {
-      if (!error?.response) {
-        setErrorMessage('No Server Response');
-      } else if (error.code === 'auth/user-not-found') {
+      if (error.code === 'auth/user-not-found') {
         setErrorMessage('User not found, please enter a valid email.');
       } else if (error.code === 'auth/wrong-password') {
         setErrorMessage('Password is incorrect. Please enter a valid password.');
