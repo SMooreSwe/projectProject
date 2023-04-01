@@ -117,7 +117,7 @@ function CollaboratorsWidget(props: {
     });
     const uuid = v4();
     await setDoc(
-      doc(db, "notifications", `${userid}`, "usernotifications", uuid),
+      doc(db, "notifications", userid, "usernotifications", uuid),
       {
         projectname: props.projectname,
         projectid: props.projectid,
