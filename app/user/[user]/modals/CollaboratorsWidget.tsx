@@ -29,6 +29,7 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 function CollaboratorsWidget(props: {
   projectid: string;
   username: string;
+  userid: string;
   projectname: string;
 }) {
   const [users, setUsers] = useState<User[]>([
@@ -95,7 +96,8 @@ function CollaboratorsWidget(props: {
       {
         projectname: props.projectname,
         projectid: props.projectid,
-        userinviting: props.username,
+        userinvitingname: props.username,
+        userinvitingid: props.userid,
         invitationuid: uuid,
         created: serverTimestamp(),
       }

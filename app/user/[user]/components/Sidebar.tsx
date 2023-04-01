@@ -68,6 +68,14 @@ const Sidebar = (props: {
     const userinvitingid = arraySplit[2];
     const projectname = arraySplit[3];
 
+
+    console.log(array)
+    console.log(arraySplit)
+    console.log(projectid)
+    console.log(invitationuid)
+    console.log(userinvitingid)
+    console.log(projectname)
+
     const projectRef = doc(db, "projects", projectid);
     await updateDoc(projectRef, {
       users: arrayUnion(props.user.userid),

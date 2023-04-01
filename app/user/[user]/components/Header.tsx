@@ -86,6 +86,7 @@ const Header = (props: {
         <CollaboratorsWidget
           projectid={props.projectid}
           username={props.user.username}
+          userid={props.user.userid}
           projectname={props.projectname}
         />
         {props.collaboratorsArray.length > 1 && <>{members()}</>}
