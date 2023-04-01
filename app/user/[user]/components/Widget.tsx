@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import styles from "../userpage.module.css";
 import "../../../globals.css";
@@ -15,7 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { Postit, Textbox, WhiteboardImage } from "../../../Types";
+import { Postit, Textbox, WhiteboardImage, WhiteboardLink } from "../../../Types";
 import { v4 } from "uuid";
 
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
@@ -25,6 +25,7 @@ import { PostIt } from "../WhiteboardComponents/PostIt";
 import { Text } from "../WhiteboardComponents/Text";
 import { Image } from "../WhiteboardComponents/Image";
 import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
+import { WBLink } from "../WhiteboardComponents/WBLink";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Widget = (props: {
@@ -39,6 +40,7 @@ const Widget = (props: {
   widgetindex: string[];
   newBoardImages: string;
   prioritySetter: Function;
+  newLinks: string;
 }) => {
   const { widgetid, date } = props;
 
@@ -66,6 +68,7 @@ const Widget = (props: {
   const [postit, setPostit] = useState<Postit[]>([]);
   const [textbox, setTextbox] = useState<Textbox[]>([]);
   const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);  
+  const [link, setLink] = useState<WhiteboardLink[]>([]);
 
   const [images, setImages] = useState<string[]>([]);
 
@@ -81,6 +84,9 @@ const Widget = (props: {
     }
     if (props.newBoardImages){
       setBoardImage(JSON.parse(props.newBoardImages))
+    }
+    if(props.newLinks) {
+      setLink(JSON.parse(props.newLinks))
     }
   }, [show, props.widgetid, props.layout]);
 
@@ -118,6 +124,7 @@ const Widget = (props: {
     currentpostits: Postit[],
     currenttextboxes: Textbox[],
     currentBoardImages: WhiteboardImage[],
+    currentLinks: WhiteboardLink[]
   ) => {
     const input = document.querySelector<HTMLDivElement>(".whiteboard__photo");
     if (input) {
@@ -133,6 +140,7 @@ const Widget = (props: {
     const allPostits = JSON.stringify(currentpostits);
     const allTextboxes = JSON.stringify(currenttextboxes);
     const allBoardImages = JSON.stringify(currentBoardImages);
+    const allLinks = JSON.stringify(currentLinks);
 
     const widgetRef = doc(db, "widgets", widgetid);
     await updateDoc(widgetRef, {
@@ -140,6 +148,7 @@ const Widget = (props: {
       postits: allPostits,
       textboxes: allTextboxes,
       boardImages: allBoardImages,
+      links: allLinks,
     });
     handleClose();
   };
@@ -201,8 +210,20 @@ const Widget = (props: {
     }
   };
 
+  const linkName = useRef<HTMLInputElement>(null)
+  const linkUrl = useRef<HTMLInputElement>(null)
   const createLink = () => {
-    console.log("LINK BUTTON!!!");
+    const nameInput = linkName.current!.value;
+    const urlInput = linkUrl.current!.value;
+    const uuid = v4();
+    const newLink = { id: uuid, name: nameInput, url: urlInput };
+    const newLinkArray = [...link, newLink];
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    setLink(newLinkArray);
+    setLayout(newLayoutArray);
   };
 
   const widgetImage = () => {
@@ -300,10 +321,29 @@ const Widget = (props: {
                   key={singleImage.id}
                   data-grid={singleLayout}
                   // @ts-ignore: Unreachable code error
-                  logger={imagelogger}
                   coordinates={singleLayout.i}
                   file={imagefile}
                   deleter={imagedeleter}
+                />
+              );
+            }
+          })}
+          {link &&
+          link.map((singleLink: WhiteboardLink) => {
+            const singleLayout = layout.find((x) => x.i === singleLink.id);
+            const name = singleLink.name
+            const url = singleLink.url;
+            if (singleLayout) {
+              return (
+                // eslint-disable-next-line jsx-a11y/alt-text
+                <WBLink
+                  key={singleLink.id}
+                  data-grid={singleLayout}
+                  // @ts-ignore: Unreachable code error
+                  coordinates={singleLayout.i}
+                  name={name}
+                  url={url}
+                  deleter={linkdeleter}
                 />
               );
             }
@@ -334,17 +374,6 @@ const Widget = (props: {
     });
   }
 
-  function imagelogger(array: string[]) {
-    setBoardImage((prevState) => {
-      let nextState = [...prevState];
-      const texttIndex = nextState.findIndex(
-        (element) => element.id === array[1]
-      );
-      nextState[texttIndex].url = array[0];
-      return nextState;
-    });
-  }
-
   function deleter(id: string) {
     setPostit((prevState) => {
       let nextState = [...prevState];
@@ -368,6 +397,15 @@ const Widget = (props: {
       let nextState = [...prevState];
       const imageIndex = nextState.findIndex((element) => element.id === id);
       nextState.splice(imageIndex, 1);
+      return nextState;
+    });
+  }
+
+  function linkdeleter(id: string) {
+    setLink((prevState) => {
+      let nextState = [...prevState];
+      const linkIndex = nextState.findIndex((element) => element.id === id);
+      nextState.splice(linkIndex, 1);
       return nextState;
     });
   }
@@ -486,7 +524,7 @@ const Widget = (props: {
           </div>
           <div className="widget__btn-container">
             <button
-              onClick={() => widgetLayout(layout, postit, textbox, boardImage)}
+              onClick={() => widgetLayout(layout, postit, textbox, boardImage, link)}
               className="widget-container__save-btn"
             >
               Save
@@ -507,6 +545,18 @@ const Widget = (props: {
                 <input type="file" onChange={(e) => addImageFromGallery(e.target.files)}/>
                 Gallery
                 </label>
+            </div>
+          </div>
+        </div>
+        <div className="link-options-header">
+          <div className="link-options-container">
+            <div className="link__control">
+              <form onSubmit={(e) => {e.preventDefault();
+                createLink()}}>
+              <input ref={linkName} type="text" placeholder="name" required/>
+              <input ref={linkUrl} type="text" placeholder="url" required/>
+              <input type="submit" name="" id="" />
+              </form>
             </div>
           </div>
         </div>

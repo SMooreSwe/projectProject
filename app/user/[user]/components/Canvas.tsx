@@ -95,6 +95,7 @@ const Canvas = (props: {
                   newPostits={widget.postits}
                   newTextbox={widget.textboxes}
                   newBoardImages={widget.boardImages}
+                  newLinks={widget.links}
                 />
               );
             })}

@@ -24,6 +24,7 @@ export type WidgetType = {
   postits: string;
   textboxes: string;
   boardImages: string;
+  links: string;
 };
 
 export type Invited = {
@@ -58,3 +59,9 @@ export type WhiteboardImage = {
   id: string;
   url: string;
 };
+
+export type WhiteboardLink = {
+  id: string;
+  name: string;
+  url: string;
+}
