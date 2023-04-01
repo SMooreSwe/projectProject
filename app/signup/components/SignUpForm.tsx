@@ -98,8 +98,8 @@ export const Form = () => {
         }
       ).catch((error: any) => {
         console.log(error.code, error.message);
-        if (!error?.response) {
-          setErrorMessage('No server response')
+        if (error.code === 'auth/weak-password') {
+          setErrorMessage('Password should be at least 6 characters.')
         } else if (error.code === 'auth/internal-error') {
           setErrorMessage('Please enter a password.')
         } else if (error.code === 'auth/email-already-in-use') {
@@ -108,6 +108,8 @@ export const Form = () => {
           setErrorMessage('Something went wrong. Try again.');
         };
       });
+    } else if (inputs.password !== inputs.confirmpassword) {
+      setErrorMessage('Passwords do not match.')
     }
   };
 
