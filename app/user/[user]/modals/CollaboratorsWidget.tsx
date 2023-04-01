@@ -115,6 +115,18 @@ function CollaboratorsWidget(props: {
     await updateDoc(userRef, {
       projects: arrayRemove(props.projectid),
     });
+    const uuid = v4();
+    await setDoc(
+      doc(db, "notifications", `${userid}`, "usernotifications", uuid),
+      {
+        projectname: props.projectname,
+        projectid: props.projectid,
+        usersendingupdate: props.username,
+        usermessage: 'has removed you from project',
+        updateuid: uuid,
+        created: serverTimestamp(),
+      }
+    );
     handleClose();
   };
 

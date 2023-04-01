@@ -22,33 +22,31 @@ export const Image = React.forwardRef<any>(
     };
     return (
       <div
-        style={style}
-        className={["postit", className].join(" ")}
+        style={{border: '1px solid black'}}
+        className={["", className].join(" ")}
         ref={ref}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onTouchEnd={onTouchEnd}
       >
         <button
-          className="postit__btn"
+          className=""
           onClick={() => props.deleter(props.coordinates)}
         >
           X
         </button>
-        <div>WNFOWfoinwoif</div>
+      
         {/* eslint-disable-next-line @next/next/no-img-element*/}
         <img
           alt="Alt"
           src={imgUrl()}
           //src={"/profileImage.png"}
-          style={style}
           className={className}
           ref={ref}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onTouchEnd={onTouchEnd}
         >
-          {children}
         </img>
         {children}
       </div>
