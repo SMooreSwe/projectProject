@@ -172,7 +172,7 @@ const Widget = (props: {
     const newPostitArray = [...postit, newPostit];
     const newLayoutArray = [
       ...layout,
-      { w: 2, h: 2, x: 1, y: 1, i: uuid, moved: false, static: false },
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
     ];
     setPostit(newPostitArray);
     setLayout(newLayoutArray);
@@ -244,7 +244,7 @@ const Widget = (props: {
         }}
         className="layout"
         compactType={null}
-        preventCollision={false}
+        preventCollision={true}
         isResizable={true}
         resizeHandles={["se"]}
         onLayoutChange={(layout: Layout[]) => {
