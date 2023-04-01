@@ -63,7 +63,7 @@ export const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (inputs.password === inputs.confirmpassword) {
+    if (inputs.username !== '' && inputs.password === inputs.confirmpassword) {
       createUserWithEmailAndPassword(auth, inputs.email, inputs.password).then(
         async (userCredential) => {
           // Signed in
