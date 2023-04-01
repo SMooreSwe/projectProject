@@ -45,12 +45,12 @@ const Sidebar = (props: {
         querySnapshot.forEach((doc) => {
           if (doc.data().invitationuid) {
             invites.push(doc.data());
-            setInvitedUSer([...invites]);
           } else {
             updates.push(doc.data());
-            setUserUpdates([...updates]);
           }
         });
+        setUserUpdates([...updates]);
+        setInvitedUSer([...invites]);
       });
     }
   };
@@ -140,6 +140,7 @@ const Sidebar = (props: {
   };
 
   const removeAfterReadingUpdate = async (e: any) => {
+    console.log('ReadingupdateCalled!!!!!!!')
     const updateuid = e.target.value;
     await deleteDoc(
       doc(
