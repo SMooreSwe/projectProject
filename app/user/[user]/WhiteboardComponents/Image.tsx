@@ -1,5 +1,6 @@
 export {};
 import React from "react";
+import {} from "../../../../public/profileImage.png";
 
 //eslint-disable-next-line react/display-name
 export const Image = React.forwardRef<any>(
@@ -37,9 +38,9 @@ export const Image = React.forwardRef<any>(
         <div>WNFOWfoinwoif</div>
         {/* eslint-disable-next-line @next/next/no-img-element*/}
         <img
-          alt=""
-          //src={imgUrl()}
-          src={"/profileImage.png"}
+          alt="Alt"
+          src={imgUrl()}
+          //src={"/profileImage.png"}
           style={style}
           className={className}
           ref={ref}
