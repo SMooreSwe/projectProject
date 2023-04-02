@@ -21,6 +21,7 @@ import {
   WhiteboardImage,
   WhiteboardLink,
   GalleryImage,
+  GalleryLink,
 } from "../../../Types";
 import { v4 } from "uuid";
 
@@ -76,10 +77,14 @@ const Widget = (props: {
   const [textbox, setTextbox] = useState<Textbox[]>([]);
   const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);
   const [link, setLink] = useState<WhiteboardLink[]>([]);
+
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [gallerySearchBox, setGallerySearchBox] = useState(false);
   const [gallerySearchImages, setGallerySearchImages] = useState(false);
+
+  const [galleryLinks, setGalleryLinks] = useState<GalleryLink[]>([]);
   const [linkSearchBox, setLinkSearchBox] = useState(false);
+  const [gallerySearchLinks, setGallerySearchLinks] = useState(false);
 
   const [images, setImages] = useState<string[]>([]);
 
@@ -220,26 +225,44 @@ const Widget = (props: {
         });
     }
   };
-
-  // const createWebImage = async (searchText: string) => {
-  //   let subscriptionKey = "67a8b1498dd548a18240387134bfe126";
-  //   const response = await axios(
-  //     "https://api.bing.microsoft.com/v7.0/search" +
-  //       "?q=" +
-  //       encodeURIComponent(searchText),
-  //     {
-  //       method: "get",
-  //       headers: {
-  //         "Ocp-Apim-Subscription-Key": subscriptionKey,
-  //       },
-  //       params: {
-  //         safesearch: "Moderate",
-  //         count: "12",
-  //         Pragma: "no-cache",
-  //         maxFileSize: "300000",
-  //       },
-  //     }
-  //   );
+  const searchLinkInput = useRef<HTMLInputElement>(null);
+  const createLinkImage = async () => {
+    console.log("CREATE LINK IMAGE");
+    if (
+      searchLinkInput.current?.value &&
+      searchLinkInput.current!.value.length > 0
+    ) {
+      setGallerySearchLinks(true);
+      const searchLink = searchLinkInput.current!.value;
+      let subscriptionKey = process.env.NEXT_PUBLIC_WEB_API;
+      const response = await axios(
+        "https://api.bing.microsoft.com/v7.0/search" +
+          "?q=" +
+          encodeURIComponent(searchLink),
+        {
+          method: "get",
+          headers: {
+            "Ocp-Apim-Subscription-Key": subscriptionKey,
+          },
+          params: {
+            safesearch: "Moderate",
+            count: "8",
+            Pragma: "no-cache",
+            maxFileSize: "300000",
+            responseFilter: "images",
+          },
+        }
+      );
+      console.log(response.data);
+      if (response.data.images.value) {
+        const imageArray = response.data.images.value.slice(0, 8);
+        setGalleryLinks(imageArray);
+        setLinkSearchBox(false);
+      } else {
+        console.log("No webpages found!");
+      }
+    }
+  };
 
   const searchImageInput = useRef<HTMLInputElement>(null);
   const createWebImage = async () => {
@@ -327,6 +350,34 @@ const Widget = (props: {
         />
       );
     }
+  };
+
+  const populateLinksGallery = () => {
+    return (
+      <div className="gallery__container">
+        {galleryLinks &&
+          galleryLinks.map((imagelink: GalleryLink) => {
+            const thumbnail = imagelink.thumbnailUrl;
+            const link = imagelink.hostPageUrl;
+            return (
+              <button
+                className="gallery__btn"
+                onClick={selectGalleryImage}
+                key={thumbnail}
+                value={thumbnail}
+              >
+                {/*eslint-disable-next-line @next/next/no-img-element*/}
+                <img
+                  className="gallery__image"
+                  src={thumbnail}
+                  alt={link}
+                ></img>
+                <p>{link}</p>
+              </button>
+            );
+          })}
+      </div>
+    );
   };
 
   const populateGallery = () => {
@@ -523,20 +574,28 @@ const Widget = (props: {
   const openLinkSearchBox = () => {
     return (
       <div className="image-options-header">
-        <div className="image-options-container">
-          <div className="whiteboard__control">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                createLink();
-              }}
-            >
-              <input ref={linkName} type="text" placeholder="name" required />
-              <input ref={linkUrl} type="text" placeholder="url" required />
-              <input type="submit" name="" id="" />
-            </form>
-          </div>
-        </div>
+        <form
+          className="image-options-searchbar"
+          onSubmit={(e) => {
+            e.preventDefault();
+            createLinkImage();
+          }}
+        >
+          <input
+            className="image-options-textfield"
+            ref={searchLinkInput}
+            type="text"
+            placeholder="Search for webpages..."
+            required
+          />
+          <input
+            type="submit"
+            name=""
+            id=""
+            value="Search"
+            className="image-options-btn"
+          />
+        </form>
       </div>
     );
   };
@@ -544,24 +603,28 @@ const Widget = (props: {
   const openGallerySearchBox = () => {
     return (
       <div className="image-options-header">
-        <div className="image-options-container">
-          <div className="whiteboard__control">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                createWebImage();
-              }}
-            >
-              <input
-                ref={searchImageInput}
-                type="text"
-                placeholder="url"
-                required
-              />
-              <input type="submit" name="" id="" />
-            </form>
-          </div>
-        </div>
+        <form
+          className="image-options-searchbar"
+          onSubmit={(e) => {
+            e.preventDefault();
+            createWebImage();
+          }}
+        >
+          <input
+            className="image-options-textfield"
+            ref={searchImageInput}
+            type="text"
+            placeholder="Search for images..."
+            required
+          />
+          <input
+            type="submit"
+            name=""
+            id=""
+            value="Search"
+            className="image-options-btn"
+          />
+        </form>
       </div>
     );
   };
@@ -704,8 +767,12 @@ const Widget = (props: {
         </div>
         {linkSearchBox === true && <>{openLinkSearchBox()}</>}
         {gallerySearchBox === true && <>{openGallerySearchBox()}</>}
+
         {gallerySearchImages === true && galleryImages.length > 0 && (
           <>{populateGallery()}</>
+        )}
+        {gallerySearchLinks === true && galleryLinks.length > 0 && (
+          <>{populateLinksGallery()}</>
         )}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">

@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import CreateProject from "../modals/CreateProject";
 import CollaboratorsWidget from "../modals/CollaboratorsWidget";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { image } from "html2canvas/dist/types/css/types/image";
 
 const Header = (props: {
   user: { email: string; username: string; userid: string };
@@ -29,8 +30,6 @@ const Header = (props: {
     "/profileImage.png"
   );
 
-  const imageSRC = useRef<HTMLImageElement>(null);
-
   const userImage = () => {
     const storage = getStorage();
     const filePath = `/users/${props.user.userid}.jpeg`;
@@ -38,13 +37,6 @@ const Header = (props: {
 
     getDownloadURL(storageRef)
       .then((url) => {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open("GET", url);
-        xhr.send();
         setImageSrc(url);
       })
       .catch((error) => {
@@ -61,6 +53,30 @@ const Header = (props: {
     userImage();
   }, [props.user, props.projectid]);
 
+  const getImage = () => {
+    if (imageSrc.toString().length > 0) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.UserProfileImage}
+          src={imageSrc as string}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.UserProfileImage}
+          src={"/profileImage.png"}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    }
+  };
+
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
@@ -68,7 +84,6 @@ const Header = (props: {
         {props.children}
         <CreateProject user={props.user} />
       </div>
-
       <div>
         <CollaboratorsWidget
           projectid={props.projectid}
@@ -80,14 +95,7 @@ const Header = (props: {
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>
-        {/*eslint-disable-next-line @next/next/no-img-element*/}
-        <img
-          ref={imageSRC}
-          className={styles.UserProfileImage}
-          src={imageSrc as string}
-          placeholder="blur"
-          alt=""
-        />
+        {imageSrc && <>{getImage()}</>}
         <button className={styles.logoutBtn} onClick={() => signOutUser()}>
           Logout
         </button>

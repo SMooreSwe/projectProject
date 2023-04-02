@@ -69,3 +69,8 @@ export type WhiteboardLink = {
 export type GalleryImage = {
   contentUrl: string;
 };
+
+export type GalleryLink = {
+  thumbnailUrl: string;
+  hostPageUrl: string;
+};
