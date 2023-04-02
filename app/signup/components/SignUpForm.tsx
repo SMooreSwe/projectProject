@@ -104,9 +104,7 @@ export const Form = () => {
           setErrorMessage('Please enter a password.')
         } else if (error.code === 'auth/email-already-in-use') {
           setErrorMessage('This email is already in use. Please enter a different one.');
-        } else {
-          setErrorMessage('Something went wrong. Try again.');
-        };
+        } 
       });
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
