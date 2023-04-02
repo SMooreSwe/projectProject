@@ -25,14 +25,14 @@ export const WBLink = React.forwardRef<any>(
     return (
       <div
         style={style}
-        className={["postit", className].join(" ")}
+        className={["wbImageItem", className].join(" ")}
         ref={ref}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onTouchEnd={onTouchEnd}
       >
         <button
-          className="postit__btn"
+          className="wbImageItem__btn"
           onClick={() => props.deleter(props.coordinates)}
         >
           X
