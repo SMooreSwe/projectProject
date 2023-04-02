@@ -49,7 +49,7 @@
 }
 
 .login-form {
-  margin: 2.25em 0;
+  margin: 2.25em 0 0 0;
 }
 
 .signup-form {
@@ -89,7 +89,7 @@
   cursor: pointer;
   justify-self: center;
   align-self: center;
-  margin-top: 15px;
+  margin-block: 10px 2em;
 }
 
 .login-form-password-div,
