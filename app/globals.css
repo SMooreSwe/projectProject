@@ -493,7 +493,6 @@ input[type="file"] {
 .whiteboard__photo {
   height: 70%;
   width: 100%;
-  object-fit: scale-down;
 }
 
 .postit {
