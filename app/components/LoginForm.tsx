@@ -80,18 +80,6 @@ export const Form = () => {
             />
           </label>
           <div className="login-form-password-div">
-            <button
-              className="login-form__password-visibility"
-              onClick={togglePassword}
-            >
-              {passwordType === "password" ? (
-                <AiOutlineEye size={20} />
-              ) : (
-                <AiOutlineEyeInvisible size={20} />
-              )}
-            </button>
-          </div>
-          <div className="login-form-password-div">
             <label className="inputLabel">
               {" "}
               Password:
@@ -104,7 +92,7 @@ export const Form = () => {
                 onChange={handleChange}
               />
               <button
-                className="formPasswordVisibility"
+                className="login-form__password-visibility"
                 onClick={togglePassword}
               >
                 {passwordType === "password" ? (
