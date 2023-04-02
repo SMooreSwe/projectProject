@@ -41,6 +41,16 @@
    margin: 15px 0;
 }
 
+@media only screen and (min-width: 700px) {
+    .about-page__title {
+        font-size: 4em;
+    }
+
+    .main__about-page {
+        margin: 50px 75px;
+    }
+  }
+
 @media only screen and (min-width: 575px) {
     .about-page__title {
         font-size: 4em;
