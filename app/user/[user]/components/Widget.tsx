@@ -80,6 +80,9 @@ const Widget = (props: {
   const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);
   const [link, setLink] = useState<WhiteboardLink[]>([]);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [gallerySearchBox, setGallerySearchBox] = useState(false);
+  const [gallerySearchImages, setGallerySearchImages] = useState(false);
+  const [linkSearchBox, setLinkSearchBox] = useState(false);
 
   const [images, setImages] = useState<string[]>([]);
 
@@ -241,26 +244,37 @@ const Widget = (props: {
   //     }
   //   );
 
-  const createWebImage = async (searchText: string) => {
-    let subscriptionKey = process.env.NEXT_PUBLIC_IMAGE_API;
-    const response = await axios(
-      "https://api.cognitive.microsoft.com/bing/v7.0/images/search" +
-        "?q=" +
-        encodeURIComponent(searchText),
-      {
-        method: "get",
-        headers: {
-          "Ocp-Apim-Subscription-Key": subscriptionKey,
-        },
-        params: {
-          safesearch: "Moderate",
-          count: "8",
-          Pragma: "no-cache",
-          maxFileSize: "300000",
-        },
-      }
-    );
-    setGalleryImages(response.data.value);
+  const searchImageInput = useRef<HTMLInputElement>(null);
+  const createWebImage = async () => {
+    if (searchImageInput.current!.value.length > 0) {
+      const searchText = searchImageInput.current!.value;
+      let subscriptionKey = process.env.NEXT_PUBLIC_IMAGE_API;
+      const response = await axios(
+        "https://api.cognitive.microsoft.com/bing/v7.0/images/search" +
+          "?q=" +
+          encodeURIComponent(searchText),
+        {
+          method: "get",
+          headers: {
+            "Ocp-Apim-Subscription-Key": subscriptionKey,
+          },
+          params: {
+            safesearch: "Moderate",
+            count: "8",
+            Pragma: "no-cache",
+            maxFileSize: "300000",
+          },
+        }
+      );
+      setGalleryImages(response.data.value);
+      setGallerySearchBox(false);
+      //     gallerySearchBox, setGallerySearchBox] = useState(false);
+      // const [gallerySearchImages,
+    }
+  };
+
+  const selectGalleryImage = (e: any) => {
+    console.log(e.target.value);
   };
 
   const linkName = useRef<HTMLInputElement>(null);
@@ -306,10 +320,6 @@ const Widget = (props: {
     }
   };
 
-  const chooseGalleryImage = (e: any) => {
-    console.log(e.target.value);
-  };
-
   const populateGallery = () => {
     return (
       <div className="gallery__container">
@@ -319,7 +329,7 @@ const Widget = (props: {
             return (
               <button
                 className="gallery__btn"
-                onClick={chooseGalleryImage}
+                onClick={selectGalleryImage}
                 key={image}
                 value={image}
               >
@@ -501,6 +511,47 @@ const Widget = (props: {
     }
   }
 
+  const openLinkSearchBox = () => {
+    return (
+      <div className="image-options-header">
+        <div className="image-options-container">
+          <div className="whiteboard__control">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                createLink();
+              }}
+            >
+              <input ref={linkName} type="text" placeholder="name" required />
+              <input ref={linkUrl} type="text" placeholder="url" required />
+              <input type="submit" name="" id="" />
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const openGallerySearchBox = () => {
+    return (
+      <div className="image-options-header">
+        <div className="image-options-container">
+          <div className="whiteboard__control">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                createWebImage();
+              }}
+            >
+              <input ref={linkUrl} type="text" placeholder="url" required />
+              <input type="submit" name="" id="" />
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
@@ -584,7 +635,7 @@ const Widget = (props: {
               <div className="whiteboard__control">
                 <button
                   className="whiteboard__control-btn"
-                  onClick={() => createWebImage("lion")}
+                  onClick={() => setGallerySearchBox(true)}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
@@ -628,23 +679,8 @@ const Widget = (props: {
             </button>
           </div>
         </div>
-        <div className="image-options-header">
-          <div className="image-options-container">
-            <div className="whiteboard__control">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  createLink();
-                }}
-              >
-                <input ref={linkName} type="text" placeholder="name" required />
-                <input ref={linkUrl} type="text" placeholder="url" required />
-                <input type="submit" name="" id="" />
-              </form>
-            </div>
-          </div>
-        </div>
-
+        {linkSearchBox === true && <>{openLinkSearchBox()}</>}
+        {gallerySearchBox === true && <>{openGallerySearchBox()}</>}
         {galleryImages.length > 0 && <>{populateGallery()}</>}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
