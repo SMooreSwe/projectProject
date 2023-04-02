@@ -622,14 +622,15 @@ const Widget = (props: {
                 <p className="whiteboard__control-text">Note</p>
               </div>
               <div className="whiteboard__control">
-                <button className="whiteboard__control-btn">
+                <label className="whiteboard__control-btn">
+                <input type="file" onChange={(e) => addImageFromGallery(e.target.files)} />
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
                     className="whiteboard__control-image"
                     src="/image.png"
                     alt=""
                   />
-                </button>
+                </label>
                 <p className="whiteboard__control-text">Gallery</p>
               </div>
               <div className="whiteboard__control">
@@ -698,7 +699,7 @@ export default Widget;
 
 {
   /* <label className="custom-file-upload">
-  <input type="file" onChange={(e) => addImageFromGallery(e.target.files)} />
+  
   Gallery
 </label>; */
 }
