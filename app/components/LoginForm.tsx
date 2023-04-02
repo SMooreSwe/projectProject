@@ -82,7 +82,7 @@ export const Form = () => {
               value={inputs.password || ""}
               onChange={handleChange}
             />
-            <button className="formPasswordVisibility" onClick={togglePassword}>
+            <button className="login-form__password-visibility" onClick={togglePassword}>
               {passwordType === "password" ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
             </button>
           </label>

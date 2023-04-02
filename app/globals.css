@@ -92,6 +92,11 @@
   margin-top: 15px;
 }
 
+.login-form-password-div,
+.signup-form-password-div {
+  position: relative;
+}
+
 .login__container-more-info-section {
   margin-top: 0;
   text-align: center;
@@ -157,10 +162,19 @@ input[type="file"] {
   visibility: hidden;
 }
 
+.login-form__password-visibility,
+.signup-form__password-visibility {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 45%;
+  right: 1%;
+}
+
 .error__container {
-  align-items: center;
+  justify-self: center;
   align-self: center;
-  padding: 15px 0 10px;
 }
 
 .error__text {
@@ -504,44 +518,6 @@ input[type="file"] {
 .wbImageItem__btn {
   position: relative;
   bottom: 15px;
-}
-.inputField--password {
-  position: relative;
-}
-
-.formPasswordVisibility {
-  cursor: pointer;
-  position: absolute;
-  right: 4px;
-  bottom: 55px;
-  border: none;
-  background: transparent;
-  margin: 2px;
-}
-
-.inputField--signupPassword {
-  position: relative;
-}
-.inputField--signupConfirmPassword {
-  position: relative;
-}
-
-.formSignupPasswordVisibility {
-  cursor: pointer;
-  position: absolute;
-  border: none;
-  background: transparent;
-  right: 36.1rem;
-  bottom: 7.9rem;
-}
-
-.formSignupConfirmPasswordVisibility {
-  cursor: pointer;
-  position: absolute;
-  border: none;
-  background: transparent;
-  right: 36.1rem;
-  bottom: 3.6rem;
 }
 
 .gallery__container {

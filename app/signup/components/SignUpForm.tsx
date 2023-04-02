@@ -168,36 +168,40 @@ export const Form = () => {
               onChange={handleChange}
             />
           </label>
-          <label className="inputLabel">
-            {" "}
-            Password:
-            <br></br>
-            <input
-              className="inputField"
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={inputs.password || ""}
-              onChange={handleChange}
-            />
-             <button className="formSignupPasswordVisibility" onClick={togglePasswordVisibility}>
-          {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
-        </button>
-          </label>
-          <label className="inputLabel">
-            {" "}
-            Confirm Password:
-            <br></br>
-            <input
-              className="inputField"
-              type={showConfirmPassword ? 'text' : 'password'}
-              name="confirmpassword"
-              value={inputs.confirmpassword || ""}
-              onChange={handleChange}
-            />
-             <button className="formSignupConfirmPasswordVisibility" onClick={toggleConfirmPasswordVisibility}>
-          {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
-        </button>
-          </label>
+          <div className="signup-form-password-div">
+            <label className="inputLabel">
+              {" "}
+              Password:
+              <br></br>
+              <input
+                className="inputField"
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={inputs.password || ""}
+                onChange={handleChange}
+              />
+              <button className="signup-form__password-visibility" onClick={togglePasswordVisibility}>
+                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
+              </button>
+            </label>
+          </div>            
+          <div className="signup-form-password-div">
+            <label className="inputLabel">
+              {" "}
+              Confirm Password:
+              <br></br>
+              <input
+                className="inputField"
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmpassword"
+                value={inputs.confirmpassword || ""}
+                onChange={handleChange}
+              />
+              <button className="signup-form__password-visibility" onClick={toggleConfirmPasswordVisibility}>
+                {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
+              </button>
+            </label>
+          </div>
           {errorMessage && (
             <div className="error__container">
               <p className="error__text">{errorMessage}</p>
