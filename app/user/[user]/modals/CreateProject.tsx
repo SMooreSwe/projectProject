@@ -49,7 +49,7 @@ function CreateProject(props: {
         </Modal.Header>
         <Modal.Body>
           <form id="editmodal" className="form" onSubmit={handleSubmit}>
-            <label className="inputLabel">
+            <label className="inputLabel-modal">
               {" "}
               Project name:
               <br></br>

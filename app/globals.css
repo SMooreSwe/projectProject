@@ -79,6 +79,11 @@
 .inputLabel {
   font-size: 1em;
   opacity: 0.8;
+}
+
+.inputLabel-modal{
+  font-size: 1em;
+  opacity: 0.8;
   width:100%;
   display: flex;
   flex-direction: row;

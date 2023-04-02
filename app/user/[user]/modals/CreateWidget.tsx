@@ -54,7 +54,7 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
         </Modal.Header>
         <Modal.Body>
           <form id="editmodal" className="form" onSubmit={handleSubmit}>
-            <label className="inputLabel">
+            <label className="inputLabel-modal">
               {" "}
               Event Date:
               <br></br>
