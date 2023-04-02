@@ -90,14 +90,13 @@ export const Form = () => {
           return response;
         }
       ).catch((error: any) => {
-        console.log(error.code, error.message);
         if (error.code === 'auth/weak-password') {
           setErrorMessage('Password should be at least 6 characters.')
         } else if (error.code === 'auth/internal-error') {
           setErrorMessage('Please enter a password.')
         } else if (error.code === 'auth/email-already-in-use') {
-          setErrorMessage('This email is already in use. Please enter a different one.');
-      });
+          setErrorMessage('This email is already in use. Please enter a different one.')
+        }});
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
     } else if (inputs.username === '') {
