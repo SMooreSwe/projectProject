@@ -631,19 +631,6 @@ const Widget = (props: {
         <div className="image-options-header">
           <div className="image-options-container">
             <div className="whiteboard__control">
-              <label className="custom-file-upload">
-                <input
-                  type="file"
-                  onChange={(e) => addImageFromGallery(e.target.files)}
-                />
-                Gallery
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="link-options-header">
-          <div className="link-options-container">
-            <div className="link__control">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -657,6 +644,7 @@ const Widget = (props: {
             </div>
           </div>
         </div>
+
         {galleryImages.length > 0 && <>{populateGallery()}</>}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
@@ -671,3 +659,10 @@ const Widget = (props: {
 };
 
 export default Widget;
+
+{
+  /* <label className="custom-file-upload">
+  <input type="file" onChange={(e) => addImageFromGallery(e.target.files)} />
+  Gallery
+</label>; */
+}
