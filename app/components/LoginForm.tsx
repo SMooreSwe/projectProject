@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  onAuthStateChanged,
-  getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -58,9 +56,8 @@ export const Form = () => {
 
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <label className="inputLabel">
-          {" "}
           Email:
           <br></br>
           <input
