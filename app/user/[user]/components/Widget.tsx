@@ -309,13 +309,13 @@ const Widget = (props: {
     setGallerySearchImages(false);
   };
 
-  const linkName = useRef<HTMLInputElement>(null);
-  const linkUrl = useRef<HTMLInputElement>(null);
-  const createLink = () => {
-    const nameInput = linkName.current!.value;
-    const urlInput = linkUrl.current!.value;
+  const selectLinkImage = (websiteInput: string, thumbnailInput: string) => {
     const uuid = v4();
-    const newLink = { id: uuid, name: nameInput, url: urlInput };
+    const newLink = {
+      id: uuid,
+      hostPageUrl: websiteInput,
+      thumbnailurl: thumbnailInput,
+    };
     const newLinkArray = [...link, newLink];
     const newLayoutArray = [
       ...layout,
@@ -323,6 +323,7 @@ const Widget = (props: {
     ];
     setLink(newLinkArray);
     setLayout(newLayoutArray);
+    setGallerySearchLinks(false);
   };
 
   const widgetImage = () => {
@@ -362,7 +363,7 @@ const Widget = (props: {
             return (
               <button
                 className="gallery__btn"
-                onClick={selectGalleryImage}
+                onClick={() => selectLinkImage(link, thumbnail)}
                 key={thumbnail}
                 value={thumbnail}
               >
@@ -480,8 +481,8 @@ const Widget = (props: {
         {link &&
           link.map((singleLink: WhiteboardLink) => {
             const singleLayout = layout.find((x) => x.i === singleLink.id);
-            const name = singleLink.name;
-            const url = singleLink.url;
+            const website = singleLink.hostPageUrl;
+            const imageurl = singleLink.thumbnailurl;
             if (singleLayout) {
               return (
                 // eslint-disable-next-line jsx-a11y/alt-text
@@ -490,8 +491,8 @@ const Widget = (props: {
                   data-grid={singleLayout}
                   // @ts-ignore: Unreachable code error
                   coordinates={singleLayout.i}
-                  name={name}
-                  url={url}
+                  website={website}
+                  imageurl={imageurl}
                   deleter={linkdeleter}
                 />
               );
@@ -585,7 +586,7 @@ const Widget = (props: {
             className="image-options-textfield"
             ref={searchLinkInput}
             type="text"
-            placeholder="Search for webpages..."
+            placeholder="Search for websites..."
             required
           />
           <input
@@ -711,7 +712,7 @@ const Widget = (props: {
                     alt=""
                   />
                 </label>
-                <p className="whiteboard__control-text">Gallery</p>
+                <p className="whiteboard__control-text">Image file</p>
               </div>
               <div className="whiteboard__control">
                 <button
@@ -739,7 +740,7 @@ const Widget = (props: {
                     alt=""
                   />
                 </button>
-                <p className="whiteboard__control-text">Link</p>
+                <p className="whiteboard__control-text">Web Link</p>
               </div>
             </div>
           </div>
@@ -755,9 +756,11 @@ const Widget = (props: {
             <button
               className="widget-container__close-btn"
               onClick={() => {
-                setLinkSearchBox(false);
                 setGallerySearchBox(false);
                 setGallerySearchImages(false);
+
+                setLinkSearchBox(false);
+                setGallerySearchLinks(false);
                 handleClose();
               }}
             >
@@ -787,10 +790,3 @@ const Widget = (props: {
 };
 
 export default Widget;
-
-{
-  /* <label className="custom-file-upload">
-  
-  Gallery
-</label>; */
-}
