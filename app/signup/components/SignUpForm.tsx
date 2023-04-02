@@ -1,25 +1,18 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
-import { initializeApp } from "firebase/app";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
 import {
   getStorage,
   ref,
-  uploadBytesResumable,
-  getDownloadURL,
   uploadBytes,
 } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { getFirebaseConfig, auth } from "../../../firebase-config";
-import { validate } from "uuid";
+import { auth } from "../../../firebase-config";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export const Form = () => {
@@ -97,19 +90,22 @@ export const Form = () => {
           return response;
         }
       ).catch((error: any) => {
-        console.log(error.code, error.message);
         if (error.code === 'auth/weak-password') {
           setErrorMessage('Password should be at least 6 characters.')
+          setTimeout(() => setErrorMessage(''), 2500)
         } else if (error.code === 'auth/internal-error') {
           setErrorMessage('Please enter a password.')
+          setTimeout(() => setErrorMessage(''), 2500)
         } else if (error.code === 'auth/email-already-in-use') {
-          setErrorMessage('This email is already in use. Please enter a different one.');
-        } 
-      });
+          setErrorMessage('This email is already in use. Please enter a different one.')
+        }});
+        setTimeout(() => setErrorMessage(''), 2500)
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
+      setTimeout(() => setErrorMessage(''), 2500)
     } else if (inputs.username === '') {
       setErrorMessage('Please input a username ')
+      setTimeout(() => setErrorMessage(''), 2500)
   } 
   };
 
@@ -136,7 +132,7 @@ export const Form = () => {
 
   return (
     <div>
-      <div className="signup__container">
+      <div className="signup-form__container">
         <div className="profileimage__container">
           <div ref={userImage} className="profileimage__button hidden">
             <img className="image" src={image} />
@@ -152,7 +148,7 @@ export const Form = () => {
             <p className="profileimage__caption" ref={uploadedImageName}>Select a Profile Image (Optional)</p>
           </div>
         </div>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="signup-form" onSubmit={handleSubmit}>
           <label className="inputLabel">
             {" "}
             Username:
@@ -177,36 +173,40 @@ export const Form = () => {
               onChange={handleChange}
             />
           </label>
-          <label className="inputLabel">
-            {" "}
-            Password:
-            <br></br>
-            <input
-              className="inputField"
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={inputs.password || ""}
-              onChange={handleChange}
-            />
-             <button className="formSignupPasswordVisibility" onClick={togglePasswordVisibility}>
-          {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
-        </button>
-          </label>
-          <label className="inputLabel">
-            {" "}
-            Confirm Password:
-            <br></br>
-            <input
-              className="inputField"
-              type={showConfirmPassword ? 'text' : 'password'}
-              name="confirmpassword"
-              value={inputs.confirmpassword || ""}
-              onChange={handleChange}
-            />
-             <button className="formSignupConfirmPasswordVisibility" onClick={toggleConfirmPasswordVisibility}>
-          {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
-        </button>
-          </label>
+          <div className="signup-form-password-div">
+            <label className="inputLabel">
+              {" "}
+              Password:
+              <br></br>
+              <input
+                className="inputField"
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={inputs.password || ""}
+                onChange={handleChange}
+              />
+              <button className="signup-form__password-visibility" onClick={togglePasswordVisibility}>
+                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
+              </button>
+            </label>
+          </div>            
+          <div className="signup-form-password-div">
+            <label className="inputLabel">
+              {" "}
+              Confirm Password:
+              <br></br>
+              <input
+                className="inputField"
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmpassword"
+                value={inputs.confirmpassword || ""}
+                onChange={handleChange}
+              />
+              <button className="signup-form__password-visibility" onClick={toggleConfirmPasswordVisibility}>
+                {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
+              </button>
+            </label>
+          </div>
           {errorMessage && (
             <div className="error__container">
               <p className="error__text">{errorMessage}</p>
