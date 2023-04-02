@@ -34,13 +34,8 @@ function CreateProject(props: {
 
   return (
     <>
-      <button className={styles.createProjectBtn} onClick={handleShow}>
-        <Image
-          className={styles.createButton}
-          src={createButton}
-          placeholder="blur"
-          alt=""
-        />
+      <button className="createProjectBtn" onClick={handleShow}>
+        <p className="createProjectBtn__plus">+</p>
       </button>
 
       <Modal

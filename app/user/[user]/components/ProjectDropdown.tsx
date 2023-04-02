@@ -7,15 +7,12 @@ const ProjectDropdown = (props: {
   projectList: Project[];
   projectSetter: Function;
 }) => {
-
-  
   const handleDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
     props.projectSetter(e.target.value);
   };
 
-  const dropdown = useRef<HTMLSelectElement>(null)
+  const dropdown = useRef<HTMLSelectElement>(null);
   const populate = () => {
-
     if (props.projectList.length === 0) {
       return <option value="">Select a project...</option>;
     } else {
@@ -28,14 +25,14 @@ const ProjectDropdown = (props: {
   };
 
   useEffect(() => {
-    dropdown.current!.selectedIndex =0
-  }, [props.projectList])
+    dropdown.current!.selectedIndex = 0;
+  }, [props.projectList]);
 
   return (
     <div>
       <select
-      ref={dropdown}
-        className={styles.headerSearchField}
+        ref={dropdown}
+        className="headerSearchField"
         name="projectList"
         onChange={handleDropdown}
       >

@@ -12,16 +12,6 @@
   opacity: 0.8;
 }
 
-.headerSearchField {
-  height: calc(var(--header-primary-toolbar-height) * 0.4);
-  background-color: rgb(242, 242, 242);
-  font-family: Arial, Helvetica, sans-serif;
-  padding-block: 7px;
-  padding-inline: 15px;
-  border-width: 0px;
-  border-radius: 15px;
-  width: 240px;
-}
 .userprofile__container,
 .createproject__container {
   display: flex;
@@ -89,17 +79,6 @@
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
   outline: 0.1px solid rgb(204, 204, 204);
   cursor: pointer;
-}
-
-.createProjectBtn {
-  width: 35px;
-  height: 35px;
-  border-radius: 17.5px;
-  align-items: center;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  background-color: white;
 }
 
 .settingsButton {
@@ -194,15 +173,6 @@
 .Sidebar__typingField {
   width: 100%;
   height: 100%;
-  border: none;
-}
-
-.Sidebar__sendbtn,
-.logoutBtn {
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
-  outline: 0.1px solid rgb(204, 204, 204);
-  border-radius: 7px;
-  padding: 5px 10px;
   border: none;
 }
 

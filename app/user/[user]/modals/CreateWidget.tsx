@@ -13,9 +13,9 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    console.log(props.projectList)
+    console.log(props.projectList);
     if (props.projectList.length !== 0) {
-      setShow(true)
+      setShow(true);
     }
   };
   const [inputs, setInputs] = useState({
@@ -40,12 +40,7 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
   return (
     <>
       <button onClick={handleShow} className="createwidget__button">
-        <Image
-          className={styles.createButton}
-          src={createButton}
-          placeholder="blur"
-          alt=""
-        />
+        <p className="createWidgetBtn__plus">+</p>
       </button>
 
       <Modal

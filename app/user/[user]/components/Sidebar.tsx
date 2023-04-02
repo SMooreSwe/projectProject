@@ -27,7 +27,6 @@ import { v4 } from "uuid";
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string };
   projectlist: Project[];
-
 }) => {
   const [invitedUser, setInvitedUSer] = useState<Invited[]>([]);
   const [userUpdates, setUserUpdates] = useState<UserUpdate[]>([]);
@@ -68,13 +67,12 @@ const Sidebar = (props: {
     const userinvitingid = arraySplit[2];
     const projectname = arraySplit[3];
 
-
-    console.log(array)
-    console.log(arraySplit)
-    console.log(projectid)
-    console.log(invitationuid)
-    console.log(userinvitingid)
-    console.log(projectname)
+    console.log(array);
+    console.log(arraySplit);
+    console.log(projectid);
+    console.log(invitationuid);
+    console.log(userinvitingid);
+    console.log(projectname);
 
     const projectRef = doc(db, "projects", projectid);
     await updateDoc(projectRef, {
@@ -100,7 +98,7 @@ const Sidebar = (props: {
         projectname: projectname,
         projectid: projectid,
         usersendingupdate: props.user.username,
-        usermessage: 'has accepted your invitation to project',
+        usermessage: "has accepted your invitation to project",
         updateuid: uuid,
         created: serverTimestamp(),
       }
@@ -132,7 +130,7 @@ const Sidebar = (props: {
         projectname: projectname,
         projectid: projectid,
         usersendingupdate: props.user.username,
-        usermessage: 'has declined your invitation to project',
+        usermessage: "has declined your invitation to project",
         updateuid: uuid,
         created: serverTimestamp(),
       }
@@ -140,11 +138,11 @@ const Sidebar = (props: {
   };
 
   const removeAfterReadingUpdate = async (e: any) => {
-    console.log('ReadingupdateCalled!!!!!!!')
+    console.log("ReadingupdateCalled!!!!!!!");
 
     const updateuid = e.target.value;
-    console.log(props.user.userid)
-    console.log(updateuid)
+    console.log(props.user.userid);
+    console.log(updateuid);
 
     await deleteDoc(
       doc(
@@ -176,20 +174,30 @@ const Sidebar = (props: {
                     alt=""
                   />
                   <p>
-                    {invitation.userinvitingname} has invited you to join project{" "}
-                    {invitation.projectname}
+                    {invitation.userinvitingname} has invited you to join
+                    project {invitation.projectname}
                   </p>
                 </div>
                 <div className={styles.notification__buttons}>
                   <button
-                    value={[invitation.projectid, invitation.invitationuid, invitation.userinvitingid, invitation.projectname]}
+                    value={[
+                      invitation.projectid,
+                      invitation.invitationuid,
+                      invitation.userinvitingid,
+                      invitation.projectname,
+                    ]}
                     onClick={AcceptProject}
                     className={styles.notification__button}
                   >
                     Accept
                   </button>
                   <button
-                    value={[invitation.projectid, invitation.invitationuid, invitation.userinvitingid, invitation.projectname]}
+                    value={[
+                      invitation.projectid,
+                      invitation.invitationuid,
+                      invitation.userinvitingid,
+                      invitation.projectname,
+                    ]}
                     onClick={DeclineProject}
                     className={styles.notification__button}
                   >
@@ -315,7 +323,7 @@ const Sidebar = (props: {
                     name="name"
                   />
                   <input
-                    className={styles.Sidebar__sendbtn}
+                    className="Sidebar__sendbtn"
                     type="submit"
                     value="Submit"
                   />
