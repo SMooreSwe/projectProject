@@ -46,12 +46,16 @@ export const Form = () => {
     } catch (error: any) {
       if (error.code === 'auth/user-not-found') {
         setErrorMessage('User not found, please enter a valid email.');
+        setTimeout(() => setErrorMessage(''), 2500)
       } else if (error.code === 'auth/wrong-password') {
         setErrorMessage('Password is incorrect. Please enter a valid password.');
+        setTimeout(() => setErrorMessage(''), 2500)
       } else if(email && !password) {
         setErrorMessage('Please input a password')
+        setTimeout(() => setErrorMessage(''), 2500)
       } else if(!email && password) {
         setErrorMessage('Please input a valid email')
+        setTimeout(() => setErrorMessage(''), 2500)
       }
     }
   };
