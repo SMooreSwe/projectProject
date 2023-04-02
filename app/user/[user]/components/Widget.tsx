@@ -20,6 +20,7 @@ import {
   Textbox,
   WhiteboardImage,
   WhiteboardLink,
+  GalleryImage,
 } from "../../../Types";
 import { v4 } from "uuid";
 
@@ -64,10 +65,6 @@ const Widget = (props: {
     "Nov",
     "Dec",
   ];
-
-  type GalleryImage = {
-    contentUrl: string;
-  };
 
   const month = monthNames[date.toDate().getMonth()];
   const day = date.toDate().getUTCDate();
@@ -246,7 +243,11 @@ const Widget = (props: {
 
   const searchImageInput = useRef<HTMLInputElement>(null);
   const createWebImage = async () => {
-    if (searchImageInput.current!.value.length > 0) {
+    if (
+      searchImageInput.current?.value &&
+      searchImageInput.current!.value.length > 0
+    ) {
+      setGallerySearchImages(true);
       const searchText = searchImageInput.current!.value;
       let subscriptionKey = process.env.NEXT_PUBLIC_IMAGE_API;
       const response = await axios(
@@ -268,13 +269,21 @@ const Widget = (props: {
       );
       setGalleryImages(response.data.value);
       setGallerySearchBox(false);
-      //     gallerySearchBox, setGallerySearchBox] = useState(false);
-      // const [gallerySearchImages,
     }
   };
 
   const selectGalleryImage = (e: any) => {
-    console.log(e.target.value);
+    const uuid = v4();
+    const imageurl = e.target.currentSrc;
+    const newImage = { id: uuid, url: imageurl };
+    const newImageArray = [...boardImage, newImage];
+    const newLayoutArray = [
+      ...layout,
+      { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+    ];
+    setBoardImage(newImageArray);
+    setLayout(newLayoutArray);
+    setGallerySearchImages(false);
   };
 
   const linkName = useRef<HTMLInputElement>(null);
@@ -543,7 +552,12 @@ const Widget = (props: {
                 createWebImage();
               }}
             >
-              <input ref={linkUrl} type="text" placeholder="url" required />
+              <input
+                ref={searchImageInput}
+                type="text"
+                placeholder="url"
+                required
+              />
               <input type="submit" name="" id="" />
             </form>
           </div>
@@ -623,7 +637,10 @@ const Widget = (props: {
               </div>
               <div className="whiteboard__control">
                 <label className="whiteboard__control-btn">
-                <input type="file" onChange={(e) => addImageFromGallery(e.target.files)} />
+                  <input
+                    type="file"
+                    onChange={(e) => addImageFromGallery(e.target.files)}
+                  />
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
                     className="whiteboard__control-image"
@@ -636,7 +653,7 @@ const Widget = (props: {
               <div className="whiteboard__control">
                 <button
                   className="whiteboard__control-btn"
-                  onClick={() => setGallerySearchBox(true)}
+                  onClick={() => setGallerySearchBox(!gallerySearchBox)}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
@@ -649,7 +666,7 @@ const Widget = (props: {
               </div>
               <div className="whiteboard__control">
                 <button
-                  onClick={createLink}
+                  onClick={() => setLinkSearchBox(!linkSearchBox)}
                   className="whiteboard__control-btn"
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
@@ -674,7 +691,12 @@ const Widget = (props: {
             </button>
             <button
               className="widget-container__close-btn"
-              onClick={() => handleClose()}
+              onClick={() => {
+                setLinkSearchBox(false);
+                setGallerySearchBox(false);
+                setGallerySearchImages(false);
+                handleClose();
+              }}
             >
               X
             </button>
@@ -682,7 +704,9 @@ const Widget = (props: {
         </div>
         {linkSearchBox === true && <>{openLinkSearchBox()}</>}
         {gallerySearchBox === true && <>{openGallerySearchBox()}</>}
-        {galleryImages.length > 0 && <>{populateGallery()}</>}
+        {gallerySearchImages === true && galleryImages.length > 0 && (
+          <>{populateGallery()}</>
+        )}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>
