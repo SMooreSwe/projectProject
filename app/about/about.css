@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 50px 10px;
+    margin: 50px 200px;
 }
 
 .about-page__title {
@@ -41,22 +41,22 @@
    margin: 15px 0;
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (max-width: 830px) {
     .about-page__title {
         font-size: 4em;
     }
 
     .main__about-page {
-        margin: 50px 75px;
+        margin: 50px 100px;
     }
   }
 
-@media only screen and (min-width: 575px) {
+@media only screen and (max-width: 575px) {
     .about-page__title {
         font-size: 4em;
     }
 
     .main__about-page {
-        margin: 50px 250px;
+        margin: 50px 50px;
     }
   }
