@@ -63,7 +63,7 @@ const Header = (props: {
 
   return (
     <nav className="Header">
-      <div className="Logo">[project Project]</div>
+      <div className="header__logo">[project Project]</div>
       <div className="createProject__container">
         {props.children}
         <CreateProject user={props.user} />

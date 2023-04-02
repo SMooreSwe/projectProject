@@ -7,93 +7,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-  --base-spacing: 8px;
   --header-height: 85px;
   --sidebar-width: 400px;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
-.link {
-  color: #4059ad;
-}
-
-.Header {
+.login__main-container,
+.signup__main-container {
+  margin-top: 50px;
+  font-family: "Open Sans", sans-serif;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-inline: 10px;
-  height: var(--header-height);
-  margin-inline: 40px;
-}
-
-.Sidebar {
-  position: absolute;
-  top: var(--header-height);
-  right: 0;
-  height: 91vh;
-  width: var(--sidebar-width);
-  padding-inline: 20px;
-}
-
-.project__container {
-  background-color: rgb(245, 245, 245);
-  height: calc(100vh - var(--header-height));
-  border-radius: 20px;
-  margin-right: var(--sidebar-width);
-  padding-block: 25px;
-  padding-inline: 25px;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
-  outline: 0.1px solid rgb(204, 204, 204);
-
-  background-image: radial-gradient(#abacaf 0.5px, rgb(245, 245, 245) 0.5px);
-  background-size: 10px 10px;
-}
-
-.createProject__container {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.signup__title,
-.signup__subtitle,
-.login__title,
-.login_subtitle {
-  position: relative;
-  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
-.signup__title,
-.login__title {
-  font-size: 4em;
+.login__title,
+.signup__title {
+  font-size: 2.5em;
   margin-bottom: 30px;
   opacity: 0.6;
   font-family: "Virgil";
-}
-
-.Logo {
-  font-size: 1.5em;
-  opacity: 0.8;
-  font-family: "Virgil";
-}
-
-.signup__subtitle,
-.login_subtitle {
-  margin-bottom: 10px;
 }
 
 .login__message {
@@ -101,10 +38,67 @@ body {
   opacity: 0.8;
 }
 
-.signup__container {
-  width: 100%;
-  height: 100%;
-  font-family: "Open Sans", sans-serif;
+.link {
+  color: hsl(226, 46%, 46%);
+}
+
+.login-form,
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form {
+  margin: 2.25em 0;
+}
+
+.signup-form {
+  margin: 1em 0;
+}
+
+.signup-form {
+  justify-self: center;
+  align-self: center;
+}
+
+.signup-form__container {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputField {
+  border-radius: 5px;
+  border: 0.1px solid black;
+  padding: 7px 10px;
+  margin: 10px 0;
+  width: 300px;
+}
+
+.inputLabel {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.formButton {
+  font-size: 1em;
+  opacity: 0.8;
+  border-radius: 5px;
+  border: 0.1px solid black;
+  padding: 8px 35px;
+  cursor: pointer;
+  justify-self: center;
+  align-self: center;
+  margin-top: 15px;
+}
+
+.login__container-more-info-section {
+  margin-top: 0;
+  text-align: center;
+}
+
+.more-info__signup {
+  margin-bottom: 1.25em;
 }
 
 .profileimage__container {
@@ -163,53 +157,61 @@ input[type="file"] {
   visibility: hidden;
 }
 
-.inputField {
-  border-radius: 5px;
-  border: 0.1px solid black;
-  padding-block: 7px;
-  padding-inline: 10px;
-  width: 300px;
-}
-
-.inputLabel {
-  font-size: 1em;
-  opacity: 0.8;
-}
-
-.main {
-  margin-top: 50px;
-  font-family: "Open Sans", sans-serif;
-}
-
-.form {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.formButton {
-  font-size: 1em;
-  opacity: 0.8;
-  border-radius: 5px;
-  border: 0.1px solid black;
-  padding-block: 8px;
-  padding-inline: 35px;
-  cursor: pointer;
-}
-
 .error__container {
-  display: flex;
-  justify-content: center;
   align-items: center;
   align-self: center;
+  padding: 15px 0 10px;
 }
 
 .error__text {
+  font-family: inherit;
   color: red;
   font-size: 0.85em;
+}
+
+/* Canvas Styles */
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px;
+  height: var(--header-height);
+  margin-inline: 40px;
+}
+
+.Sidebar {
+  position: absolute;
+  top: var(--header-height);
+  right: 0;
+  height: 91vh;
+  width: var(--sidebar-width);
+  padding-inline: 20px;
+}
+
+.project__container {
+  background-color: rgb(245, 245, 245);
+  height: calc(100vh - var(--header-height));
+  border-radius: 20px;
+  margin-right: var(--sidebar-width);
+  padding-block: 25px;
+  padding-inline: 25px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  background-image: radial-gradient(#abacaf 0.5px, rgb(245, 245, 245) 0.5px);
+  background-size: 10px 10px;
+}
+
+.createProject__container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.header__logo {
+  font-size: 1.5em;
+  opacity: 0.8;
+  font-family: "Virgil";
 }
 
 .canvas__container {
@@ -226,6 +228,7 @@ input[type="file"] {
   height: 100%;
   width: calc(100% - 150px);
 }
+
 .widget-container {
   display: flex;
   justify-content: space-between;
@@ -562,4 +565,11 @@ input[type="file"] {
   width: 100%;
   height: 200px;
   object-fit: cover;
+}
+
+@media only screen and (min-width: 575px) {
+  .login__title,
+  .signup__title {
+    font-size: 4em;
+  }
 }
