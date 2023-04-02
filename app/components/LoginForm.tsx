@@ -1,16 +1,19 @@
 "use client";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { auth } from "../../firebase-config";
+import { app, auth } from "../../firebase-config";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { GoogleAuthProvider } from "firebase/auth";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import router from "next/router";
 
 const provider = new GoogleAuthProvider();
 
 export const Form = () => {
   const router = useRouter();
+  const db = getFirestore(app) as any;
   const [passwordType, setPasswordType] = useState("password");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [inputs, setInputs] = useState({
@@ -31,7 +34,42 @@ export const Form = () => {
     }
     setPasswordType("password");
   };
-
+  
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider).then(async (result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
+    const docRef = doc(db, "users", `${user.uid}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        } else {
+          await setDoc(docRef, {
+            email: user.email,
+            userid: user.uid,
+            projects:'',
+            username: user.displayName,
+          })
+          router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        }
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+  
+    
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = inputs.email;
@@ -113,7 +151,7 @@ export const Form = () => {
           </button>
         </form>
       </div>
-      <button>google</button>
+      <button className="formButton" onClick={() => googleSignIn()}>Sign in with Google</button>
     </>
   );
 };
