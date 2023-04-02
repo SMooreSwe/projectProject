@@ -61,18 +61,6 @@ const Header = (props: {
     userImage();
   }, [props.user, props.projectid]);
 
-  const members = () => {
-    console.log("triggered?");
-    console.log(props.collaboratorsArray.length);
-    return (
-      <>
-        <label className={styles.collaborators__number} htmlFor="">
-          +{props.collaboratorsArray.length}
-        </label>
-      </>
-    );
-  };
-
   return (
     <nav className="Header">
       <div className="Logo">[project Project]</div>
@@ -81,15 +69,14 @@ const Header = (props: {
         <CreateProject user={props.user} />
       </div>
 
-      <div className={styles.collaborator__container}>
-        <label htmlFor="">Add Collaborators</label>
+      <div>
         <CollaboratorsWidget
           projectid={props.projectid}
           username={props.user.username}
           userid={props.user.userid}
           projectname={props.projectname}
+          projectcollaborators={props.collaboratorsArray}
         />
-        {props.collaboratorsArray.length > 1 && <>{members()}</>}
       </div>
       <div className={styles.userprofile__container}>
         <p className={styles.userprofile__name}>{props.user.username}</p>

@@ -31,6 +31,7 @@ function CollaboratorsWidget(props: {
   username: string;
   userid: string;
   projectname: string;
+  projectcollaborators: string[];
 }) {
   const [users, setUsers] = useState<User[]>([
     {
@@ -116,17 +117,14 @@ function CollaboratorsWidget(props: {
       projects: arrayRemove(props.projectid),
     });
     const uuid = v4();
-    await setDoc(
-      doc(db, "notifications", userid, "usernotifications", uuid),
-      {
-        projectname: props.projectname,
-        projectid: props.projectid,
-        usersendingupdate: props.username,
-        usermessage: 'has removed you from project',
-        updateuid: uuid,
-        created: serverTimestamp(),
-      }
-    );
+    await setDoc(doc(db, "notifications", userid, "usernotifications", uuid), {
+      projectname: props.projectname,
+      projectid: props.projectid,
+      usersendingupdate: props.username,
+      usermessage: "has removed you from project",
+      updateuid: uuid,
+      created: serverTimestamp(),
+    });
     handleClose();
   };
 
@@ -213,17 +211,29 @@ function CollaboratorsWidget(props: {
     );
   };
 
+  const members = () => {
+    console.log("triggered?");
+    return (
+      <label className={styles.collaborators__number} htmlFor="">
+        + {props.projectcollaborators.length}
+      </label>
+    );
+  };
+
   return (
     <>
-      <button onClick={handleShow} className={styles.collaboratorBtn}>
-        <Image
-          className={styles.createButton}
-          src={createButton}
-          placeholder="blur"
-          alt=""
-        />
-      </button>
-
+      <div className={styles.collaborator__container}>
+        <button onClick={handleShow} className={styles.collaboratorBtn}>
+          {/*eslint-disable-next-line @next/next/no-img-element*/}
+          <img
+            className={styles.UserProfileImage}
+            src={"/collab1.png"}
+            placeholder="blur"
+            alt=""
+          />
+          {props.projectcollaborators.length > 1 && <>{members()}</>}
+        </button>
+      </div>
       <Modal
         show={show}
         onHide={handleClose}

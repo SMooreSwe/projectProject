@@ -15,7 +15,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { app } from "@/firebase-config";
 import html2canvas from "html2canvas";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { Postit, Textbox, WhiteboardImage, WhiteboardLink } from "../../../Types";
+import {
+  Postit,
+  Textbox,
+  WhiteboardImage,
+  WhiteboardLink,
+} from "../../../Types";
 import { v4 } from "uuid";
 
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
@@ -27,6 +32,7 @@ import { Image } from "../WhiteboardComponents/Image";
 import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text-shadow";
 import { WBLink } from "../WhiteboardComponents/WBLink";
 const ResponsiveGridLayout = WidthProvider(Responsive);
+import axios from "axios";
 
 const Widget = (props: {
   projectid: string;
@@ -59,6 +65,10 @@ const Widget = (props: {
     "Dec",
   ];
 
+  type GalleryImage = {
+    contentUrl: string;
+  };
+
   const month = monthNames[date.toDate().getMonth()];
   const day = date.toDate().getUTCDate();
 
@@ -67,8 +77,9 @@ const Widget = (props: {
   const [layout, setLayout] = useState<Layout[]>([]);
   const [postit, setPostit] = useState<Postit[]>([]);
   const [textbox, setTextbox] = useState<Textbox[]>([]);
-  const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);  
+  const [boardImage, setBoardImage] = useState<WhiteboardImage[]>([]);
   const [link, setLink] = useState<WhiteboardLink[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
 
   const [images, setImages] = useState<string[]>([]);
 
@@ -76,17 +87,17 @@ const Widget = (props: {
     if (props.layout) {
       setLayout(JSON.parse(props.layout));
     }
-    if (props.newPostits){
+    if (props.newPostits) {
       setPostit(JSON.parse(props.newPostits));
     }
     if (props.newTextbox) {
       setTextbox(JSON.parse(props.newTextbox));
     }
-    if (props.newBoardImages){
-      setBoardImage(JSON.parse(props.newBoardImages))
+    if (props.newBoardImages) {
+      setBoardImage(JSON.parse(props.newBoardImages));
     }
-    if(props.newLinks) {
-      setLink(JSON.parse(props.newLinks))
+    if (props.newLinks) {
+      setLink(JSON.parse(props.newLinks));
     }
   }, [show, props.widgetid, props.layout]);
 
@@ -194,24 +205,66 @@ const Widget = (props: {
       const filePath = `/widgets/${props.widgetid}/${uuid}.jpeg`;
       const storageRef = ref(storage, filePath);
       uploadBytes(storageRef, image)
-      .then((snapshot) => {
-        return getDownloadURL(snapshot.ref)
-      })
-      .then(downloadURL => {
-        const newImage = { id: uuid, url: downloadURL};
-        const newImageArray = [...boardImage, newImage];
-        const newLayoutArray = [
-          ...layout,
-          { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
-        ];
-        setBoardImage(newImageArray);
-        setLayout(newLayoutArray);
-      })
+        .then((snapshot) => {
+          return getDownloadURL(snapshot.ref);
+        })
+        .then((downloadURL) => {
+          const newImage = { id: uuid, url: downloadURL };
+          const newImageArray = [...boardImage, newImage];
+          const newLayoutArray = [
+            ...layout,
+            { w: 1, h: 1, x: 1, y: 1, i: uuid, moved: false, static: false },
+          ];
+          setBoardImage(newImageArray);
+          setLayout(newLayoutArray);
+        });
     }
   };
 
-  const linkName = useRef<HTMLInputElement>(null)
-  const linkUrl = useRef<HTMLInputElement>(null)
+  // const createWebImage = async (searchText: string) => {
+  //   let subscriptionKey = "67a8b1498dd548a18240387134bfe126";
+  //   const response = await axios(
+  //     "https://api.bing.microsoft.com/v7.0/search" +
+  //       "?q=" +
+  //       encodeURIComponent(searchText),
+  //     {
+  //       method: "get",
+  //       headers: {
+  //         "Ocp-Apim-Subscription-Key": subscriptionKey,
+  //       },
+  //       params: {
+  //         safesearch: "Moderate",
+  //         count: "12",
+  //         Pragma: "no-cache",
+  //         maxFileSize: "300000",
+  //       },
+  //     }
+  //   );
+
+  const createWebImage = async (searchText: string) => {
+    let subscriptionKey = process.env.NEXT_PUBLIC_IMAGE_API;
+    const response = await axios(
+      "https://api.cognitive.microsoft.com/bing/v7.0/images/search" +
+        "?q=" +
+        encodeURIComponent(searchText),
+      {
+        method: "get",
+        headers: {
+          "Ocp-Apim-Subscription-Key": subscriptionKey,
+        },
+        params: {
+          safesearch: "Moderate",
+          count: "8",
+          Pragma: "no-cache",
+          maxFileSize: "300000",
+        },
+      }
+    );
+    setGalleryImages(response.data.value);
+  };
+
+  const linkName = useRef<HTMLInputElement>(null);
+  const linkUrl = useRef<HTMLInputElement>(null);
   const createLink = () => {
     const nameInput = linkName.current!.value;
     const urlInput = linkUrl.current!.value;
@@ -251,6 +304,32 @@ const Widget = (props: {
         />
       );
     }
+  };
+
+  const chooseGalleryImage = (e: any) => {
+    console.log(e.target.value);
+  };
+
+  const populateGallery = () => {
+    return (
+      <div className="gallery__container">
+        {galleryImages &&
+          galleryImages.map((imagelink: GalleryImage) => {
+            const image = imagelink.contentUrl;
+            return (
+              <button
+                className="gallery__btn"
+                onClick={chooseGalleryImage}
+                key={image}
+                value={image}
+              >
+                {/*eslint-disable-next-line @next/next/no-img-element*/}
+                <img className="gallery__image" src={image} alt={image}></img>
+              </button>
+            );
+          })}
+      </div>
+    );
   };
 
   const populateWhiteboard = () => {
@@ -328,10 +407,10 @@ const Widget = (props: {
               );
             }
           })}
-          {link &&
+        {link &&
           link.map((singleLink: WhiteboardLink) => {
             const singleLayout = layout.find((x) => x.i === singleLink.id);
-            const name = singleLink.name
+            const name = singleLink.name;
             const url = singleLink.url;
             if (singleLayout) {
               return (
@@ -411,16 +490,15 @@ const Widget = (props: {
   }
 
   function addImageFromGallery(files: any) {
-    const uuid = v4();
     if (files) {
       const fileRef = files[0];
       const fileType: string = fileRef.type || "";
-      if (fileType ==='image/jpeg') {
-        createImage(files[0])
+      if (fileType === "image/jpeg") {
+        createImage(files[0]);
       } else {
-        console.log('only jpeg!')
+        console.log("only jpeg!");
       }
-    };
+    }
   }
 
   return (
@@ -493,9 +571,20 @@ const Widget = (props: {
                 <p className="whiteboard__control-text">Note</p>
               </div>
               <div className="whiteboard__control">
+                <button className="whiteboard__control-btn">
+                  {/*eslint-disable-next-line @next/next/no-img-element*/}
+                  <img
+                    className="whiteboard__control-image"
+                    src="/image.png"
+                    alt=""
+                  />
+                </button>
+                <p className="whiteboard__control-text">Gallery</p>
+              </div>
+              <div className="whiteboard__control">
                 <button
-                  
                   className="whiteboard__control-btn"
+                  onClick={() => createWebImage("lion")}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
@@ -504,7 +593,7 @@ const Widget = (props: {
                     alt=""
                   />
                 </button>
-                <p className="whiteboard__control-text">Image</p>
+                <p className="whiteboard__control-text">Web Image</p>
               </div>
               <div className="whiteboard__control">
                 <button
@@ -524,7 +613,9 @@ const Widget = (props: {
           </div>
           <div className="widget__btn-container">
             <button
-              onClick={() => widgetLayout(layout, postit, textbox, boardImage, link)}
+              onClick={() =>
+                widgetLayout(layout, postit, textbox, boardImage, link)
+              }
               className="widget-container__save-btn"
             >
               Save
@@ -540,26 +631,33 @@ const Widget = (props: {
         <div className="image-options-header">
           <div className="image-options-container">
             <div className="whiteboard__control">
-                  
-                <label className="custom-file-upload">
-                <input type="file" onChange={(e) => addImageFromGallery(e.target.files)}/>
+              <label className="custom-file-upload">
+                <input
+                  type="file"
+                  onChange={(e) => addImageFromGallery(e.target.files)}
+                />
                 Gallery
-                </label>
+              </label>
             </div>
           </div>
         </div>
         <div className="link-options-header">
           <div className="link-options-container">
             <div className="link__control">
-              <form onSubmit={(e) => {e.preventDefault();
-                createLink()}}>
-              <input ref={linkName} type="text" placeholder="name" required/>
-              <input ref={linkUrl} type="text" placeholder="url" required/>
-              <input type="submit" name="" id="" />
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  createLink();
+                }}
+              >
+                <input ref={linkName} type="text" placeholder="name" required />
+                <input ref={linkUrl} type="text" placeholder="url" required />
+                <input type="submit" name="" id="" />
               </form>
             </div>
           </div>
         </div>
+        {galleryImages.length > 0 && <>{populateGallery()}</>}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>
