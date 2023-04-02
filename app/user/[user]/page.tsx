@@ -49,10 +49,12 @@ const User = () => {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-      setProjectList(data);
-      setCurrentProject(data[0].projectid);
-      setCurrentProjectName(data[0].name);
-      setCurrentProjectMembers(data[0].users);
+      if (data.length < 0) {
+        setProjectList(data);
+        setCurrentProject(data[0].projectid);
+        setCurrentProjectName(data[0].name);
+        setCurrentProjectMembers(data[0].users);
+      }
     });
   };
 
