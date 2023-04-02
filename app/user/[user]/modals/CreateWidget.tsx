@@ -77,7 +77,7 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <button form="editmodal" className="formButton" type="submit">
+          <button form="editmodal" className="formButton-create" type="submit">
             Create
           </button>
         </Modal.Footer>

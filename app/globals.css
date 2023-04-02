@@ -93,6 +93,17 @@
   margin-block: 10px 2em;
 }
 
+.formButton-create {
+  font-size: 1em;
+  opacity: 0.8;
+  border-radius: 5px;
+  border: 0.1px solid black;
+  padding: 8px 35px;
+  cursor: pointer;
+  justify-self: center;
+  align-self: center;
+}
+
 .login-form-password-div,
 .signup-form-password-div {
   position: relative;
