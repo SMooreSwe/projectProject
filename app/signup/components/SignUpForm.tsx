@@ -110,7 +110,7 @@ export const Form = () => {
       setErrorMessage('Passwords do not match.')
     } else if (inputs.username === '') {
       setErrorMessage('Please input a username ')
-  };
+  } 
   };
 
   const uploadedImageName = useRef<HTMLParagraphElement>(null);
