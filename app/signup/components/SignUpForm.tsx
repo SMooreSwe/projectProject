@@ -92,15 +92,20 @@ export const Form = () => {
       ).catch((error: any) => {
         if (error.code === 'auth/weak-password') {
           setErrorMessage('Password should be at least 6 characters.')
+          setTimeout(() => setErrorMessage(''), 2500)
         } else if (error.code === 'auth/internal-error') {
           setErrorMessage('Please enter a password.')
+          setTimeout(() => setErrorMessage(''), 2500)
         } else if (error.code === 'auth/email-already-in-use') {
           setErrorMessage('This email is already in use. Please enter a different one.')
         }});
+        setTimeout(() => setErrorMessage(''), 2500)
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
+      setTimeout(() => setErrorMessage(''), 2500)
     } else if (inputs.username === '') {
       setErrorMessage('Please input a username ')
+      setTimeout(() => setErrorMessage(''), 2500)
   } 
   };
 
