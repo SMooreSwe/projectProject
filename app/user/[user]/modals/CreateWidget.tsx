@@ -56,7 +56,7 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
           <form id="editmodal" className="form" onSubmit={handleSubmit}>
             <label className="inputLabel">
               {" "}
-              Project name:
+              Event Date:
               <br></br>
               <input
                 className="inputField"
@@ -72,7 +72,7 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <button form="editmodal" className="formButton" type="submit">
+          <button form="editmodal" className="formButton-create" type="submit">
             Create
           </button>
         </Modal.Footer>
