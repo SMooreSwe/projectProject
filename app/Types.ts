@@ -64,4 +64,8 @@ export type WhiteboardLink = {
   id: string;
   name: string;
   url: string;
-}
+};
+
+export type GalleryImage = {
+  contentUrl: string;
+};

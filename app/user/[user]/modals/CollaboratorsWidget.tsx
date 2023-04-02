@@ -212,28 +212,27 @@ function CollaboratorsWidget(props: {
   };
 
   const members = () => {
-    console.log("triggered?");
     return (
-      <label className={styles.collaborators__number} htmlFor="">
-        + {props.projectcollaborators.length}
-      </label>
+      <p className={styles.collaborators__number}>
+        +{props.projectcollaborators.length}
+      </p>
     );
   };
 
   return (
     <>
-      <div className={styles.collaborator__container}>
-        <button onClick={handleShow} className={styles.collaboratorBtn}>
+      <button onClick={handleShow} className={styles.collaborator__container}>
+        <div className={styles.collaboratorBtn}>
           {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img
-            className={styles.UserProfileImage}
+            className={styles.collaborators__image}
             src={"/collab1.png"}
             placeholder="blur"
             alt=""
           />
-          {props.projectcollaborators.length > 1 && <>{members()}</>}
-        </button>
-      </div>
+        </div>
+        {props.projectcollaborators.length > 1 && <>{members()}</>}
+      </button>
       <Modal
         show={show}
         onHide={handleClose}

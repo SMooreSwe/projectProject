@@ -97,13 +97,12 @@ export const Form = () => {
           setErrorMessage('Please enter a password.')
         } else if (error.code === 'auth/email-already-in-use') {
           setErrorMessage('This email is already in use. Please enter a different one.');
-        };
       });
     } else if (inputs.password !== inputs.confirmpassword) {
       setErrorMessage('Passwords do not match.')
     } else if (inputs.username === '') {
       setErrorMessage('Please input a username ')
-  };
+  } 
   };
 
   const uploadedImageName = useRef<HTMLParagraphElement>(null);

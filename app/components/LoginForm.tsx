@@ -48,8 +48,10 @@ export const Form = () => {
         setErrorMessage('User not found, please enter a valid email.');
       } else if (error.code === 'auth/wrong-password') {
         setErrorMessage('Password is incorrect. Please enter a valid password.');
-      } else {
-        setErrorMessage('Something went wrong. Try again.');
+      } else if(email && !password) {
+        setErrorMessage('Please input a password')
+      } else if(!email && password) {
+        setErrorMessage('Please input a valid email')
       }
     }
   };
