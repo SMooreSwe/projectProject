@@ -387,6 +387,7 @@ input[type="file"] {
   border: none;
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
 
 .whiteboard__control-text {
