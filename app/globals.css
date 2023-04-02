@@ -62,7 +62,7 @@
 }
 
 .signup-form__container {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -571,7 +571,6 @@ input[type="file"] {
   object-fit: cover;
 }
 
-<<<<<<< HEAD
 .gallery__container__link {
   padding-inline: 20px;
   padding-block: 10px;
@@ -594,11 +593,9 @@ input[type="file"] {
   height: 200px;
   object-fit: cover;
 }
-=======
 @media only screen and (min-width: 575px) {
   .login__title,
   .signup__title {
     font-size: 4em;
   }
 }
->>>>>>> 1dee9b81a87d622257557dfc02267858563c0d77
