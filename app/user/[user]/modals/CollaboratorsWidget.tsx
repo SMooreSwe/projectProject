@@ -221,7 +221,7 @@ function CollaboratorsWidget(props: {
 
   return (
     <>
-      <button onClick={handleShow} className={styles.collaborator__container}>
+      <button onClick={handleShow} className="collaborator__containerbtn">
         <div className={styles.collaboratorBtn}>
           {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img

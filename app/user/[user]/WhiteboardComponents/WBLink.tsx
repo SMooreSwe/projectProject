@@ -14,13 +14,17 @@ export const WBLink = React.forwardRef<any>(
     }: any,
     ref
   ) => {
-    const [name, setName] = useState<string>('')
-    const [url, setUrl] = useState<string>('')
+    const [website, setWebsite] = useState<string>("");
+    const [imgurl, setImageUrl] = useState<string>("");
 
-    useEffect(()=> {
-        setName(props.name)
-        setUrl(props.url)
-    }, [props.name, props.url])
+    useEffect(() => {
+      if (props.website) {
+        setWebsite(props.website);
+      }
+      if (props.imageurl) {
+        setImageUrl(props.imageurl);
+      }
+    }, [props.website, props.imageurl]);
 
     return (
       <div
@@ -37,7 +41,16 @@ export const WBLink = React.forwardRef<any>(
         >
           X
         </button>
-        <a href="www.google.com">test</a>
+        <a href={website}>
+          {/* eslint-disable-next-line @next/next/no-img-element*/}
+          <img
+            alt="Alt"
+            src={imgurl}
+            className={["wbImageItem__img", className].join(" ")}
+            ref={ref}
+          ></img>
+          <p>{website}</p>
+        </a>
         {children}
       </div>
     );

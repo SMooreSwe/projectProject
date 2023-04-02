@@ -9,6 +9,7 @@
 :root {
   --header-height: 85px;
   --sidebar-width: 400px;
+  --theme-color: rgb(13, 50, 105);
 }
 
 * {
@@ -299,7 +300,7 @@ input[type="file"] {
   height: 60px;
   border-radius: 30px;
   border: none;
-  background-color: white;
+  background-color: var(--theme-color);
 }
 
 .widget-container__date {
@@ -315,6 +316,21 @@ input[type="file"] {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.collaborator__containerbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100px;
+  height: 40px;
+  background-color: var(--theme-color);
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border-radius: 7px;
+  border: none;
 }
 
 .collaborator__infocontainer {
@@ -359,6 +375,7 @@ input[type="file"] {
 
 .whiteboard__title {
   font-family: "Virgil";
+  width: 145px;
   opacity: 0.8;
 }
 
@@ -467,7 +484,7 @@ input[type="file"] {
   padding-inline: 20px;
   padding-block: 10px;
   border: none;
-  width: 500px;
+  width: 445px;
 }
 
 .image-options-textfield {
