@@ -187,7 +187,7 @@ function CollaboratorsWidget(props: {
       <>
         <p className="card__title">Add collaborators:</p>
         {users &&
-          users.map((user: User, index) => {
+          users.map((user: User) => {
             const userProjects = user.projects;
             if (!userProjects.includes(props.projectid)) {
               return (

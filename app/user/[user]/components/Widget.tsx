@@ -35,6 +35,7 @@ import { textShadow } from "html2canvas/dist/types/css/property-descriptors/text
 import { WBLink } from "../WhiteboardComponents/WBLink";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 import axios from "axios";
+import next from "next";
 
 const Widget = (props: {
   projectid: string;
@@ -88,7 +89,8 @@ const Widget = (props: {
 
   const [galleryError, setGalleryError] = useState(false);
 
-  const [images, setImages] = useState<string[]>([]);
+  const [widgetImage, setWidgetImage] = useState<string[]>([]);
+  const [saveWidgetIndex, setSaveWidgetIndex] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.layout) {
@@ -106,10 +108,13 @@ const Widget = (props: {
     if (props.newLinks) {
       setLink(JSON.parse(props.newLinks));
     }
+    if (props.widgetindex) {
+      setSaveWidgetIndex(props.widgetindex)
+    }
   }, [show, props.widgetid, props.layout]);
 
   useEffect(() => {
-    setImages(props.widgetimages);
+    setWidgetImage(props.widgetimages);
   }, [props.widgetimages, show]);
 
   const db = getFirestore(app) as any;
@@ -125,10 +130,6 @@ const Widget = (props: {
   };
 
   const handleClose = () => {
-    setImages((prevState) => {
-      let nextState = [...prevState];
-      return nextState;
-    });
     setShow(false);
   };
   const handleShow = (e: any) => {
@@ -171,15 +172,70 @@ const Widget = (props: {
     handleClose();
   };
 
+  // const uploadToStorage = async (imgData: any) => {
+  //   const blob = await (await fetch(imgData)).blob();
+  //   const file = new File([blob], "filename")
+  //   const reader = new FileReader();
+  //   const fileType: string = file.type || "";
+  //   reader.readAsBinaryString(file);
+  //   reader.onload = (ev: any) => {
+  //     if (saveWidgetIndex.includes(props.widgetid)) {
+  //       const index = saveWidgetIndex.indexOf(props.widgetid);
+  //       setWidgetImage((prevState) => {
+  //         let nextState = [...prevState]
+  //         nextState[index] = (`data:${fileType};base64,${btoa(ev.target.result)}`);
+  //         return nextState
+  //       })
+  //     } else {
+  //       setSaveWidgetIndex((prevState) => {
+  //         let nextState = [...prevState]
+  //         nextState.push(widgetid);
+  //         return nextState
+  //       })
+  //       setWidgetImage((prevState) => {
+  //         let nextState = [...prevState]
+  //         nextState.push(`data:${fileType};base64,${btoa(ev.target.result)}`);
+  //         return nextState
+  //       })
+  //     }
+  //   }
+  // };
+
   const uploadToStorage = async (imgData: any) => {
-    const blob = await (await fetch(imgData)).blob();
     const storage = getStorage();
     const filePath = `/widgets/${widgetid}.jpeg`;
     const storageRef = ref(storage, filePath);
-    uploadBytes(storageRef, blob).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
-    });
-  };
+
+    const blob = await (await fetch(imgData)).blob();
+
+    uploadBytes(storageRef, blob)
+    .then((snapshot) => {
+      return getDownloadURL(snapshot.ref);
+    })
+    .then((downloadURL) => {    
+      if (saveWidgetIndex.includes(props.widgetid)) {
+        const index = saveWidgetIndex.indexOf(props.widgetid);
+        setWidgetImage((prevState) => {
+          let nextState = [...prevState]
+          nextState[index] = (downloadURL);
+          return nextState
+        })
+      } else {
+        setSaveWidgetIndex((prevState) => {
+          let nextState = [...prevState]
+          nextState.push(widgetid);
+          return nextState
+        })
+        setWidgetImage((prevState) => {
+          let nextState = [...prevState]
+          nextState.push(downloadURL);
+          return nextState
+        })
+      }
+    })
+  }
+  
+  
 
   const createText = () => {
     const uuid = v4();
@@ -340,17 +396,21 @@ const Widget = (props: {
     setGallerySearchLinks(false);
   };
 
-  const widgetImage = () => {
-    const array = props.widgetindex;
-    const index = array.indexOf(props.widgetid);
+  const populatewWidgetImage = () => {
+    const index = saveWidgetIndex.indexOf(props.widgetid);
+    console.log('---------1--------')
+    console.log(props.widgetid)
+    console.log(index)
+    console.log(widgetImage)
+    console.log(saveWidgetIndex)
+    console.log('-----------------')
 
-    images.length > 0
-    if (props.widgetindex.length && index !== -1 && images.length > 0) {
+    if (index !== -1 && widgetImage.length > 0) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.widgetImage}
-          src={images[index]}
+          src={widgetImage[index]}
           placeholder="blur"
           alt=""
         />
@@ -682,7 +742,7 @@ const Widget = (props: {
             </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {images && <>{widgetImage()}</>}
+          {saveWidgetIndex && <>{populatewWidgetImage()}</>}
         </div>
       </article>
       <Modal
