@@ -260,7 +260,7 @@ export const Form = () => {
             </div>
           )}
           <button className="formButton" type="submit">
-            Login
+            Sign Up
           </button>
         </form>
         <div className="google-signin">
