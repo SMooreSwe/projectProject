@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import Image from "next/image";
+import { BsCheckSquareFill } from "react-icons/bs";
 import { User } from "firebase/auth";
 import { Invited, UserUpdate } from "../../../Types";
 import {
@@ -292,36 +293,18 @@ const Sidebar = (props: {
             <h3>Hello {props.user.username}! Welcome to [project Project]</h3>
 
             <div className={styles.tutorial__positioning}>
-              <Image
-                className={(styles.createButton, styles.createProjectBtn)}
-                src={createButton}
-                placeholder="blur"
-                alt=""
-              />
               <p className={styles.tutorial__text}>
                 Click the Create New Project button above to start a new
                 project!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
-              <Image
-                className={(styles.createButton, styles.createProjectBtn)}
-                src={createButton}
-                placeholder="blur"
-                alt=""
-              />
               <p className={styles.tutorial__text}>
-                Once you have a project, create new events by selecting the +
+                Create new events by selecting the +
                 button to the left!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
-              <Image
-                className={(styles.createButton, styles.createProjectBtn)}
-                src={createButton}
-                placeholder="blur"
-                alt=""
-              />
               <p className={styles.tutorial__text}>
                 Click on collaborators to invite others to your project and
                 collaborate!
