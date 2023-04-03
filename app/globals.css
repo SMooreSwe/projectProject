@@ -866,6 +866,34 @@ input[type="file"] {
   color: var(--theme-color)
 }
 
+.tutorial__subtitle {
+  opacity: 0.8;
+  font-size: 1.2em;
+  font-family: "Virgil";
+  color: var(--theme-color)
+}
+
+.Sidebar__title {
+  opacity: 0.8;
+  font-family: "Virgil";
+}
+
+.collaborators__number {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4em;
+  color: white;
+  font-family: "Virgil";
+}
+
+.userprofile__name {
+  font-size: 1.4em;
+  margin: 0px;
+  margin-right: 5px;
+  font-family: "Virgil";
+  opacity: 0.8;
+}
+
 
 @media only screen and (min-width: 575px) {
   .login__title,

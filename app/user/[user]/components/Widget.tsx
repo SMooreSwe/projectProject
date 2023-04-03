@@ -343,7 +343,9 @@ const Widget = (props: {
   const widgetImage = () => {
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
-    if (props.widgetindex.length && index !== -1) {
+
+    images.length > 0
+    if (props.widgetindex.length && index !== -1 && images.length > 0) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -358,7 +360,7 @@ const Widget = (props: {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.widgetImage}
-          src={"/editme.png"}
+          src={"/doubleclick2.png"}
           placeholder="blur"
           alt=""
         />
@@ -680,7 +682,7 @@ const Widget = (props: {
             </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
-          {images.length > 0 && <>{widgetImage()}</>}
+          {images && <>{widgetImage()}</>}
         </div>
       </article>
       <Modal

@@ -1,11 +1,3 @@
-.userprofile__name {
-  font-size: 1.4em;
-  margin: 0px;
-  margin-right: 5px;
-  font-family: "Virgil";
-  opacity: 0.8;
-}
-
 .userprofile__container,
 .createproject__container {
   display: flex;
@@ -28,14 +20,6 @@
   border: none;
   cursor: pointer;
   background-color: transparent;
-}
-
-.collaborators__number {
-  margin: 0;
-  padding: 0;
-  font-size: 1.4em;
-  color: white;
-  font-family: "Virgil";
 }
 
 .notification__container {
@@ -94,17 +78,6 @@
   width: 100%;
   opacity: 0.5;
   cursor: pointer;
-}
-
-@font-face {
-  font-family: "Virgil";
-  src: url("/public/Virgil.woff2") format("woff2");
-  font-weight: 400;
-}
-
-.Sidebar__title {
-  opacity: 0.8;
-  font-family: "Virgil";
 }
 
 .whiteboard {
@@ -181,9 +154,3 @@
   margin-left: 21px;
 }
 
-.tutorial__subtitle {
-  opacity: 0.8;
-  font-size: 1.2em;
-  font-family: "Virgil";
-  color: var(--)
-}
