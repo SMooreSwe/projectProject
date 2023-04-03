@@ -64,7 +64,11 @@ function CreateProject(props: {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            className="formButton-close"
+            variant="secondary"
+            onClick={handleClose}
+          >
             Close
           </Button>
           <button form="editmodal" className="formButton-create" type="submit">

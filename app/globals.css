@@ -9,7 +9,7 @@
 :root {
   --header-height: 85px;
   --sidebar-width: 400px;
-  --theme-color: rgb(210, 194, 158);
+  --theme-color: #38a3a5;
 }
 
 * {
@@ -52,8 +52,6 @@
   display: flex;
   flex-direction: column;
 }
-
-
 
 .login-form {
   margin: 2.25em 0 0 0;
@@ -122,13 +120,30 @@
 
 .formButton-create {
   font-size: 1em;
-  opacity: 0.8;
   border-radius: 5px;
   border: 0.1px solid black;
   padding: 8px 35px;
   cursor: pointer;
   justify-self: center;
   align-self: center;
+  background-color: var(--theme-color);
+  color: white;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border: none;
+}
+
+.formButton-create:hover {
+  opacity: 0.8;
+  background-color: rgb(95, 95, 95);
+}
+
+.formButton-close {
+  background-color: #e8e8e8;
+  color: #666;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border: none;
 }
 
 .login-form-password-div,
@@ -214,8 +229,8 @@ input[type="file"] {
   border: none;
   background: transparent;
   position: absolute;
-  top: 45%;
-  right: 1%;
+  top: 50%;
+  right: 2%;
 }
 
 .error__container {
@@ -233,7 +248,7 @@ input[type="file"] {
   margin-bottom: 15px;
 }
 
-.login-google-btn, 
+.login-google-btn,
 .signup-google-btn {
   display: flex;
 }
@@ -241,7 +256,6 @@ input[type="file"] {
 .login-google-icon {
   padding-right: 5px;
 }
-
 
 /* Canvas Styles */
 
@@ -302,6 +316,13 @@ input[type="file"] {
   grid-auto-flow: row dense;
   height: 100%;
   width: calc(100% - 150px);
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  aspect-ratio: 1/1;
 }
 
 .widget-container {
@@ -400,7 +421,22 @@ input[type="file"] {
   padding: 0;
 }
 
-.collaborator__btn {
+.collaborator__btn-add {
+  padding-inline: 10px;
+  padding-block: 5px;
+  border-radius: 7px;
+  border: none;
+  font-size: 0.8em;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  cursor: pointer;
+  height: 35px;
+  width: 70px;
+  background-color: var(--theme-color);
+  color: white;
+}
+
+.collaborator__btn-remove {
   padding-inline: 10px;
   padding-block: 5px;
   border-radius: 7px;
@@ -507,6 +543,8 @@ input[type="file"] {
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
   outline: 0.1px solid rgb(204, 204, 204);
   border-radius: 5px;
+  background-color: var(--theme-color);
+  color: white;
 }
 
 .widget-container__close-btn {
@@ -764,8 +802,25 @@ input[type="file"] {
   border-color: var(--theme-color);
 }
 
+.Sidebar__messagebubble-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
+.Sidebar__messagebubble-container-other {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
 .Sidebar__messagebubble-self {
-  margin-block: 10px;
+  margin-block: 5px;
   margin-inline: 20px;
   padding-inline: 20px;
   padding-block: 20px;
@@ -779,8 +834,8 @@ input[type="file"] {
 }
 
 .Sidebar__messagebubble-other {
-  margin-block: 10px;
-  margin-inline: 20px;
+  margin-block: 5px;
+  margin-inline: 10px;
   padding-inline: 20px;
   padding-block: 20px;
   background-color: rgb(239, 239, 239);
@@ -791,6 +846,19 @@ input[type="file"] {
   border: none;
 }
 
+.Sidebar__messagebubble-text {
+  padding: 0;
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.Sidebar__messagebubble-name {
+  padding: 0;
+  margin: 0;
+  font-size: 1.2em;
+  font-family: "Virgil";
+}
+
 @media only screen and (min-width: 575px) {
   .login__title,
   .signup__title {
@@ -798,12 +866,26 @@ input[type="file"] {
   }
 }
 
-@media only screen and (min-width: 1500px) { 
+@media screen and (max-width: 820px) {
+  .whiteboard__header {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .whiteboard__control-container {
+    min-width: 65%;
+    margin-top: 5px;
+    order: 1;
+    justify-self: center;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
   .widget-container__date {
     font-size: 1.25em;
   }
 
   .widget__select {
-    font-size: .85em;
+    font-size: 0.85em;
   }
 }
