@@ -257,8 +257,8 @@ export const Form = () => {
           </button>
         </form>
         <div className="google-signin">
-        <button className="formButton login-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign up with Google</button>
-      </div>
+          <button className="formButton signup-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign up with Google</button>
+        </div>
       </div>
     </div>
   );
