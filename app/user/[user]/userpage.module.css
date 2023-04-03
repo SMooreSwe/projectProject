@@ -121,7 +121,7 @@
 
 .tutorial__positioning {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   margin: 25px;
 }
 
@@ -175,4 +175,15 @@
 
 .Sidebar__typingField:focus {
   outline: none;
+}
+
+.tutorial__title {
+  margin-left: 21px;
+}
+
+.tutorial__subtitle {
+  opacity: 0.8;
+  font-size: 1.2em;
+  font-family: "Virgil";
+  color: var(--)
 }

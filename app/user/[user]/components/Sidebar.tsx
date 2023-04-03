@@ -340,26 +340,38 @@ const Sidebar = (props: {
       return (
         <>
           <div className={styles.tutorial__container}>
-            <h3>Hello {props.user.username}! Welcome to [project Project]</h3>
+            <h3 className={styles.tutorial__title}>Hello {props.user.username}! Welcome to [project Project]</h3>
 
             <div className={styles.tutorial__positioning}>
+              <p className="tutorial__subtitle">
+                Projects
+              </p>
               <p className={styles.tutorial__text}>
                 Click the Create New Project button above to start a new
                 project!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
+              <p className="tutorial__subtitle">
+                Events
+              </p>
               <p className={styles.tutorial__text}>
                 Create new events by selecting the + button to the left!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
+              <p className="tutorial__subtitle">
+                Collaborators
+              </p>
               <p className={styles.tutorial__text}>
                 Click on collaborators to invite others to your project and
                 collaborate!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
+              <p className="tutorial__subtitle">
+                Whiteboards
+              </p>
               <p className={styles.tutorial__text}>
                 Double click on an event to access its whiteboard functionality!
               </p>
@@ -398,7 +410,7 @@ const Sidebar = (props: {
                 <input
                   className="Sidebar__sendbtn"
                   type="submit"
-                  value="Submit"
+                  value="Send"
                 />
               </form>
             </div>

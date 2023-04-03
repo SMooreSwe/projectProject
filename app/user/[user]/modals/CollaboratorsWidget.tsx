@@ -219,20 +219,28 @@ function CollaboratorsWidget(props: {
     );
   };
 
+  const collabButton = () => {
+    if (props.projectid.length > 1) {
+      return (
+        <button onClick={handleShow} className="collaborator__containerbtn">
+          <div className={styles.collaboratorBtn}>
+            {/*eslint-disable-next-line @next/next/no-img-element*/}
+            <img
+              className={styles.collaborators__image}
+              src={"/collab1.png"}
+              placeholder="blur"
+              alt=""
+            />
+          </div>
+          {props.projectcollaborators.length > 1 && <>{members()}</>}
+        </button>
+      );
+    }
+  };
+
   return (
     <>
-      <button onClick={handleShow} className="collaborator__containerbtn">
-        <div className={styles.collaboratorBtn}>
-          {/*eslint-disable-next-line @next/next/no-img-element*/}
-          <img
-            className={styles.collaborators__image}
-            src={"/collab1.png"}
-            placeholder="blur"
-            alt=""
-          />
-        </div>
-        {props.projectcollaborators.length > 1 && <>{members()}</>}
-      </button>
+      {props.projectid && <>{collabButton()}</>}     
       <Modal
         show={show}
         onHide={handleClose}

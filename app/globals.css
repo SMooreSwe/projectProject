@@ -859,6 +859,13 @@ input[type="file"] {
   font-family: "Virgil";
 }
 
+.tutorial__subtitle {
+  font-size: 1.2em;
+  font-family: "Virgil";
+  color: var(--theme-color)
+}
+
+
 @media only screen and (min-width: 575px) {
   .login__title,
   .signup__title {

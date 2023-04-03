@@ -37,12 +37,19 @@ function CreateWidget(props: { projectid: string; projectList: Project[] }) {
     }
   };
 
+  const createWidget = () => {
+    if (props.projectid.length > 1) {
+      return (
+        <button onClick={handleShow} className="createwidget__button">
+          <p className="createWidgetBtn__plus">+</p>
+        </button>
+      );
+    }
+  };
+
   return (
     <>
-      <button onClick={handleShow} className="createwidget__button">
-        <p className="createWidgetBtn__plus">+</p>
-      </button>
-
+      {props.projectid && <>{createWidget()}</>}  
       <Modal
         show={show}
         onHide={handleClose}
