@@ -300,7 +300,7 @@ const Sidebar = (props: {
             </div>
             <div className={styles.tutorial__positioning}>
               <p className={styles.tutorial__text}>
-                Create new tasks by selecting the +
+                Create new events by selecting the +
                 button to the left!
               </p>
             </div>
