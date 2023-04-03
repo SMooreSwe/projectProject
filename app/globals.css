@@ -108,6 +108,12 @@
   margin: 8px 0;
 }
 
+.formButton:active {
+  background-color: var(--theme-color);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
 .formButton-create {
   font-size: 1em;
   opacity: 0.8;
