@@ -32,13 +32,40 @@
     font-size: 1.75em;
 }
 
+.section__team-images-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.section__team-image {
+    width: 200px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.section__team-name {
+    font-weight: bold;
+}
+
 .ul__project-why {
     padding: 25px 45px;
 }
 
 .section__project-img{
    width: 100%;
-   margin: 15px 0;
+   margin: 25px 0 0;
+}
+
+.section__project-img-caption {
+    text-align: center;
+    font-size: .75em;
+}
+
+.section__project-p {
+    margin-top: 1em;
 }
 
 @media only screen and (max-width: 830px) {
