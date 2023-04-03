@@ -740,7 +740,10 @@ const Widget = (props: {
               <div className="whiteboard__control">
                 <button
                   className="whiteboard__control-btn"
-                  onClick={() => setGallerySearchBox(!gallerySearchBox)}
+                  onClick={() => {
+                    setGallerySearchBox(!gallerySearchBox)
+                    setGallerySearchImages(!gallerySearchImages)
+                  }}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
@@ -753,7 +756,10 @@ const Widget = (props: {
               </div>
               <div className="whiteboard__control">
                 <button
-                  onClick={() => setLinkSearchBox(!linkSearchBox)}
+                  onClick={() => {
+                    setLinkSearchBox(!linkSearchBox)
+                    setGallerySearchLinks(!gallerySearchLinks)
+                  }}
                   className="whiteboard__control-btn"
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
