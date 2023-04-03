@@ -782,11 +782,10 @@ const Widget = (props: {
               onClick={() => {
                 setGallerySearchBox(false);
                 setGallerySearchImages(false);
-
+                setImages(images)
                 setLinkSearchBox(false);
                 setGallerySearchLinks(false);
                 handleClose();
-                widgetImage();
               }}
             >
               X
