@@ -58,7 +58,7 @@ const Header = (props: {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          className={styles.UserProfileImage}
+          className="UserProfileImage"
           src={imageSrc as string}
           placeholder="blur"
           alt=""
@@ -68,7 +68,7 @@ const Header = (props: {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          className={styles.UserProfileImage}
+          className="UserProfileImage"
           src={"/profileImage.png"}
           placeholder="blur"
           alt=""

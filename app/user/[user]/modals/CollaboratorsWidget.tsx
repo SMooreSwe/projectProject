@@ -134,7 +134,7 @@ function CollaboratorsWidget(props: {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          className={styles.UserProfileImage}
+          className="UserProfileImage"
           src={allimages[index]}
           placeholder="blur"
           alt=""
@@ -144,7 +144,7 @@ function CollaboratorsWidget(props: {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          className={styles.UserProfileImage}
+          className="UserProfileImage"
           src={"/profileImage.png"}
           placeholder="blur"
           alt=""

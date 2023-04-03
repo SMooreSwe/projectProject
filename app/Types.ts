@@ -74,3 +74,12 @@ export type GalleryLink = {
   thumbnailUrl: string;
   hostPageUrl: string;
 };
+
+export type ChatMessages = {
+  messageid: string;
+  timestamp: Timestamp;
+  name: string;
+  chatuserid: string;
+  text: string;
+  profilePicUrl: string;
+};
