@@ -6,17 +6,23 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import {
   getStorage,
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { auth } from "../../../firebase-config";
+import { app, auth } from "../../../firebase-config";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { FcGoogle } from "react-icons/fc";
 
 export const Form = () => {
   const router = useRouter();
+  const provider = new GoogleAuthProvider();
+  const db = getFirestore(app) as any;
   const [image, setImage] = useState<string>("");
   const [file, setFile] = useState<any>();
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -28,6 +34,36 @@ export const Form = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider).then(async (result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
+    const docRef = doc(db, "users", `${user.uid}`);
+      const docSnap = await getDoc(docRef);
+          await setDoc(docRef, {
+            email: user.email,
+            userid: user.uid,
+            projects:'',
+            username: user.displayName,
+          })
+          router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -216,6 +252,9 @@ export const Form = () => {
             Login
           </button>
         </form>
+        <div className="google-signin">
+        <button className="formButton login-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign up with Google</button>
+      </div>
       </div>
     </div>
   );
