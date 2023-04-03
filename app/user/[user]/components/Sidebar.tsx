@@ -26,6 +26,7 @@ import { uuid } from "uuidv4";
 import createButton from "../../../../public/createbutton.png";
 import { Project, ChatMessages } from "../../../Types";
 import { v4 } from "uuid";
+import { messaging } from "firebase-admin";
 
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string };
@@ -243,29 +244,34 @@ const Sidebar = (props: {
   };
 
   const populateMessages = () => {
-    //const timestamp = timestamp ? timestamp.toMillis() : Date.now();
     return (
       <>
         {chatMessages &&
           chatMessages.map((chat: ChatMessages) => {
-            if (chat.chatuserid === props.user.userid) {
-              return (
-                <div
-                  key={chat.messageid}
-                  className="Sidebar__messagebubble-self"
-                >
-                  <p>What up with this USER...</p>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  key={chat.messageid}
-                  className="Sidebar__messagebubble-other"
-                >
-                  <p>What up with this NOT USER...</p>
-                </div>
-              );
+            const timestamp = chat.timestamp;
+            const currenttimestamp = timestamp
+              ? timestamp.toMillis()
+              : Date.now();
+            if (currenttimestamp !== null) {
+              if (chat.chatuserid === props.user.userid) {
+                return (
+                  <div key={chat.messageid}>
+                    <img></img>
+                    <div className="Sidebar__messagebubble-self">
+                      <p>{chat.text}</p>
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={chat.messageid}
+                    className="Sidebar__messagebubble-other"
+                  >
+                    <p>{chat.text}</p>
+                  </div>
+                );
+              }
             }
           })}
       </>
@@ -284,7 +290,7 @@ const Sidebar = (props: {
     );
   };
 
-  const Tutorial = () => {
+  const tutorial = () => {
     if (props.projectlist.length === 0) {
       return (
         <>
@@ -330,42 +336,44 @@ const Sidebar = (props: {
           </div>
         </>
       );
-    } else {
-      return (
-        <>
-          <div>
-            <h3 className={styles.Sidebar__title}>Comments</h3>
-            <div className={styles.Sidebar__container}>
-              <div className={styles.Sidebar__messagebox}>
-                {chatMessages.length > 0 && <>{populateMessages()}</>}
-              </div>
-              <div>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    saveMessage();
-                  }}
-                  className={styles.Sidebar__typingbox}
-                >
-                  <input
-                    ref={messageInput}
-                    className={styles.Sidebar__typingField}
-                    type="text"
-                    name="name"
-                    required
-                  />
-                  <input
-                    className="Sidebar__sendbtn"
-                    type="submit"
-                    value="Submit"
-                  />
-                </form>
-              </div>
+    }
+  };
+
+  const allMessages = () => {
+    return (
+      <>
+        <div>
+          <h3 className={styles.Sidebar__title}>Comments</h3>
+          <div className={styles.Sidebar__container}>
+            <div className={styles.Sidebar__messagebox}>
+              {chatMessages.length > 0 && <>{populateMessages()}</>}
+            </div>
+            <div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  saveMessage();
+                }}
+                className={styles.Sidebar__typingbox}
+              >
+                <input
+                  ref={messageInput}
+                  className={styles.Sidebar__typingField}
+                  type="text"
+                  name="name"
+                  required
+                />
+                <input
+                  className="Sidebar__sendbtn"
+                  type="submit"
+                  value="Submit"
+                />
+              </form>
             </div>
           </div>
-        </>
-      );
-    }
+        </div>
+      </>
+    );
   };
 
   useEffect(() => {
@@ -413,13 +421,13 @@ const Sidebar = (props: {
       limit(8)
     );
     // Start listening to the query.
-    const messages: any[] = [];
-    onSnapshot(recentMessagesQuery, function (snapshot) {
-      snapshot.docChanges().forEach(function (change) {
-        const message = change.doc.data();
+    onSnapshot(recentMessagesQuery, (querySnapshot) => {
+      let messages: any[] = [];
+      querySnapshot.forEach((doc) => {
+        const message = doc.data();
         messages.push(message);
-        setChatMessages([...messages]);
       });
+      setChatMessages([...messages]);
     });
   }
 
@@ -428,10 +436,10 @@ const Sidebar = (props: {
       {<>{notificationsTitle()}</>}
       {invitedUser && <>{userInvitedMessage()}</>}
       {userUpdates && <>{userUpdateMessage()}</>}
-      <div>
-        <h3 className={styles.Sidebar__title}></h3>
-        {<>{Tutorial()}</>}
-      </div>
+      {props.projectlist.length === 0 && <>{tutorial()}</>}
+      {invitedUser.length === 0 &&
+        userUpdates.length === 0 &&
+        props.projectlist.length !== 0 && <>{allMessages()}</>}
     </div>
   );
 };
