@@ -205,8 +205,8 @@ input[type="file"] {
   border: none;
   background: transparent;
   position: absolute;
-  top: 45%;
-  right: 1%;
+  top: 50%;
+  right: 2%;
 }
 
 .error__container {
