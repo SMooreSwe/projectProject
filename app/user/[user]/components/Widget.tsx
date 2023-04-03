@@ -786,6 +786,7 @@ const Widget = (props: {
                 setLinkSearchBox(false);
                 setGallerySearchLinks(false);
                 handleClose();
+                widgetImage();
               }}
             >
               X
