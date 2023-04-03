@@ -18,7 +18,7 @@
 
 .login__main-container,
 .signup__main-container {
-  margin-top: 50px;
+  margin-top: 75px;
   font-family: "Open Sans", sans-serif;
   display: flex;
   flex-direction: column;
