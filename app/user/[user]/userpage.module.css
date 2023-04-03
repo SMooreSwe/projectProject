@@ -107,22 +107,19 @@
   font-family: "Virgil";
 }
 
-.whiteboard {
-  height: 68vh;
-}
-
 .tutorial__container {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
+  height: min-content;
 }
 
 .tutorial__positioning {
   display: flex;
   flex-direction: column;
-  margin: 25px;
+  margin-top: 15px;
+  margin-inline: 10px;
 }
 
 .tutorial__text {

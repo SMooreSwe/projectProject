@@ -272,7 +272,7 @@ input[type="file"] {
   position: absolute;
   top: var(--header-height);
   right: 0;
-  height: 91vh;
+  height: 85vh;
   width: var(--sidebar-width);
   padding-inline: 20px;
 }
@@ -859,13 +859,6 @@ input[type="file"] {
   font-size: 1.2em;
   font-family: "Virgil";
 }
-
-.tutorial__subtitle {
-  font-size: 1.2em;
-  font-family: "Virgil";
-  color: var(--theme-color)
-}
-
 
 @media only screen and (min-width: 575px) {
   .login__title,
