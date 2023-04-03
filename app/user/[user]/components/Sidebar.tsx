@@ -388,7 +388,7 @@ const Sidebar = (props: {
         <div>
           <h3 className={"Sidebar__title"}>Chat</h3>
           <div className={styles.Sidebar__container}>
-            <div className={styles.Sidebar__messagebox}>
+            <div className={"Sidebar__messagebox"}>
               {chatMessages.length > 0 && <>{populateMessages()}</>}
             </div>
             <div>
