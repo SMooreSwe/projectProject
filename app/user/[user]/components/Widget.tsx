@@ -110,7 +110,7 @@ const Widget = (props: {
 
   useEffect(() => {
     setImages(props.widgetimages);
-  }, [props.widgetimages]);
+  }, [props.widgetimages, show]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -343,7 +343,6 @@ const Widget = (props: {
   const widgetImage = () => {
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
-    console.log(index);
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -782,7 +781,6 @@ const Widget = (props: {
               onClick={() => {
                 setGallerySearchBox(false);
                 setGallerySearchImages(false);
-                setImages(images)
                 setLinkSearchBox(false);
                 setGallerySearchLinks(false);
                 handleClose();
