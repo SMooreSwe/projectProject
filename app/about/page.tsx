@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import Image from 'next/image'
 import './about.css';
 
 const About = () => {
@@ -10,11 +10,39 @@ const About = () => {
       <section className='section section___project-who'>
         <h2 className='section__title'>Who We Are</h2>
         <p>We are four people with completely different nationalities, career backgrounds, and skillsets who are all motivated by the same thing: creating practical and accessible software.</p>
-        <div className='section__team-images'>
-          <img/>
-          <img/>
-          <img/>
-          <img/>
+        <div className='section__team-images-container'>
+          <img
+            className='section__team-image'
+            src="/sonja.jpg"
+            alt="luis barri"
+          />
+          <p className='section__team-name'>Luis Barri</p>
+          <p>Fullstack Javascript Developer</p>
+          <p><a target="_blank" href='https://www.linkedin.com/in/luis-barri-a1a393ab/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
+          <img
+            className='section__team-image'
+            src="/sonja.jpg"
+            alt="sonja kitanoska"
+          />
+          <p className='section__team-name'>Sonja Kitanoska</p>
+          <p>Fullstack Javascript Developer</p>
+          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
+          <img 
+            className='section__team-image'
+            src="/Stephen_Moore.jpg"
+            alt="stephen moore"
+          />
+          <p className='section__team-name'>Stephen Moore</p>
+          <p>Fullstack Javascript Developer</p>
+          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
+          <img
+            className='section__team-image'
+            src="/brittany.jpg"
+            alt="brittany villegas"
+          />
+          <p className='section__team-name'>Brittany Villegas</p>
+          <p>Fullstack Javascript Developer</p>
+          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
         </div>
       </section>
       
@@ -43,12 +71,14 @@ const About = () => {
           src="/first-sketch.jpg"
           alt="[project Project]'s very first UI sketch"
         />
+        <p className='section__project-img-caption'>[project Project]s very first UI sketch.</p>
         <img 
           className='section__project-img'
           src="/component-mapping.jpg"
           alt="first draft of our components and application architecture"
         />
-        <p>View the [project Project] Github repo <a href="https://github.com/SMooreSwe/projectProject" target="_blank">here</a>.</p>
+        <p className='section__project-img-caption'>First draft of [project Project] components and application architecture.</p>
+        <p className='section__project-p'>View the [project Project] Github repo <a href="https://github.com/SMooreSwe/projectProject" target="_blank">here</a>.</p>
       </section>
     </main>
   )

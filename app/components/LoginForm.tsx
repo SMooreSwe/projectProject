@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { app, auth } from "../../firebase-config";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc"
 import { GoogleAuthProvider } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import router from "next/router";
 
 const provider = new GoogleAuthProvider();
 
@@ -129,7 +129,7 @@ export const Form = () => {
                 value={inputs.password || ""}
                 onChange={handleChange}
               />
-              <button
+              <i
                 className="login-form__password-visibility"
                 onClick={togglePassword}
               >
@@ -138,7 +138,7 @@ export const Form = () => {
                 ) : (
                   <AiOutlineEyeInvisible size={20} />
                 )}
-              </button>
+              </i>
             </label>
           </div>
           {errorMessage && (
@@ -151,7 +151,9 @@ export const Form = () => {
           </button>
         </form>
       </div>
-      <button className="formButton" onClick={() => googleSignIn()}>Sign in with Google</button>
+      <div className="google-signin">
+        <button className="formButton login-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign in with Google</button>
+      </div>
     </>
   );
 };

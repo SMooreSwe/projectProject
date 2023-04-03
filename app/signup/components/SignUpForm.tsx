@@ -185,9 +185,9 @@ export const Form = () => {
                 value={inputs.password || ""}
                 onChange={handleChange}
               />
-              <button className="signup-form__password-visibility" onClick={togglePasswordVisibility}>
+              <i className="signup-form__password-visibility" onClick={togglePasswordVisibility}>
                 {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20}/>}
-              </button>
+              </i>
             </label>
           </div>            
           <div className="signup-form-password-div">
@@ -202,9 +202,9 @@ export const Form = () => {
                 value={inputs.confirmpassword || ""}
                 onChange={handleChange}
               />
-              <button className="signup-form__password-visibility" onClick={toggleConfirmPasswordVisibility}>
+              <i className="signup-form__password-visibility" onClick={toggleConfirmPasswordVisibility}>
                 {showConfirmPassword ? < AiOutlineEyeInvisible size={20}/> : <AiOutlineEye size={20}/>}
-              </button>
+              </i>
             </label>
           </div>
           {errorMessage && (
