@@ -18,7 +18,7 @@
 
 .login__main-container,
 .signup__main-container {
-  margin-top: 50px;
+  margin-top: 75px;
   font-family: "Open Sans", sans-serif;
   display: flex;
   flex-direction: column;
@@ -53,12 +53,14 @@
   flex-direction: column;
 }
 
+
+
 .login-form {
   margin: 2.25em 0 0 0;
 }
 
 .signup-form {
-  margin: 1em 0;
+  margin-top: 1em;
 }
 
 .signup-form {
@@ -112,6 +114,12 @@
   margin: 8px 0;
 }
 
+.formButton:active {
+  background-color: var(--theme-color);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
 .formButton-create {
   font-size: 1em;
   opacity: 0.8;
@@ -135,6 +143,13 @@
 
 .more-info__signup {
   margin-bottom: 1.25em;
+}
+
+.signup-form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .profileimage__container {
@@ -199,8 +214,8 @@ input[type="file"] {
   border: none;
   background: transparent;
   position: absolute;
-  top: 45%;
-  right: 1%;
+  top: 50%;
+  right: 2%;
 }
 
 .error__container {
@@ -218,13 +233,15 @@ input[type="file"] {
   margin-bottom: 15px;
 }
 
-.login-google-btn {
+.login-google-btn, 
+.signup-google-btn {
   display: flex;
 }
 
 .login-google-icon {
   padding-right: 5px;
 }
+
 
 /* Canvas Styles */
 

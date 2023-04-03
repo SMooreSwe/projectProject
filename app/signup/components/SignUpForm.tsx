@@ -46,6 +46,9 @@ export const Form = () => {
       // ...
     const docRef = doc(db, "users", `${user.uid}`);
       const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        } else {
           await setDoc(docRef, {
             email: user.email,
             userid: user.uid,
@@ -53,6 +56,7 @@ export const Form = () => {
             username: user.displayName,
           })
           router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        }
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -253,8 +257,8 @@ export const Form = () => {
           </button>
         </form>
         <div className="google-signin">
-        <button className="formButton login-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign up with Google</button>
-      </div>
+          <button className="formButton signup-google-btn" onClick={() => googleSignIn()}><FcGoogle className="login-google-icon" size={20} /> Sign up with Google</button>
+        </div>
       </div>
     </div>
   );

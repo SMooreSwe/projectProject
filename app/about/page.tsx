@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
+import { BsLinkedin, BsGithub } from "react-icons/bs";
 import './about.css';
 
 const About = () => {
@@ -11,38 +12,46 @@ const About = () => {
         <h2 className='section__title'>Who We Are</h2>
         <p>We are four people with completely different nationalities, career backgrounds, and skillsets who are all motivated by the same thing: creating practical and accessible software.</p>
         <div className='section__team-images-container'>
-          <img
-            className='section__team-image'
-            src="/sonja.jpg"
-            alt="luis barri"
-          />
-          <p className='section__team-name'>Luis Barri</p>
-          <p>Fullstack Javascript Developer</p>
-          <p><a target="_blank" href='https://www.linkedin.com/in/luis-barri-a1a393ab/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
-          <img
-            className='section__team-image'
-            src="/sonja.jpg"
-            alt="sonja kitanoska"
-          />
-          <p className='section__team-name'>Sonja Kitanoska</p>
-          <p>Fullstack Javascript Developer</p>
-          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
-          <img 
-            className='section__team-image'
-            src="/Stephen_Moore.jpg"
-            alt="stephen moore"
-          />
-          <p className='section__team-name'>Stephen Moore</p>
-          <p>Fullstack Javascript Developer</p>
-          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
-          <img
-            className='section__team-image'
-            src="/brittany.jpg"
-            alt="brittany villegas"
-          />
-          <p className='section__team-name'>Brittany Villegas</p>
-          <p>Fullstack Javascript Developer</p>
-          <p><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'>LinkedIn</a> <a target="_blank" href='https://github.com/bretagne-marie'>Github</a></p>
+          <div className='section___image-container'>
+            <img
+              className='section__team-image'
+              src="/luis.jpg"
+              alt="luis barri"
+            />
+            <p className='section__team-name'>Luis Barri</p>
+            <p>Fullstack Javascript Developer</p>
+            <p className='profile-links'><a target="_blank" href='https://www.linkedin.com/in/luis-barri-a1a393ab/'><BsLinkedin className='icon' size={20} /></a> <a target="_blank" href='https://github.com/luisw90'><BsGithub className='icon' size={20} /></a></p>
+          </div>
+          <div className='section___image-container'>
+            <img
+              className='section__team-image'
+              src="/sonja.jpg"
+              alt="sonja kitanoska"
+            />
+            <p className='section__team-name'>Sonja Kitanoska</p>
+            <p>Fullstack Javascript Developer</p>
+            <p className='profile-links'><a target="_blank" href='https://www.linkedin.com/in/sonja-kitanoska-986ba8a8/'><BsLinkedin size={20} className='icon' /></a> <a target="_blank" href='https://github.com/Sonja-Kitanoska'><BsGithub className='icon' size={20} /></a></p>
+          </div>
+          <div className='section___image-container'>
+            <img 
+              className='section__team-image'
+              src="/Stephen_Moore.jpg"
+              alt="stephen moore"
+            />
+            <p className='section__team-name'>Stephen Moore</p>
+            <p>Fullstack Javascript Developer</p>
+            <p className='profile-links'><a target="_blank" href='https://www.linkedin.com/in/stephen-moore-swe/'><BsLinkedin className='icon' size={20} /></a> <a target="_blank" href='https://github.com/SMooreSwe'><BsGithub className='icon' size={20} /></a></p>
+          </div>
+          <div className='section___image-container'>
+            <img
+              className='section__team-image'
+              src="/brittany.jpg"
+              alt="brittany villegas"
+            />
+            <p className='section__team-name'>Brittany Villegas</p>
+            <p>Fullstack Javascript Developer</p>
+            <p className='profile-links'><a target="_blank" href='https://www.linkedin.com/in/bmvillegas/'><BsLinkedin className='icon' size={20} /></a> <a target="_blank" href='https://github.com/bretagne-marie'><BsGithub className='icon' size={20} /></a></p>
+          </div>
         </div>
       </section>
       
