@@ -742,7 +742,7 @@ const Widget = (props: {
                   className="whiteboard__control-btn"
                   onClick={() => {
                     setGallerySearchBox(!gallerySearchBox)
-                    setGallerySearchImages(!gallerySearchImages)
+                    setGallerySearchImages(false)
                   }}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
@@ -758,7 +758,7 @@ const Widget = (props: {
                 <button
                   onClick={() => {
                     setLinkSearchBox(!linkSearchBox)
-                    setGallerySearchLinks(!gallerySearchLinks)
+                    setGallerySearchLinks(false)
                   }}
                   className="whiteboard__control-btn"
                 >
