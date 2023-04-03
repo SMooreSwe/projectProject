@@ -53,8 +53,6 @@
   flex-direction: column;
 }
 
-
-
 .login-form {
   margin: 2.25em 0 0 0;
 }
@@ -233,7 +231,7 @@ input[type="file"] {
   margin-bottom: 15px;
 }
 
-.login-google-btn, 
+.login-google-btn,
 .signup-google-btn {
   display: flex;
 }
@@ -241,7 +239,6 @@ input[type="file"] {
 .login-google-icon {
   padding-right: 5px;
 }
-
 
 /* Canvas Styles */
 
@@ -771,8 +768,25 @@ input[type="file"] {
   border-color: var(--theme-color);
 }
 
+.Sidebar__messagebubble-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
+.Sidebar__messagebubble-container-other {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
 .Sidebar__messagebubble-self {
-  margin-block: 10px;
+  margin-block: 5px;
   margin-inline: 20px;
   padding-inline: 20px;
   padding-block: 20px;
@@ -786,8 +800,8 @@ input[type="file"] {
 }
 
 .Sidebar__messagebubble-other {
-  margin-block: 10px;
-  margin-inline: 20px;
+  margin-block: 5px;
+  margin-inline: 10px;
   padding-inline: 20px;
   padding-block: 20px;
   background-color: rgb(239, 239, 239);
@@ -798,10 +812,38 @@ input[type="file"] {
   border: none;
 }
 
+.Sidebar__messagebubble-text {
+  padding: 0;
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.Sidebar__messagebubble-name {
+  padding: 0;
+  margin: 0;
+  font-size: 1.2em;
+  font-family: "Virgil";
+}
+
 @media only screen and (min-width: 575px) {
   .login__title,
   .signup__title {
     font-size: 4em;
+  }
+}
+
+
+@media screen and (max-width: 820px) {
+  .whiteboard__header {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .whiteboard__control-container {
+    min-width: 65%;
+    margin-top: 5px;
+    order: 1;
+    justify-self: center;
   }
 }
 
@@ -814,4 +856,3 @@ input[type="file"] {
     font-size: .85em;
   }
 }
-

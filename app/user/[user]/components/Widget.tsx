@@ -110,7 +110,7 @@ const Widget = (props: {
 
   useEffect(() => {
     setImages(props.widgetimages);
-  }, [props.widgetimages]);
+  }, [props.widgetimages, show]);
 
   const db = getFirestore(app) as any;
   const deleteWidget = async () => {
@@ -343,7 +343,6 @@ const Widget = (props: {
   const widgetImage = () => {
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
-    console.log(index);
     if (props.widgetindex.length && index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -742,7 +741,10 @@ const Widget = (props: {
               <div className="whiteboard__control">
                 <button
                   className="whiteboard__control-btn"
-                  onClick={() => setGallerySearchBox(!gallerySearchBox)}
+                  onClick={() => {
+                    setGallerySearchBox(!gallerySearchBox)
+                    setGallerySearchImages(false)
+                  }}
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
                   <img
@@ -755,7 +757,10 @@ const Widget = (props: {
               </div>
               <div className="whiteboard__control">
                 <button
-                  onClick={() => setLinkSearchBox(!linkSearchBox)}
+                  onClick={() => {
+                    setLinkSearchBox(!linkSearchBox)
+                    setGallerySearchLinks(false)
+                  }}
                   className="whiteboard__control-btn"
                 >
                   {/*eslint-disable-next-line @next/next/no-img-element*/}
@@ -783,7 +788,6 @@ const Widget = (props: {
               onClick={() => {
                 setGallerySearchBox(false);
                 setGallerySearchImages(false);
-                setImages(images)
                 setLinkSearchBox(false);
                 setGallerySearchLinks(false);
                 handleClose();

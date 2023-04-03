@@ -28,6 +28,7 @@ import createButton from "../../../../public/createbutton.png";
 import { Project, ChatMessages } from "../../../Types";
 import { v4 } from "uuid";
 import { messaging } from "firebase-admin";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string };
@@ -37,6 +38,13 @@ const Sidebar = (props: {
   const [invitedUser, setInvitedUSer] = useState<Invited[]>([]);
   const [userUpdates, setUserUpdates] = useState<UserUpdate[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessages[]>([]);
+
+  const [allNotificationImages, setAllNotificationImages] = useState<string[]>(
+    []
+  );
+  const [userNotificationIndex, setUserNotificationIndex] = useState<string[]>(
+    []
+  );
 
   const db = getFirestore(app) as any;
 
@@ -244,6 +252,31 @@ const Sidebar = (props: {
     );
   };
 
+  const filter = (userid: string) => {
+    const index = userNotificationIndex.indexOf(userid);
+    if (index !== -1) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className="UserProfileImage"
+          src={allNotificationImages[index]}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className="UserProfileImage"
+          src={"/profileImage.png"}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    }
+  };
+
   const populateMessages = () => {
     return (
       <>
@@ -256,20 +289,31 @@ const Sidebar = (props: {
             if (currenttimestamp !== null) {
               if (chat.chatuserid === props.user.userid) {
                 return (
-                  <div key={chat.messageid}>
-
+                  <div
+                    className="Sidebar__messagebubble-container"
+                    key={chat.messageid}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element*/}
+                    <p className="Sidebar__messagebubble-name">{chat.name}</p>
                     <div className="Sidebar__messagebubble-self">
-                      <p>{chat.text}</p>
+                      <p className="Sidebar__messagebubble-text">{chat.text}</p>
                     </div>
                   </div>
                 );
               } else {
                 return (
                   <div
+                    className="Sidebar__messagebubble-container-other"
                     key={chat.messageid}
-                    className="Sidebar__messagebubble-other"
                   >
-                    <p>{chat.text}</p>
+                    <div
+                      key={chat.messageid}
+                      className="Sidebar__messagebubble-other"
+                    >
+                      <p className="Sidebar__messagebubble-text">{chat.text}</p>
+                    </div>
+                    {/* eslint-disable-next-line @next/next/no-img-element*/}
+                    <p className="Sidebar__messagebubble-name">{chat.name}</p>
                   </div>
                 );
               }
@@ -306,8 +350,7 @@ const Sidebar = (props: {
             </div>
             <div className={styles.tutorial__positioning}>
               <p className={styles.tutorial__text}>
-                Create new events by selecting the +
-                button to the left!
+                Create new events by selecting the + button to the left!
               </p>
             </div>
             <div className={styles.tutorial__positioning}>
@@ -343,6 +386,7 @@ const Sidebar = (props: {
                   saveMessage();
                 }}
                 className={styles.Sidebar__typingbox}
+                ref={messageForm}
               >
                 <input
                   ref={messageInput}
@@ -370,7 +414,30 @@ const Sidebar = (props: {
     }
   }, [props.projectid]);
 
+  // const getAllimages = async () => {
+  //   const storage = getStorage();
+
+  //   const urls: any[] = [];
+  //   const userIndex: string[] = [];
+
+  //   chatMessages.map((notification: Notification) => {
+  //     const filePath = `/users/${notification.}.jpeg`;
+  //     const storageRef = ref(storage, filePath);
+  //     getDownloadURL(storageRef)
+  //       .then((url) => {
+  //         urls.push(url);
+  //         userIndex.push(chat.chatuserid);
+  //         setAllChatImages([...urls]);
+  //         setUserChatIndex([...userIndex]);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
+  // };
+
   const messageInput = useRef<HTMLInputElement>(null);
+  const messageForm = useRef<HTMLFormElement>(null);
   async function saveMessage() {
     const messageValue = messageInput.current!.value;
     const uuid = v4();
@@ -394,6 +461,9 @@ const Sidebar = (props: {
             timestamp: serverTimestamp(),
           }
         );
+        if (messageForm.current) {
+          messageForm.current!.reset();
+        }
       } catch (error) {
         console.error("Error writing new message to Firebase Database", error);
       }
