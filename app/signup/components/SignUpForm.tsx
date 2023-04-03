@@ -26,6 +26,7 @@ export const Form = () => {
   const [image, setImage] = useState<string>("");
   const [file, setFile] = useState<any>();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [jpegImgOnlyMessage, setJpegImgOnlyMessage] = useState<string>("");
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -165,7 +166,8 @@ export const Form = () => {
           setImage(`data:${fileType};base64,${btoa(ev.target.result)}`);
         };
       } else {
-        console.log('only jpeg!')
+        setJpegImgOnlyMessage('Please upload a JPEG image file.');
+        setTimeout(() => setJpegImgOnlyMessage(""), 2500);
       }
     }
   };
@@ -187,6 +189,11 @@ export const Form = () => {
             </label>
             <p className="profileimage__caption" ref={uploadedImageName}>Select a Profile Image (Optional)</p>
           </div>
+          {jpegImgOnlyMessage && (
+            <div className="error__container">
+              <p className="error__text">{jpegImgOnlyMessage}</p>
+            </div>
+          )}
         </div>
         <form className="signup-form" onSubmit={handleSubmit}>
           <label className="inputLabel">
