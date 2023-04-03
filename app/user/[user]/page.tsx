@@ -50,9 +50,11 @@ const User = () => {
         data.push(doc.data());
       });
         setProjectList(data);
-        setCurrentProject(data[0].projectid);
-        setCurrentProjectName(data[0].name);
-        setCurrentProjectMembers(data[0].users);
+        if (data[0]) {
+          setCurrentProject(data[0].projectid);
+          setCurrentProjectName(data[0].name);
+          setCurrentProjectMembers(data[0].users);
+        }
     });
   };
 
