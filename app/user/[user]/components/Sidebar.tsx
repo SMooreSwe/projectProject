@@ -330,7 +330,7 @@ const Sidebar = (props: {
     }
     return (
       <>
-        <h3 className={styles.Sidebar__title}>{title}</h3>
+        <h3 className={"Sidebar__title"}>{title}</h3>
       </>
     );
   };
@@ -386,7 +386,7 @@ const Sidebar = (props: {
     return (
       <>
         <div>
-          <h3 className={styles.Sidebar__title}>Chat</h3>
+          <h3 className={"Sidebar__title"}>Chat</h3>
           <div className={styles.Sidebar__container}>
             <div className={styles.Sidebar__messagebox}>
               {chatMessages.length > 0 && <>{populateMessages()}</>}

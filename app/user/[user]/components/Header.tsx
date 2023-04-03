@@ -94,7 +94,7 @@ const Header = (props: {
         />
       </div>
       <div className={styles.userprofile__container}>
-        <p className={styles.userprofile__name}>{props.user.username}</p>
+        <p className={"userprofile__name"}>{props.user.username}</p>
         {imageSrc && <>{getImage()}</>}
         <button className="logoutBtn" onClick={() => signOutUser()}>
           <p className="logoutBtn__text">Logout</p>

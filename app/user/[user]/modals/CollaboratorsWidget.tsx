@@ -213,7 +213,7 @@ function CollaboratorsWidget(props: {
 
   const members = () => {
     return (
-      <p className={styles.collaborators__number}>
+      <p className={"collaborators__number"}>
         +{props.projectcollaborators.length}
       </p>
     );
