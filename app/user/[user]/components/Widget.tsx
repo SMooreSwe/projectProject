@@ -743,6 +743,7 @@ const Widget = (props: {
                   className="whiteboard__control-btn"
                   onClick={() => {
                     setGallerySearchBox(!gallerySearchBox)
+                    setLinkSearchBox(false)
                     setGallerySearchImages(false)
                   }}
                 >
@@ -759,6 +760,7 @@ const Widget = (props: {
                 <button
                   onClick={() => {
                     setLinkSearchBox(!linkSearchBox)
+                    setGallerySearchBox(false)
                     setGallerySearchLinks(false)
                   }}
                   className="whiteboard__control-btn"
