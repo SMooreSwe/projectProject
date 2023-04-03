@@ -46,6 +46,9 @@ export const Form = () => {
       // ...
     const docRef = doc(db, "users", `${user.uid}`);
       const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        } else {
           await setDoc(docRef, {
             email: user.email,
             userid: user.uid,
@@ -53,6 +56,7 @@ export const Form = () => {
             username: user.displayName,
           })
           router.push(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.uid}`);
+        }
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
