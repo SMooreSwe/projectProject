@@ -789,7 +789,7 @@ input[type="file"] {
 }
 
 .Sidebar__messagebubble-self {
-  margin-block: 10px;
+  margin-block: 5px;
   margin-inline: 20px;
   padding-inline: 20px;
   padding-block: 20px;
@@ -803,8 +803,8 @@ input[type="file"] {
 }
 
 .Sidebar__messagebubble-other {
-  margin-block: 10px;
-  margin-inline: 20px;
+  margin-block: 5px;
+  margin-inline: 10px;
   padding-inline: 20px;
   padding-block: 20px;
   background-color: rgb(239, 239, 239);
@@ -819,6 +819,13 @@ input[type="file"] {
   padding: 0;
   margin: 0;
   font-size: 0.9em;
+}
+
+.Sidebar__messagebubble-name {
+  padding: 0;
+  margin: 0;
+  font-size: 1.2em;
+  font-family: "Virgil";
 }
 
 @media only screen and (min-width: 575px) {

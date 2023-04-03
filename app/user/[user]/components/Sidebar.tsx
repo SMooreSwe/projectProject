@@ -39,8 +39,12 @@ const Sidebar = (props: {
   const [userUpdates, setUserUpdates] = useState<UserUpdate[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessages[]>([]);
 
-  const [allChatImages, setAllChatImages] = useState<string[]>([]);
-  const [userChatIndex, setUserChatIndex] = useState<string[]>([]);
+  const [allNotificationImages, setAllNotificationImages] = useState<string[]>(
+    []
+  );
+  const [userNotificationIndex, setUserNotificationIndex] = useState<string[]>(
+    []
+  );
 
   const db = getFirestore(app) as any;
 
@@ -249,13 +253,13 @@ const Sidebar = (props: {
   };
 
   const filter = (userid: string) => {
-    const index = userChatIndex.indexOf(userid);
+    const index = userNotificationIndex.indexOf(userid);
     if (index !== -1) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className="UserProfileImage"
-          src={allChatImages[index]}
+          src={allNotificationImages[index]}
           placeholder="blur"
           alt=""
         />
@@ -290,7 +294,7 @@ const Sidebar = (props: {
                     key={chat.messageid}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element*/}
-                    {allChatImages && <>{filter(chat.chatuserid)}</>}
+                    <p className="Sidebar__messagebubble-name">{chat.name}</p>
                     <div className="Sidebar__messagebubble-self">
                       <p className="Sidebar__messagebubble-text">{chat.text}</p>
                     </div>
@@ -309,7 +313,7 @@ const Sidebar = (props: {
                       <p className="Sidebar__messagebubble-text">{chat.text}</p>
                     </div>
                     {/* eslint-disable-next-line @next/next/no-img-element*/}
-                    {allChatImages && <>{filter(chat.chatuserid)}</>}
+                    <p className="Sidebar__messagebubble-name">{chat.name}</p>
                   </div>
                 );
               }
@@ -377,6 +381,7 @@ const Sidebar = (props: {
                   saveMessage();
                 }}
                 className={styles.Sidebar__typingbox}
+                ref={messageForm}
               >
                 <input
                   ref={messageInput}
@@ -401,33 +406,33 @@ const Sidebar = (props: {
   useEffect(() => {
     if (props.projectid) {
       loadMessages();
-      getAllimages();
     }
   }, [props.projectid]);
 
-  const getAllimages = async () => {
-    const storage = getStorage();
+  // const getAllimages = async () => {
+  //   const storage = getStorage();
 
-    const urls: any[] = [];
-    const userIndex: string[] = [];
+  //   const urls: any[] = [];
+  //   const userIndex: string[] = [];
 
-    chatMessages.map((chat: ChatMessages) => {
-      const filePath = `/users/${chat.chatuserid}.jpeg`;
-      const storageRef = ref(storage, filePath);
-      getDownloadURL(storageRef)
-        .then((url) => {
-          urls.push(url);
-          userIndex.push(chat.chatuserid);
-          setAllChatImages([...urls]);
-          setUserChatIndex([...userIndex]);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  };
+  //   chatMessages.map((notification: Notification) => {
+  //     const filePath = `/users/${notification.}.jpeg`;
+  //     const storageRef = ref(storage, filePath);
+  //     getDownloadURL(storageRef)
+  //       .then((url) => {
+  //         urls.push(url);
+  //         userIndex.push(chat.chatuserid);
+  //         setAllChatImages([...urls]);
+  //         setUserChatIndex([...userIndex]);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
+  // };
 
   const messageInput = useRef<HTMLInputElement>(null);
+  const messageForm = useRef<HTMLFormElement>(null);
   async function saveMessage() {
     const messageValue = messageInput.current!.value;
     const uuid = v4();
@@ -451,6 +456,9 @@ const Sidebar = (props: {
             timestamp: serverTimestamp(),
           }
         );
+        if (messageForm.current) {
+          messageForm.current!.reset();
+        }
       } catch (error) {
         console.error("Error writing new message to Firebase Database", error);
       }
