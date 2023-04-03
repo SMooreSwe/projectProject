@@ -170,7 +170,7 @@ function CollaboratorsWidget(props: {
                   <button
                     value={user.userid}
                     onClick={removeCollaborator}
-                    className="collaborator__btn"
+                    className="collaborator__btn-remove"
                   >
                     REMOVE
                   </button>
@@ -199,7 +199,7 @@ function CollaboratorsWidget(props: {
                   <button
                     value={user.userid}
                     onClick={addCollaborator}
-                    className="collaborator__btn"
+                    className="collaborator__btn-add"
                   >
                     ADD
                   </button>

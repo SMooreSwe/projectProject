@@ -120,13 +120,25 @@
 
 .formButton-create {
   font-size: 1em;
-  opacity: 0.8;
   border-radius: 5px;
   border: 0.1px solid black;
   padding: 8px 35px;
   cursor: pointer;
   justify-self: center;
   align-self: center;
+  background-color: var(--theme-color);
+  color: white;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border: none;
+}
+
+.formButton-close {
+  background-color: #e8e8e8;
+  color: #666;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  border: none;
 }
 
 .login-form-password-div,
@@ -407,7 +419,22 @@ input[type="file"] {
   padding: 0;
 }
 
-.collaborator__btn {
+.collaborator__btn-add {
+  padding-inline: 10px;
+  padding-block: 5px;
+  border-radius: 7px;
+  border: none;
+  font-size: 0.8em;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  cursor: pointer;
+  height: 35px;
+  width: 70px;
+  background-color: var(--theme-color);
+  color: white;
+}
+
+.collaborator__btn-remove {
   padding-inline: 10px;
   padding-block: 5px;
   border-radius: 7px;
@@ -514,6 +541,8 @@ input[type="file"] {
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
   outline: 0.1px solid rgb(204, 204, 204);
   border-radius: 5px;
+  background-color: var(--theme-color);
+  color: white;
 }
 
 .widget-container__close-btn {

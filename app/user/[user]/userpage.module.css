@@ -173,3 +173,7 @@
   border: none;
   text-indent: 10px;
 }
+
+.Sidebar__typingField:focus {
+  outline: none;
+}
