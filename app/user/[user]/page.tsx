@@ -49,10 +49,10 @@ const User = () => {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-        setProjectList(data);
-        setCurrentProject(data[0].projectid);
-        setCurrentProjectName(data[0].name);
-        setCurrentProjectMembers(data[0].users);
+      setProjectList(data);
+      setCurrentProject(data[0].projectid);
+      setCurrentProjectName(data[0].name);
+      setCurrentProjectMembers(data[0].users);
     });
   };
 
@@ -99,9 +99,15 @@ const User = () => {
           projectSetter={projectSetter}
         />
       </Header>
-      <Sidebar user={user} projectlist={projectList}/>
+      <Sidebar
+        user={user}
+        projectlist={projectList}
+        projectid={currentProject}
+      />
       <div className="project__container">
-        <Canvas project={currentProject} projectList={projectList}> </Canvas>
+        <Canvas project={currentProject} projectList={projectList}>
+          {" "}
+        </Canvas>
       </div>
     </div>
   );

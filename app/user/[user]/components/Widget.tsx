@@ -86,6 +86,8 @@ const Widget = (props: {
   const [linkSearchBox, setLinkSearchBox] = useState(false);
   const [gallerySearchLinks, setGallerySearchLinks] = useState(false);
 
+  const [galleryError, setGalleryError] = useState(false);
+
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -235,31 +237,35 @@ const Widget = (props: {
       setGallerySearchLinks(true);
       const searchLink = searchLinkInput.current!.value;
       let subscriptionKey = process.env.NEXT_PUBLIC_WEB_API;
-      const response = await axios(
-        "https://api.bing.microsoft.com/v7.0/search" +
-          "?q=" +
-          encodeURIComponent(searchLink),
-        {
-          method: "get",
-          headers: {
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
-          },
-          params: {
-            safesearch: "Moderate",
-            count: "8",
-            Pragma: "no-cache",
-            maxFileSize: "300000",
-            responseFilter: "images",
-          },
+      try {
+        const response = await axios(
+          "https://api.bing.microsoft.com/v7.0/search" +
+            "?q=" +
+            encodeURIComponent(searchLink),
+          {
+            method: "get",
+            headers: {
+              "Ocp-Apim-Subscription-Key": subscriptionKey,
+            },
+            params: {
+              safesearch: "Moderate",
+              count: "8",
+              Pragma: "no-cache",
+              maxFileSize: "300000",
+              responseFilter: "images",
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.images.value) {
+          const imageArray = response.data.images.value.slice(0, 8);
+          setGalleryLinks(imageArray);
+          setLinkSearchBox(false);
         }
-      );
-      console.log(response.data);
-      if (response.data.images.value) {
-        const imageArray = response.data.images.value.slice(0, 8);
-        setGalleryLinks(imageArray);
+      } catch (err) {
+        setGalleryError(true);
+        setTimeout(() => setGalleryError(false), 2500);
         setLinkSearchBox(false);
-      } else {
-        console.log("No webpages found!");
       }
     }
   };
@@ -273,25 +279,33 @@ const Widget = (props: {
       setGallerySearchImages(true);
       const searchText = searchImageInput.current!.value;
       let subscriptionKey = process.env.NEXT_PUBLIC_IMAGE_API;
-      const response = await axios(
-        "https://api.cognitive.microsoft.com/bing/v7.0/images/search" +
-          "?q=" +
-          encodeURIComponent(searchText),
-        {
-          method: "get",
-          headers: {
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
-          },
-          params: {
-            safesearch: "Moderate",
-            count: "8",
-            Pragma: "no-cache",
-            maxFileSize: "300000",
-          },
+      try {
+        const response = await axios(
+          "https://api.cognitive.microsoft.com/bing/v7.0/images/search" +
+            "?q=" +
+            encodeURIComponent(searchText),
+          {
+            method: "get",
+            headers: {
+              "Ocp-Apim-Subscription-Key": subscriptionKey,
+            },
+            params: {
+              safesearch: "Moderate",
+              count: "8",
+              Pragma: "no-cache",
+              maxFileSize: "300000",
+            },
+          }
+        );
+        if (response.data.value) {
+          setGalleryImages(response.data.value);
+          setGallerySearchBox(false);
         }
-      );
-      setGalleryImages(response.data.value);
-      setGallerySearchBox(false);
+      } catch (err) {
+        setGalleryError(true);
+        setTimeout(() => setGalleryError(false), 2500);
+        setGallerySearchBox(false);
+      }
     }
   };
 
@@ -399,6 +413,16 @@ const Widget = (props: {
               </button>
             );
           })}
+      </div>
+    );
+  };
+
+  const showGalleryError = () => {
+    return (
+      <div className="image-options-header">
+        <div className="image-options-searchbar">
+          <p>No search results were found. Please try again.</p>
+        </div>
       </div>
     );
   };
@@ -777,6 +801,7 @@ const Widget = (props: {
         {gallerySearchLinks === true && galleryLinks.length > 0 && (
           <>{populateLinksGallery()}</>
         )}
+        {galleryError === true && <>{showGalleryError()}</>}
         <Modal.Body className="whiteboard__body">
           <div className="whiteboard__photo">
             <div className={styles.whiteboard}>

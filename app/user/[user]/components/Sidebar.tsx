@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../userpage.module.css";
 import profileImage from "../../../../public/profileImage.png";
 import Image from "next/image";
 import { User } from "firebase/auth";
 import { Invited, UserUpdate } from "../../../Types";
 import {
+  addDoc,
   arrayRemove,
   arrayUnion,
   collection,
   deleteDoc,
   doc,
   getFirestore,
+  limit,
   onSnapshot,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -21,15 +24,17 @@ import {
 import { app } from "../../../../firebase-config";
 import { uuid } from "uuidv4";
 import createButton from "../../../../public/createbutton.png";
-import { Project } from "../../../Types";
+import { Project, ChatMessages } from "../../../Types";
 import { v4 } from "uuid";
 
 const Sidebar = (props: {
   user: { email: string; username: string; userid: string };
   projectlist: Project[];
+  projectid: string;
 }) => {
   const [invitedUser, setInvitedUSer] = useState<Invited[]>([]);
   const [userUpdates, setUserUpdates] = useState<UserUpdate[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessages[]>([]);
 
   const db = getFirestore(app) as any;
 
@@ -66,14 +71,6 @@ const Sidebar = (props: {
     const invitationuid = arraySplit[1];
     const userinvitingid = arraySplit[2];
     const projectname = arraySplit[3];
-
-    console.log(array);
-    console.log(arraySplit);
-    console.log(projectid);
-    console.log(invitationuid);
-    console.log(userinvitingid);
-    console.log(projectname);
-
     const projectRef = doc(db, "projects", projectid);
     await updateDoc(projectRef, {
       users: arrayUnion(props.user.userid),
@@ -138,12 +135,7 @@ const Sidebar = (props: {
   };
 
   const removeAfterReadingUpdate = async (e: any) => {
-    console.log("ReadingupdateCalled!!!!!!!");
-
     const updateuid = e.target.value;
-    console.log(props.user.userid);
-    console.log(updateuid);
-
     await deleteDoc(
       doc(
         db,
@@ -168,7 +160,7 @@ const Sidebar = (props: {
               >
                 <div className={styles.notification__message}>
                   <Image
-                    className={styles.UserProfileImage}
+                    className="UserProfileImage"
                     src={profileImage}
                     placeholder="blur"
                     alt=""
@@ -224,7 +216,7 @@ const Sidebar = (props: {
               >
                 <div className={styles.notification__message}>
                   <Image
-                    className={styles.UserProfileImage}
+                    className="UserProfileImage"
                     src={profileImage}
                     placeholder="blur"
                     alt=""
@@ -245,6 +237,36 @@ const Sidebar = (props: {
                 </div>
               </div>
             );
+          })}
+      </>
+    );
+  };
+
+  const populateMessages = () => {
+    //const timestamp = timestamp ? timestamp.toMillis() : Date.now();
+    return (
+      <>
+        {chatMessages &&
+          chatMessages.map((chat: ChatMessages) => {
+            if (chat.chatuserid === props.user.userid) {
+              return (
+                <div
+                  key={chat.messageid}
+                  className="Sidebar__messagebubble-self"
+                >
+                  <p>What up with this USER...</p>
+                </div>
+              );
+            } else {
+              return (
+                <div
+                  key={chat.messageid}
+                  className="Sidebar__messagebubble-other"
+                >
+                  <p>What up with this NOT USER...</p>
+                </div>
+              );
+            }
           })}
       </>
     );
@@ -314,13 +336,23 @@ const Sidebar = (props: {
           <div>
             <h3 className={styles.Sidebar__title}>Comments</h3>
             <div className={styles.Sidebar__container}>
-              <div className={styles.Sidebar__messagebox}></div>
+              <div className={styles.Sidebar__messagebox}>
+                {chatMessages.length > 0 && <>{populateMessages()}</>}
+              </div>
               <div>
-                <form className={styles.Sidebar__typingbox}>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    saveMessage();
+                  }}
+                  className={styles.Sidebar__typingbox}
+                >
                   <input
+                    ref={messageInput}
                     className={styles.Sidebar__typingField}
                     type="text"
                     name="name"
+                    required
                   />
                   <input
                     className="Sidebar__sendbtn"
@@ -335,6 +367,61 @@ const Sidebar = (props: {
       );
     }
   };
+
+  useEffect(() => {
+    if (props.projectid) {
+      loadMessages();
+    }
+  }, [props.projectid]);
+
+  const messageInput = useRef<HTMLInputElement>(null);
+  async function saveMessage() {
+    const messageValue = messageInput.current!.value;
+    const uuid = v4();
+    if (messageValue && messageValue.length > 0) {
+      // Add a new message entry to the Firebase database.
+      try {
+        await setDoc(
+          doc(
+            getFirestore(),
+            "messages",
+            props.projectid,
+            "usermessages",
+            uuid
+          ),
+          {
+            messageid: uuid,
+            name: props.user.username,
+            chatuserid: props.user.userid,
+            text: messageValue,
+            profilePicUrl: `${props.user.userid}.jpeg`,
+            timestamp: serverTimestamp(),
+          }
+        );
+      } catch (error) {
+        console.error("Error writing new message to Firebase Database", error);
+      }
+    }
+  }
+
+  // Loads chat messages history and listens for upcoming ones.
+  // Create the query to load the last 12 messages and listen for new ones.
+  function loadMessages() {
+    const recentMessagesQuery = query(
+      collection(getFirestore(), "messages", props.projectid, "usermessages"),
+      orderBy("timestamp", "desc"),
+      limit(8)
+    );
+    // Start listening to the query.
+    const messages: any[] = [];
+    onSnapshot(recentMessagesQuery, function (snapshot) {
+      snapshot.docChanges().forEach(function (change) {
+        const message = change.doc.data();
+        messages.push(message);
+        setChatMessages([...messages]);
+      });
+    });
+  }
 
   return (
     <div className="Sidebar">
