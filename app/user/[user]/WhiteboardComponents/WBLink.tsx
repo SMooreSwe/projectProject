@@ -41,7 +41,7 @@ export const WBLink = React.forwardRef<any>(
         >
           X
         </button>
-        <a href={website}>
+        <a onDoubleClick={() => window.open(website, "_blank")}>
           {/* eslint-disable-next-line @next/next/no-img-element*/}
           <img
             alt="Alt"
@@ -49,7 +49,7 @@ export const WBLink = React.forwardRef<any>(
             className={["wbImageItem__img", className].join(" ")}
             ref={ref}
           ></img>
-          <p>{website}</p>
+          <p className="wbLinkText">{website}</p>
         </a>
         {children}
       </div>
