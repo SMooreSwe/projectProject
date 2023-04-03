@@ -970,6 +970,7 @@ input[type="file"] {
     height: 150px;
     gap: 10px;
     margin-inline: 5px;
+    margin-bottom: 10px;
   }
 
   .header__logo {
