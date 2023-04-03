@@ -101,6 +101,7 @@ const User = () => {
           projectSetter={projectSetter}
         />
       </Header>
+      <div className="user__main">
       <Sidebar
         user={user}
         projectlist={projectList}
@@ -110,6 +111,7 @@ const User = () => {
         <Canvas project={currentProject} projectList={projectList}>
           {" "}
         </Canvas>
+      </div>
       </div>
     </div>
   );

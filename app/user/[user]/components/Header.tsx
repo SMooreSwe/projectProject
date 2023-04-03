@@ -84,7 +84,7 @@ const Header = (props: {
         {props.children}
         <CreateProject user={props.user} />
       </div>
-      <div>
+      <div className="header__collab">
         <CollaboratorsWidget
           projectid={props.projectid}
           username={props.user.username}

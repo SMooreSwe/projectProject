@@ -393,6 +393,14 @@ input[type="file"] {
   align-items: center;
 }
 
+.userprofile__container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
 .collaborator__containerbtn {
   display: flex;
   flex-direction: row;
@@ -891,6 +899,18 @@ input[type="file"] {
   }
 }
 
+.Sidebar__messagebox {
+  display: flex;
+  overflow: scroll;
+  flex-direction: column-reverse;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  outline: 0.1px solid rgb(204, 204, 204);
+  height: 65vh;
+  width: 100%;
+  border-radius: 7px;
+  border: none;
+}
+
 .tutorial__subtitle {
   opacity: 0.8;
   font-size: 1.2em;
@@ -917,4 +937,49 @@ input[type="file"] {
   margin-right: 5px;
   font-family: "Virgil";
   opacity: 0.8;
+}
+
+@media screen and (max-width: 970px) {
+  .user__main {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    height: 100%;
+  }
+
+  .project__container {
+    width: 95%;
+    height: 60vh;
+    margin-inline: auto;
+  }
+
+  .Sidebar {
+    position: static;
+    height: 25%;
+    width: 95%;
+    margin-inline: auto;
+  }
+
+  .Sidebar__messagebox {
+    height: 15%;
+  }
+
+  .Header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 150px;
+    gap: 10px;
+    margin-inline: 5px;
+    margin-bottom: 10px;
+  }
+
+  .header__logo {
+    width: 48%;
+    order: -1;
+    font-size: 2em;
+  }
+
+  .createProject__container {
+    order: 3;
+  }
 }
