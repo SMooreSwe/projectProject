@@ -257,7 +257,7 @@ const Sidebar = (props: {
               if (chat.chatuserid === props.user.userid) {
                 return (
                   <div key={chat.messageid}>
-                    <img></img>
+
                     <div className="Sidebar__messagebubble-self">
                       <p>{chat.text}</p>
                     </div>
@@ -316,6 +316,11 @@ const Sidebar = (props: {
                 collaborate!
               </p>
             </div>
+            <div className={styles.tutorial__positioning}>
+              <p className={styles.tutorial__text}>
+                Double click on an event to access its whiteboard functionality!
+              </p>
+            </div>
           </div>
         </>
       );
@@ -326,7 +331,7 @@ const Sidebar = (props: {
     return (
       <>
         <div>
-          <h3 className={styles.Sidebar__title}>Comments</h3>
+          <h3 className={styles.Sidebar__title}>Chat</h3>
           <div className={styles.Sidebar__container}>
             <div className={styles.Sidebar__messagebox}>
               {chatMessages.length > 0 && <>{populateMessages()}</>}

@@ -121,9 +121,8 @@
 
 .tutorial__positioning {
   display: flex;
-  gap: 30px;
   align-items: center;
-  margin-block: 30px;
+  margin: 25px;
 }
 
 .tutorial__text {

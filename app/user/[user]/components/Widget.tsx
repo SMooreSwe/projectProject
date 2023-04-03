@@ -658,26 +658,27 @@ const Widget = (props: {
     <>
       <article className={`widget ${props.priority}`} onClick={handleShow}>
         <div className="widget-container">
-          <p className="widget-container__date">{widgetDate}</p>
+          <div>
+            <p className="widget-container__date">{widgetDate}</p>
+          </div>
           <div>
             <select
-              defaultValue={"medium"}
-              className="widget__select"
-              onChange={(e) => {
-                widgetPriority(e.target.value);
-              }}
-            >
-              <option value="medium">none</option>
-              <option value="high">high</option>
+                defaultValue={"medium"}
+                className="widget__select"
+                onChange={(e) => {
+                  widgetPriority(e.target.value)}}>
+                <option value="medium">none</option>
+                <option value="high">high</option>
             </select>
-
-            <button
-              onClick={() => deleteWidget()}
-              className="widget-container__remove-btn"
-            >
-              X
-            </button>
-          </div>
+            </div>
+            <div>
+              <button
+                onClick={() => deleteWidget()}
+                className="widget-container__remove-btn"
+              >
+                X
+              </button>
+            </div>
         </div>
         <div className={`widget__main ${props.priority}`}>
           {images.length > 0 && <>{widgetImage()}</>}
