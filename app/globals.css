@@ -272,7 +272,7 @@ input[type="file"] {
   position: absolute;
   top: var(--header-height);
   right: 0;
-  height: 91vh;
+  height: 85vh;
   width: var(--sidebar-width);
   padding-inline: 20px;
 }
@@ -859,41 +859,6 @@ input[type="file"] {
   font-size: 1.2em;
   font-family: "Virgil";
 }
-
-.tutorial__subtitle {
-  font-size: 1.2em;
-  font-family: "Virgil";
-  color: var(--theme-color)
-}
-
-.tutorial__subtitle {
-  opacity: 0.8;
-  font-size: 1.2em;
-  font-family: "Virgil";
-  color: var(--theme-color)
-}
-
-.Sidebar__title {
-  opacity: 0.8;
-  font-family: "Virgil";
-}
-
-.collaborators__number {
-  margin: 0;
-  padding: 0;
-  font-size: 1.4em;
-  color: white;
-  font-family: "Virgil";
-}
-
-.userprofile__name {
-  font-size: 1.4em;
-  margin: 0px;
-  margin-right: 5px;
-  font-family: "Virgil";
-  opacity: 0.8;
-}
-
 
 @media only screen and (min-width: 575px) {
   .login__title,

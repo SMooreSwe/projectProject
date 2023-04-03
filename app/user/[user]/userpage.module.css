@@ -80,8 +80,15 @@
   cursor: pointer;
 }
 
-.whiteboard {
-  height: 68vh;
+@font-face {
+  font-family: "Virgil";
+  src: url("/public/Virgil.woff2") format("woff2");
+  font-weight: 400;
+}
+
+.Sidebar__title {
+  opacity: 0.8;
+  font-family: "Virgil";
 }
 
 .tutorial__container {
@@ -89,13 +96,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
+  height: min-content;
 }
 
 .tutorial__positioning {
   display: flex;
   flex-direction: column;
-  margin: 25px;
+  margin-top: 15px;
+  margin-inline: 10px;
 }
 
 .tutorial__text {
