@@ -692,6 +692,8 @@ input[type="file"] {
 }
 
 .createProjectBtn__plus {
+  position: relative;
+  bottom: 5px;
   margin: 0;
   padding: 0;
   font-family: "Virgil";
@@ -702,6 +704,8 @@ input[type="file"] {
 }
 
 .createWidgetBtn__plus {
+  position: relative;
+  bottom: 5px;
   margin: 0;
   padding: 0;
   font-family: "Virgil";
