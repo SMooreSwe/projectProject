@@ -53,8 +53,6 @@
   flex-direction: column;
 }
 
-
-
 .login-form {
   margin: 2.25em 0 0 0;
 }
@@ -233,7 +231,7 @@ input[type="file"] {
   margin-bottom: 15px;
 }
 
-.login-google-btn, 
+.login-google-btn,
 .signup-google-btn {
   display: flex;
 }
@@ -241,7 +239,6 @@ input[type="file"] {
 .login-google-icon {
   padding-right: 5px;
 }
-
 
 /* Canvas Styles */
 
@@ -774,6 +771,23 @@ input[type="file"] {
   border-color: var(--theme-color);
 }
 
+.Sidebar__messagebubble-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
+.Sidebar__messagebubble-container-other {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  padding-inline: 10px;
+}
+
 .Sidebar__messagebubble-self {
   margin-block: 10px;
   margin-inline: 20px;
@@ -799,6 +813,12 @@ input[type="file"] {
   outline: 0.1px solid rgb(204, 204, 204);
   border-radius: 10px;
   border: none;
+}
+
+.Sidebar__messagebubble-text {
+  padding: 0;
+  margin: 0;
+  font-size: 0.9em;
 }
 
 @media only screen and (min-width: 575px) {
