@@ -939,9 +939,9 @@ input[type="file"] {
   opacity: 0.8;
 }
 
-@media screen and (max-width: 970px) {
+@media screen and (max-width: 1000px) {
   .canvas {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 28% 28% 28%;
   }
 }
 
@@ -992,6 +992,6 @@ input[type="file"] {
 
 @media screen and (max-width: 600px) {
   .canvas {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 40% 40%;
   }
 }
