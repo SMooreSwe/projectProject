@@ -940,6 +940,12 @@ input[type="file"] {
 }
 
 @media screen and (max-width: 970px) {
+  .canvas {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 970px) {
   .user__main {
     display: flex;
     flex-direction: column-reverse;
@@ -981,5 +987,11 @@ input[type="file"] {
 
   .createProject__container {
     order: 3;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .canvas {
+    grid-template-columns: 1fr 1fr;
   }
 }
