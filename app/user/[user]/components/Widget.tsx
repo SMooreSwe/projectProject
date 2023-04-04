@@ -234,8 +234,6 @@ const Widget = (props: {
       }
     })
   }
-  
-  
 
   const createText = () => {
     const uuid = v4();
@@ -397,20 +395,35 @@ const Widget = (props: {
   };
 
   const populatewWidgetImage = () => {
-    const index = saveWidgetIndex.indexOf(props.widgetid);
+    const array = props.widgetindex;
+    const index = array.indexOf(props.widgetid);
+    const index2 = saveWidgetIndex.indexOf(props.widgetid);
     console.log('---------1--------')
     console.log(props.widgetid)
+    console.log(props.widgetindex)
+    console.log('------------index---------')
     console.log(index)
+    console.log(index2)
+    console.log('------------index---------')
     console.log(widgetImage)
     console.log(saveWidgetIndex)
     console.log('-----------------')
-
-    if (index !== -1 && widgetImage.length > 0) {
+    if (props.widgetindex.length && index !== -1 && widgetImage.length > 0) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           className={styles.widgetImage}
           src={widgetImage[index]}
+          placeholder="blur"
+          alt=""
+        />
+      );
+    } else if (index2 !== -1 && widgetImage.length > 0) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className={styles.widgetImage}
+          src={widgetImage[index2]}
           placeholder="blur"
           alt=""
         />
