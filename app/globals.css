@@ -939,7 +939,7 @@ input[type="file"] {
   opacity: 0.8;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
   .canvas {
     grid-template-columns: 28% 28% 28%;
   }
@@ -992,6 +992,26 @@ input[type="file"] {
 
 @media screen and (max-width: 600px) {
   .canvas {
-    grid-template-columns: 40% 40%;
+    grid-template-columns: 40% 40%; 
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .Header {
+    height: 200px; 
+    justify-content: center;
+  }
+
+  .canvas {
+    grid-template-columns: 80%; 
+  }
+
+  .high {
+    grid-column: auto;
+  }
+  
+  .header__logo {
+    width: 80%;
+    text-align: center;
   }
 }
