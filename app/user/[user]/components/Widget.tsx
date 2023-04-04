@@ -172,35 +172,6 @@ const Widget = (props: {
     handleClose();
   };
 
-  // const uploadToStorage = async (imgData: any) => {
-  //   const blob = await (await fetch(imgData)).blob();
-  //   const file = new File([blob], "filename")
-  //   const reader = new FileReader();
-  //   const fileType: string = file.type || "";
-  //   reader.readAsBinaryString(file);
-  //   reader.onload = (ev: any) => {
-  //     if (saveWidgetIndex.includes(props.widgetid)) {
-  //       const index = saveWidgetIndex.indexOf(props.widgetid);
-  //       setWidgetImage((prevState) => {
-  //         let nextState = [...prevState]
-  //         nextState[index] = (`data:${fileType};base64,${btoa(ev.target.result)}`);
-  //         return nextState
-  //       })
-  //     } else {
-  //       setSaveWidgetIndex((prevState) => {
-  //         let nextState = [...prevState]
-  //         nextState.push(widgetid);
-  //         return nextState
-  //       })
-  //       setWidgetImage((prevState) => {
-  //         let nextState = [...prevState]
-  //         nextState.push(`data:${fileType};base64,${btoa(ev.target.result)}`);
-  //         return nextState
-  //       })
-  //     }
-  //   }
-  // };
-
   const uploadToStorage = async (imgData: any) => {
     const storage = getStorage();
     const filePath = `/widgets/${widgetid}.jpeg`;
@@ -398,16 +369,7 @@ const Widget = (props: {
     const array = props.widgetindex;
     const index = array.indexOf(props.widgetid);
     const index2 = saveWidgetIndex.indexOf(props.widgetid);
-    console.log('---------1--------')
-    console.log(props.widgetid)
-    console.log(props.widgetindex)
-    console.log('------------index---------')
-    console.log(index)
-    console.log(index2)
-    console.log('------------index---------')
-    console.log(widgetImage)
-    console.log(saveWidgetIndex)
-    console.log('-----------------')
+
     if (props.widgetindex.length && index !== -1 && widgetImage.length > 0) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
