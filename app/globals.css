@@ -949,6 +949,7 @@ input[type="file"] {
   width: 100%;
   border-radius: 7px;
   border: none;
+  padding-bottom: 10px;
 }
 
 .tutorial__subtitle {
