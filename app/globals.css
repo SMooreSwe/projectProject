@@ -1047,11 +1047,17 @@ input[type="file"] {
 
   .gallery__container {
     overflow-x: scroll;
+    overflow-y: none;
+    height: 80px;
   }
 
   .gallery__btn {
-    width: 80px;
+    width: 60px;
+  }
+
+  .gallery__image {
     aspect-ratio: 1/1;
+    height: 60px;
     object-fit: cover;
   }
 }
