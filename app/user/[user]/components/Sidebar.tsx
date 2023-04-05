@@ -194,7 +194,7 @@ const Sidebar = (props: {
                 className={styles.notification__container}
               >
                 <div className={styles.notification__message}>
-                  {<>{filter(invitation.userinvitingid)}</>}
+                  {allNotificationImages && <>{filter(invitation.userinvitingid)}</>}
                   <p>
                     {invitation.userinvitingname} has invited you to join
                     project {invitation.projectname}
@@ -245,7 +245,7 @@ const Sidebar = (props: {
                 className={styles.notification__container}
               >
                 <div className={styles.notification__message}>
-                  {<>{filter(userupdate.usersendingupdateid)}</>}
+                  {allNotificationImages && <>{filter(userupdate.usersendingupdateid)}</>}
                   <p>
                     {userupdate.usersendingupdate} {userupdate.usermessage}{" "}
                     {userupdate.projectname}

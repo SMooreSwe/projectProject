@@ -809,6 +809,7 @@ input[type="file"] {
   border-radius: 25px;
   border-width: 1px;
   border-color: var(--theme-color);
+  object-fit: cover;
 }
 
 .Sidebar__messagebubble-container-self {
