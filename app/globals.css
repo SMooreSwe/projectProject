@@ -1030,4 +1030,28 @@ input[type="file"] {
     width: 80%;
     text-align: center;
   }
+
+  .whiteboard__control-container {
+    height: 120px;
+    justify-content: center;
+  }
+
+  .whiteboard__controlers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .whiteboard__control {
+    margin-bottom: 5px;
+  }
+
+  .gallery__container {
+    overflow-x: scroll;
+  }
+
+  .gallery__image {
+    min-width: 80px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
 }
