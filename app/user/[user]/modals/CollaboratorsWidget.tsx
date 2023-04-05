@@ -121,6 +121,7 @@ function CollaboratorsWidget(props: {
       projectname: props.projectname,
       projectid: props.projectid,
       usersendingupdate: props.username,
+      usersendingupdateid: props.userid,
       usermessage: "has removed you from project",
       updateuid: uuid,
       created: serverTimestamp(),

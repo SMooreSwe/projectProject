@@ -54,17 +54,40 @@ const Sidebar = (props: {
         collection(db, "notifications", props.user.userid, "usernotifications")
       );
       onSnapshot(docRef, (querySnapshot) => {
+        let alluserid = [] as any[]
+    
         let invites = [] as any[];
         let updates = [] as any[];
         querySnapshot.forEach((doc) => {
           if (doc.data().invitationuid) {
             invites.push(doc.data());
+            alluserid.push(doc.data().userinvitingid)
           } else {
             updates.push(doc.data());
+            alluserid.push(doc.data().usersendingupdateid)
           }
         });
         setUserUpdates([...updates]);
         setInvitedUSer([...invites]);
+        const storage = getStorage();
+
+        const urls: any[] = [];
+        const userIndex: string[] = [];
+
+        alluserid.map((userid: string) => {
+          const filePath = `/users/${userid}.jpeg`;
+          const storageRef = ref(storage, filePath);
+          getDownloadURL(storageRef)
+            .then((url) => {
+              urls.push(url);
+              userIndex.push(userid);
+              setAllNotificationImages([...urls]);
+              setUserNotificationIndex([...userIndex]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       });
     }
   };
@@ -72,28 +95,6 @@ const Sidebar = (props: {
   useEffect(() => {
     getNotifications();
   }, [props.user, props.projectlist]);
-
-  // const getAllNotificationImages = async () => {
-  //   const storage = getStorage();
-
-  //   const urls: any[] = [];
-  //   const userIndex: string[] = [];
-
-  //   us.map((notification: Invited) => {
-  //     const filePath = `/users/${notification.}.jpeg`;
-  //     const storageRef = ref(storage, filePath);
-  //     getDownloadURL(storageRef)
-  //       .then((url) => {
-  //         urls.push(url);
-  //         userIndex.push(chat.chatuserid);
-  //         setAllChatImages([...urls]);
-  //         setUserChatIndex([...userIndex]);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   });
-  // };
 
   const AcceptProject = async (e: any) => {
     const array = e.target.value;
@@ -127,6 +128,7 @@ const Sidebar = (props: {
         projectname: projectname,
         projectid: projectid,
         usersendingupdate: props.user.username,
+        usersendingupdateid: props.user.userid,
         usermessage: "has accepted your invitation to project",
         updateuid: uuid,
         created: serverTimestamp(),
@@ -159,6 +161,7 @@ const Sidebar = (props: {
         projectname: projectname,
         projectid: projectid,
         usersendingupdate: props.user.username,
+        usersendingupdateid: props.user.userid,
         usermessage: "has declined your invitation to project",
         updateuid: uuid,
         created: serverTimestamp(),
@@ -191,12 +194,7 @@ const Sidebar = (props: {
                 className={styles.notification__container}
               >
                 <div className={styles.notification__message}>
-                  <Image
-                    className="UserProfileImage"
-                    src={profileImage}
-                    placeholder="blur"
-                    alt=""
-                  />
+                  {<>{filter(invitation.userinvitingid)}</>}
                   <p>
                     {invitation.userinvitingname} has invited you to join
                     project {invitation.projectname}
@@ -247,12 +245,7 @@ const Sidebar = (props: {
                 className={styles.notification__container}
               >
                 <div className={styles.notification__message}>
-                  <Image
-                    className="UserProfileImage"
-                    src={profileImage}
-                    placeholder="blur"
-                    alt=""
-                  />
+                  {<>{filter(userupdate.usersendingupdateid)}</>}
                   <p>
                     {userupdate.usersendingupdate} {userupdate.usermessage}{" "}
                     {userupdate.projectname}
