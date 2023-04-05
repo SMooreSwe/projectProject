@@ -20,12 +20,6 @@ export const PostIt = React.forwardRef<any>(
     if (test) {
       test.value = text;
     }
-
-    const grabber = () => {
-      if (window.innerWidth < 625) {
-        postitText.current?.focus()
-      }
-    }
     
     return (
       <div
@@ -47,7 +41,6 @@ export const PostIt = React.forwardRef<any>(
           id=""
           ref={postitText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
-          onDoubleClick={() => grabber()}
           className="postit__text"
           placeholder="Write a note!"
         ></textarea>
