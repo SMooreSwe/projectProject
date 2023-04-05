@@ -1048,16 +1048,16 @@ input[type="file"] {
   .gallery__container {
     overflow-x: scroll;
     overflow-y: none;
-    height: 100px;
+    height: 200px;
   }
 
   .gallery__btn {
-    width: 60px;
+    width: 80px;
   }
 
   .gallery__image {
     aspect-ratio: 1/1;
-    height: 60px;
+    height: 80px;
     object-fit: cover;
   }
 }
