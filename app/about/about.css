@@ -5,6 +5,7 @@
     margin: 0;
 }
 
+
 .main__about-page {
     display: flex;
     flex-direction: column;
@@ -23,6 +24,8 @@
 
 .section {
     margin: 10px;
+    max-width: 1000px;
+    margin-bottom: 40px;
 }
 
 .section__title {

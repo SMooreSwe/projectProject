@@ -73,6 +73,28 @@ const Sidebar = (props: {
     getNotifications();
   }, [props.user, props.projectlist]);
 
+  // const getAllNotificationImages = async () => {
+  //   const storage = getStorage();
+
+  //   const urls: any[] = [];
+  //   const userIndex: string[] = [];
+
+  //   us.map((notification: Invited) => {
+  //     const filePath = `/users/${notification.}.jpeg`;
+  //     const storageRef = ref(storage, filePath);
+  //     getDownloadURL(storageRef)
+  //       .then((url) => {
+  //         urls.push(url);
+  //         userIndex.push(chat.chatuserid);
+  //         setAllChatImages([...urls]);
+  //         setUserChatIndex([...userIndex]);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
+  // };
+
   const AcceptProject = async (e: any) => {
     const array = e.target.value;
     const arraySplit = array.split(",");
@@ -425,28 +447,6 @@ const Sidebar = (props: {
       loadMessages();
     }
   }, [props.projectid]);
-
-  // const getAllimages = async () => {
-  //   const storage = getStorage();
-
-  //   const urls: any[] = [];
-  //   const userIndex: string[] = [];
-
-  //   chatMessages.map((notification: Notification) => {
-  //     const filePath = `/users/${notification.}.jpeg`;
-  //     const storageRef = ref(storage, filePath);
-  //     getDownloadURL(storageRef)
-  //       .then((url) => {
-  //         urls.push(url);
-  //         userIndex.push(chat.chatuserid);
-  //         setAllChatImages([...urls]);
-  //         setUserChatIndex([...userIndex]);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   });
-  // };
 
   const messageInput = useRef<HTMLInputElement>(null);
   const messageForm = useRef<HTMLFormElement>(null);
