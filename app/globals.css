@@ -1048,7 +1048,7 @@ input[type="file"] {
   .gallery__container {
     overflow-x: scroll;
     overflow-y: none;
-    height: 80px;
+    height: 100px;
   }
 
   .gallery__btn {
