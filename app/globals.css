@@ -1060,4 +1060,8 @@ input[type="file"] {
     height: 80px;
     object-fit: cover;
   }
+
+  .project__container {
+    overflow-y: scroll;
+  }
 }

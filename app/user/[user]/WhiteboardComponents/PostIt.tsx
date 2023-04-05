@@ -33,7 +33,6 @@ export const PostIt = React.forwardRef<any>(
         <button
           className="postit__btn"
           onClick={() => props.deleter(props.coordinates)}
-          onDoubleClick={() => props.deleter(props.coordinates)}
         >
           X
         </button>
