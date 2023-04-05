@@ -1048,6 +1048,15 @@ input[type="file"] {
     height: 40px;
   }
 
+  .createWidgetBtn__plus {
+    bottom: 14px;
+    right: 1px;
+  }
+
+  .widget__select {
+    display: none;
+  }
+
   .canvas {
     width: 100%;
     grid-template-columns: 100%; 
@@ -1060,5 +1069,39 @@ input[type="file"] {
   .header__logo {
     width: 80%;
     text-align: center;
+  }
+
+  .whiteboard__control-container {
+    height: 120px;
+    justify-content: center;
+  }
+
+  .whiteboard__controlers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .whiteboard__control {
+    margin-bottom: 5px;
+  }
+
+  .gallery__container {
+    overflow-x: scroll;
+    overflow-y: none;
+    height: 200px;
+  }
+
+  .gallery__btn {
+    width: 80px;
+  }
+
+  .gallery__image {
+    aspect-ratio: 1/1;
+    height: 80px;
+    object-fit: cover;
+  }
+
+  .project__container {
+    overflow-y: scroll;
   }
 }

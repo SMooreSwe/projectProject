@@ -20,7 +20,7 @@ export const PostIt = React.forwardRef<any>(
     if (test) {
       test.value = text;
     }
-
+    
     return (
       <div
         style={style}
