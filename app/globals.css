@@ -1008,6 +1008,15 @@ input[type="file"] {
     height: 40px;
   }
 
+  .createWidgetBtn__plus {
+    bottom: 14px;
+    right: 1px;
+  }
+
+  .widget__select {
+    display: none;
+  }
+
   .canvas {
     width: 100%;
     grid-template-columns: 100%; 
