@@ -1064,4 +1064,8 @@ input[type="file"] {
   .project__container {
     overflow-y: scroll;
   }
+
+  .postit__text {
+    line-height: 20px;
+  }
 }
