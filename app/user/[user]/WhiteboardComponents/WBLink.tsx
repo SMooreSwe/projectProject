@@ -50,7 +50,7 @@ export const WBLink = React.forwardRef<any>(
             className={["wbImageItem__img", className].join(" ")}
             ref={ref}
           ></img>
-          <p className="wbLinkText">{website}</p>
+          <p className="wbLinkText" onTouchStart={() => window.open(website, "_blank")}>{website}</p>
         </a>
         {children}
       </div>
