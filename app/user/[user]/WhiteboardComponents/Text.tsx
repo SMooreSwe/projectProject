@@ -46,7 +46,7 @@ export const Text = React.forwardRef<HTMLDivElement>(
           id=""
           ref={boxText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
-          onTouchStart={() => grabber()}
+          onTouchEnd={() => grabber()}
           className="textblock__text"
           placeholder="Write some text!"
         ></textarea>
