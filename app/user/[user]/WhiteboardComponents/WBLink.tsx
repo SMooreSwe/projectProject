@@ -38,6 +38,7 @@ export const WBLink = React.forwardRef<any>(
         <button
           className="wbImageItem__btn"
           onClick={() => props.deleter(props.coordinates)}
+          onTouchStart={() => props.deleter(props.coordinates)}
         >
           X
         </button>

@@ -33,6 +33,7 @@ export const Text = React.forwardRef<HTMLDivElement>(
         <button
           className="textblock__btn"
           onClick={() => props.deleter(props.coordinates)}
+          onTouchStart={() => props.deleter(props.coordinates)}
         >
           X
         </button>
