@@ -21,6 +21,10 @@ export const PostIt = React.forwardRef<any>(
       test.value = text;
     }
     
+    const grabber = () => {
+      test?.focus()
+    }
+    
     return (
       <div
         style={style}
@@ -42,6 +46,7 @@ export const PostIt = React.forwardRef<any>(
           id=""
           ref={postitText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
+          onTouchStart={() => grabber()}
           className="postit__text"
           placeholder="Write a note!"
         ></textarea>
