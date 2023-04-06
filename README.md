@@ -1,38 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [project Project]
 
-## Getting Started
+project Project] is a collaborative and interactive project management application. It was ideated in two hours, planned in a day, then developed within the span of 11 days by four full-stack Javascript students a part of the winter 2023 class from the School of Applied Learning and Technology, aka salt.
 
-First, run the development server:
+## Who we are
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+We are four people with completely different nationalities, career backgrounds, and skillsets who are all motivated by the same thing: creating practical and accessible software.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Luis Barri 
+- [github](https://github.com/luisw90)
+- [LinkedIn](https://www.linkedin.com/in/luis-barri-a1a393ab/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sonja Kitanoska
+- [github](https://github.com/Sonja-Kitanoska)
+- [LinkedIn](https://www.linkedin.com/in/sonja-kitanoska-986ba8a8/)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Stephen Moore
+- [github](https://github.com/SMooreSwe)
+- [LinkedIn](https://www.linkedin.com/in/stephen-moore-swe/)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Brittany Villegas
+- [github](https://github.com/bretagne-marie)
+- [LinkedIn](https://www.linkedin.com/in/bmvillegas/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Find the project deployed at https://project-project-nine.vercel.app/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
+We built this project with NextJS 13 in Typescript. Our database is hosted by Firebase and we are currently using the Bing API for searches.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[MIT](https://choosealicense.com/licenses/mit/)
