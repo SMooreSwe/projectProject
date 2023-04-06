@@ -21,6 +21,10 @@ export const Text = React.forwardRef<HTMLDivElement>(
       test.value = text;
     }
 
+    const grabber = () => {
+      test?.focus()
+    }
+
     return (
       <div
         style={style}
@@ -42,6 +46,7 @@ export const Text = React.forwardRef<HTMLDivElement>(
           id=""
           ref={boxText}
           onChange={(e) => props.logger([e.target.value, props.coordinates])}
+          onTouchStart={() => grabber()}
           className="textblock__text"
           placeholder="Write some text!"
         ></textarea>
