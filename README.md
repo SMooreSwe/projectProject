@@ -1,6 +1,14 @@
 # [project Project]
 
-project Project] is a collaborative and interactive project management application. It was ideated in two hours, planned in a day, then developed within the span of 11 days by four full-stack Javascript students a part of the winter 2023 class from the School of Applied Learning and Technology, aka salt.
+project Project] is a collaborative and interactive project management application. It was ideated in two hours, planned in a day, then developed within the span of 11 days by four full-stack Javascript students a part of the winter 2023 class from the School of Applied Learning and Technology, aka Salt.
+
+## Tech Stack
+We built this project in TypeScript. The following tools/services were used:
+- NextJS v.13 (and NextAPI)
+- FireBase Auth
+- Firebase 
+- FireStore (for storage of pictures)
+- Bing Image API
 
 ## Who we are
 
@@ -26,9 +34,6 @@ Brittany Villegas
 ## Deployment
 
 Find the project deployed at https://project-project-nine.vercel.app/
-
-## Tech Stack
-We built this project with NextJS 13 in Typescript. Our database is hosted by Firebase and we are currently using the Bing API for searches.
 
 ## License
 
