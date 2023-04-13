@@ -43,7 +43,7 @@ Following the completion of the 11 day sprint, we have added the following featu
 - Amended chat layout for clearer display.
 - User images now displaying properly as originally intended.
 
-We hope to continue improving and tweaking this project in the future and may look at the following areas.
+We hope to continue improving and tweaking this project in the future and may look at the following areas (as well as any others we may think of).
 
 - Properly displaying user image for google authenticated users.
 
