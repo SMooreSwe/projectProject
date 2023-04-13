@@ -35,6 +35,18 @@ Brittany Villegas
 
 Find the project deployed at https://project-project-nine.vercel.app/
 
+## Improvements
+
+Following the completion of the 11 day sprint, we have added the following features:
+
+- Full mobile responsiveness (and fixed issue where items in whiteboard could not be deleted on mobile)
+- Amended chat layout for clearer display.
+- User images now displaying properly as originally intended.
+
+We hope to continue improving and tweaking this project in the future and may look at the following areas.
+
+- Properly displaying user image for google authenticated users.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
